@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/railway/railway.cpp
+railway.h
+D:/railway/railway.h
+iostream
+-
+fstream
+-
+
+D:/railway/railway.h
+string
+-
+vector
+-
+
