@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+D:/railway/main.cpp
+railway.h
+D:/railway/railway.h
+iostream
+-
+
 D:/railway/railway.cpp
 railway.h
 D:/railway/railway.h

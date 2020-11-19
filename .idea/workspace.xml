@@ -11,7 +11,16 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dfa12ea-abc3-44b6-a62f-ecca603283ad" name="Default Changelist" comment="" />
+    <list default="true" id="5dfa12ea-abc3-44b6-a62f-ecca603283ad" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Model1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Model1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/railway.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/railway.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/railway.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/railway.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/railway.h" beforeDir="false" afterPath="$PROJECT_DIR$/railway.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/правила для input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/правила для input.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,7 +44,11 @@
     <select />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1kBslWecXiwcGfCTAoYxEraEVBS" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -43,8 +56,9 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../inheritance/main.cpp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../2 курс моё/ппвис/inheritance/main.cpp" />
   </component>
   <component name="RunManager">
     <configuration name="railway" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="railway" TARGET_NAME="railway" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="railway" RUN_TARGET_NAME="railway">
@@ -81,7 +95,8 @@
       <workItem from="1605531147442" duration="63000" />
       <workItem from="1605613975237" duration="217000" />
       <workItem from="1605619461405" duration="17460000" />
-      <workItem from="1605693921953" duration="7289000" />
+      <workItem from="1605693921953" duration="14013000" />
+      <workItem from="1605766014127" duration="17349000" />
     </task>
     <servers />
   </component>
@@ -89,54 +104,54 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="549" y="170" key="FileChooserDialogImpl" timestamp="1605460095261">
+    <state x="549" y="170" key="FileChooserDialogImpl" timestamp="1605785434079">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="170" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605460095261" />
-    <state width="1493" height="370" key="GridCell.Tab.0.bottom" timestamp="1605701261590">
+    <state x="549" y="170" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605785434079" />
+    <state width="1493" height="339" key="GridCell.Tab.0.bottom" timestamp="1605792466323">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="370" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605701261590" />
-    <state width="1493" height="370" key="GridCell.Tab.0.center" timestamp="1605701261590">
+    <state width="1493" height="339" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605792466323" />
+    <state width="1493" height="339" key="GridCell.Tab.0.center" timestamp="1605792466323">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="370" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1605701261590" />
-    <state width="1493" height="370" key="GridCell.Tab.0.left" timestamp="1605701261590">
+    <state width="1493" height="339" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1605792466323" />
+    <state width="1493" height="339" key="GridCell.Tab.0.left" timestamp="1605792466323">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="370" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1605701261590" />
-    <state width="1493" height="370" key="GridCell.Tab.0.right" timestamp="1605701261590">
+    <state width="1493" height="339" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1605792466323" />
+    <state width="1493" height="339" key="GridCell.Tab.0.right" timestamp="1605792466323">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="370" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1605701261590" />
-    <state width="1493" height="370" key="GridCell.Tab.1.bottom" timestamp="1605701261590">
+    <state width="1493" height="339" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1605792466323" />
+    <state width="1493" height="339" key="GridCell.Tab.1.bottom" timestamp="1605792467278">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="370" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605701261590" />
-    <state width="1493" height="370" key="GridCell.Tab.1.center" timestamp="1605701261590">
+    <state width="1493" height="339" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605792467278" />
+    <state width="1493" height="339" key="GridCell.Tab.1.center" timestamp="1605792467278">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="370" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1605701261590" />
-    <state width="1493" height="370" key="GridCell.Tab.1.left" timestamp="1605701261590">
+    <state width="1493" height="339" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1605792467278" />
+    <state width="1493" height="339" key="GridCell.Tab.1.left" timestamp="1605792467278">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="370" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1605701261590" />
-    <state width="1493" height="370" key="GridCell.Tab.1.right" timestamp="1605701261590">
+    <state width="1493" height="339" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1605792467278" />
+    <state width="1493" height="339" key="GridCell.Tab.1.right" timestamp="1605792467278">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="370" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1605701261590" />
+    <state width="1493" height="339" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1605792467278" />
     <state x="510" y="60" key="refactoring.ChangeSignatureDialog" timestamp="1605636344517">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="510" y="60" key="refactoring.ChangeSignatureDialog/0.0.1536.824@0.0.1536.824" timestamp="1605636344517" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1605634670653">
+    <state x="425" y="187" key="run.anything.popup" timestamp="1605782614367">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605634670653" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1605379055040">
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605782614367" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1605724590919">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1605379055040" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1605724590919" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -144,7 +159,7 @@
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/main.cpp</url>
           <line>8</line>
-          <option name="timeStamp" value="18" />
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
