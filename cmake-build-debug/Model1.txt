@@ -13,12 +13,12 @@ E 3 50 140
 Train1
 5
 1 2 2 1 1 1 2
-D 0 A 3 B 1 C 2
+D A B C
 Train2
 10
 1 2 2 1 1 1 2
-A 0 B 2 C 1
+A B C
 Train3
 5
 1 2 2 1 1 1 2 2 2 2
-E 0 C 3
+E C

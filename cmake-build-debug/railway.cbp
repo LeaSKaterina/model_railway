@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="D:/railway/Station.cpp">
+			<Option target="railway"/>
+		</Unit>
+		<Unit filename="D:/railway/Station.h">
+			<Option target="railway"/>
+		</Unit>
 		<Unit filename="D:/railway/main.cpp">
 			<Option target="railway"/>
 		</Unit>

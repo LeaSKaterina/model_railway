@@ -61,7 +61,12 @@ int Van::loading(int numberOfResource) {
 void Van::uploading(int numberOfResource) {
     if (currentLoad < numberOfResource){
         //throw 123;
-        cout<<"Error: There are not "<<endl;
+        cout<<"Error: There are not enough resources. ";
+        cout<<currentLoad<<" units are uploaded."<<endl;
+        currentLoad = 0;
+    } else{
+        currentLoad -= numberOfResource;
+        cout<<numberOfResource<<" units are uploaded from the van number "<<getNumber()<<"."<<endl;
     }
     load = IS_NOT_LOADED;
 }
@@ -116,12 +121,16 @@ int PassengerVan::loading(int numberOfPersons) {
 }
 
 void PassengerVan::uploading(int numberOfPersons) {
-    if (!vanIsLoaded()){
-        cout<<"Passenger van number "<< number <<" is already uploaded."<<endl;
+    if (currentLoad < numberOfPersons){
+        //throw 123;
+        cout<<"Error: There are not enough persons at the van number "<<getNumber()<<"."<<endl;
+        cout<<currentLoad<<" persons got off the train."<<endl;
+        currentLoad = 0;
     } else{
-        load = IS_NOT_LOADED;
-        cout<<"Passenger van number "<< number <<" is uploaded successfully."<<endl;
+        currentLoad -= numberOfPersons;
+        cout<<numberOfPersons<<" persons got off the van number "<<getNumber()<<"."<<endl;
     }
+    load = IS_NOT_LOADED;
 }
 
 PassengerVan::PassengerVan(int numberOfPersons){
@@ -160,12 +169,16 @@ int FreightVan::loading(int numberOfGoods) {
 }
 
 void FreightVan::uploading(int numberOfGoods) {
-    if (!vanIsLoaded()){
-        cout<<"Freight van number "<< number <<" is already uploaded."<<endl;
+    if (currentLoad < numberOfGoods){
+        //throw 123;
+        cout<<"Error: There are not enough goods at the van number "<<getNumber()<<"."<<endl;
+        cout<<currentLoad<<" persons got off the train."<<endl;
+        currentLoad = 0;
     } else{
-        load = IS_NOT_LOADED;
-        cout<<"Freight van number "<< number <<" is uploaded successfully."<<endl;
+        currentLoad -= numberOfGoods;
+        cout<<numberOfGoods<<" goods are uploaded from the van number "<<getNumber()<<"."<<endl;
     }
+    load = IS_NOT_LOADED;
 }
 
 FreightVan::FreightVan() {
@@ -184,20 +197,14 @@ int Train::loadingOfPassengerVans(int numberOfPersons) {
         if (van->getTypeOfVan() == PASSENGER) {
             numberOfPersons = van->loading(numberOfPersons);
             if (!numberOfPersons) {
-                break;
-                /*cout<<"All of people successfully got on the train."<<endl;
-                return 0;*/
+                cout<<"All of people successfully got on the train."<<endl;
+                return 0;
             }
         }
     }
-    if (numberOfPersons) {
-        cout <<"There weren't enough seats for everybody, so "<<numberOfPersons<<" persons had to stay."<<endl;
-        //throw
-        return numberOfPersons;
-    } else{
-        cout<<"All of people successfully got on the train."<<endl;
-        return 0;
-    }
+    cout <<"There weren't enough seats for everybody, so "<<numberOfPersons<<" persons had to stay."<<endl;
+    //throw
+    return numberOfPersons;
 }
 
 int Train::loadingOfFreightVans(int numberOfGoods) {
@@ -205,23 +212,19 @@ int Train::loadingOfFreightVans(int numberOfGoods) {
         if (van->getTypeOfVan() == FREIGHT) {
             numberOfGoods = van->loading(numberOfGoods);
             if (!numberOfGoods){
-                break;
-                /*cout<<"All of goods are loaded on the train successfully."<<endl;
-                return 0;*/
+                cout<<"All of goods are loaded on the train successfully."<<endl;
+                return 0;
             }
         }
     }
-    if (numberOfGoods) {
-        cout <<"There wasn't enough space for all, so "<<numberOfGoods<<" goods is left at the station."<<endl;
-        //throw
-        return numberOfGoods;
-    } else{
-        cout<<"All of goods are loaded on the train successfully."<<endl;
-        return 0;
-    }
+    cout <<"There wasn't enough space for all, so "<<numberOfGoods<<" goods is left at the station."<<endl;
+    //throw
+    return numberOfGoods;
 }
 
+
 void Train::uploadingOfPassengerVans(int numberOfPersons) {
+    //--------------------------------------------------------------------------------------------------------------------------ПЕРЕДЕЛАТЬ
     for (auto & van : Train::listOfVans){
         if (van->getTypeOfVan() == PASSENGER)
             van->uploading(numberOfPersons);
@@ -229,6 +232,7 @@ void Train::uploadingOfPassengerVans(int numberOfPersons) {
 }
 
 void Train::uploadingOfFreightVans(int numberOfGoods) {
+    //--------------------------------------------------------------------------------------------------------------------------ПЕРЕДЕЛАТЬ
     for (auto & van : Train::listOfVans){
         if (van->getTypeOfVan() == FREIGHT)
             van->uploading(numberOfGoods);
@@ -259,10 +263,10 @@ void Train::inputListOfVansFromString(string &inputString) {
     }
 }
 
-Train::Train(string &name, int &locomotive, string &listOfVans, string &schedule) {
+Train::Train(string &name, int &locomotive, string &listOfVans, string &route) {
     Train::name = name;
     Train::inputListOfVansFromString(listOfVans);
-    Train::schedule.inputFromString(schedule);
+    Train::route.inputFromString(route);
     Train::locomotive = Locomotive(locomotive);
     Train::updateTractionForceOfLocomotive();
     Train::calculateSpeed();
@@ -277,6 +281,7 @@ void Train::updateTractionForceOfLocomotive() {
 }
 
 void Train::updateTheParametersOfTheTrain() {
+    //--------------------------------------------------------------------------------------------------------------------------ПЕРЕДЕЛАТЬ
     updateTractionForceOfLocomotive();
     calculateSpeed();
     //updateSchedule  ??????
@@ -297,14 +302,6 @@ string Station::getName() {
     return Station::name;
 }
 
-/*void Station::loading(Train train) {
-   // train.loadingOfAllVans();
-}
-
-void Station::uploading(Train train) {
-    //train.uploadingOfAllVans();
-}*/
-
 Station::Station(string name, int numberOfResource) {
     Station::name = move(name);
     Station::type = UNKNOWN_TYPE;
@@ -318,40 +315,16 @@ PassengerStation::PassengerStation(string name, int numberOfPassengers) : Statio
     resources.emplace_back(Resource(PASSENGER,numberOfPassengers));
 }
 
-/*void PassengerStation::loading(Train train) {
-    //train.loadingOfPassengerVans();
-}
-
-void PassengerStation::uploading(Train train) {
-   // train.uploadingOfPassengerVans();
-}*/
-
 FreightStation::FreightStation(string name, int numberOfGoods) : Station(move(name)) {
     type = FREIGHT;
     resources.emplace_back(Resource(FREIGHT,numberOfGoods));
 }
-
-/*void FreightStation::loading(Train train) {
-    //train.loadingOfFreightVans();
-}
-
-void FreightStation::uploading(Train train) {
-    //train.uploadingOfFreightVans();
-}*/
 
 PassengerAndFreightStation::PassengerAndFreightStation(string name, int numberOfPassengers, int numberOfGoods) : Station(move(name)) {
     type = PASSENGER_AND_FREIGHT;
     resources.emplace_back(Resource(PASSENGER, numberOfPassengers));
     resources.emplace_back(Resource(FREIGHT,numberOfGoods));
 }
-/*
-void PassengerAndFreightStation::loading(Train train) {
-    //train.loadingOfAllVans();
-}
-
-void PassengerAndFreightStation::uploading(Train train) {
-    //train.uploadingOfAllVans();
-}*/
 
 void Map::inputStationsFromFile(const char *path) {
     ifstream F;
@@ -437,6 +410,17 @@ void Map::inputMapFromFile(const char *path) {
     Map::inputPathsFromFile(path);
 }
 
+Station *Map::getStation(string &nameOfStation) {
+    for (auto & station : listOfStations){
+        if (station->getName() == nameOfStation){
+            return station;
+        }
+    }
+    //throw 13; нет такой станции
+    return nullptr;
+}
+
+
 void Locomotive::calculateTractionForce(vector<Van*> &vans) {
     Locomotive::tractionForce = 0;
     for (auto & van : vans){
@@ -484,6 +468,7 @@ void Locomotive::setAge(int newAge) {
     Locomotive::calculateInitialSpeed();
 }
 
+/*
 
 //НУЖНА ПРОВЕРКА НА КОРРЕКТНОСТЬ ВВЕДЕННОЙ СТРОКИ
 void Schedule::inputFromString( string &inputString) {
@@ -525,6 +510,7 @@ string *Stop::getNameOfStation() {
 void Stop::setNameOfStation(string newNameOfStation) {
     nameOfStation = move(newNameOfStation);
 }
+*/
 
 void Railway::inputModelFromFile(const char *path) {
     Railway::map.inputMapFromFile(path);
@@ -547,25 +533,20 @@ void Railway::inputListOfTrainsFromFile(const char *path) {
             getline(F, bufferString);
         }
     }
-    /*вместо отдельной переменной количества поездов просто посчитать строки в файле (?)
-     while (getline(in, line))
-    {
-        n++;
-    }*/
     int amountOfTrains;
     F>>amountOfTrains;
     getline(F,bufferString);//спускаемся со строки с количеством поездов
     string bufferName;
     int bufferLocomotiveAge;
     string bufferVans;
-    string bufferSchedule;
+    string bufferRoute;
     for (int i=0; i<amountOfTrains; i++){
         getline(F, bufferName);
         F >> bufferLocomotiveAge;
         getline(F,bufferString);//спускаемся со строки с возрастом
         getline(F, bufferVans);
-        getline(F, bufferSchedule);
-        Railway::listOfTrains.emplace_back(bufferName, bufferLocomotiveAge, bufferVans, bufferSchedule);
+        getline(F, bufferRoute);
+        Railway::listOfTrains.emplace_back(bufferName, bufferLocomotiveAge, bufferVans, bufferRoute);
     }
 }
 
@@ -589,4 +570,30 @@ void Resource::setAmount(int newAmount) {
 Resource::Resource() {
     type = UNKNOWN_TYPE;
     amount = 0;
+}
+
+void Route::addStation(Station *station) {
+    listOfStations.push_back(station);
+}
+
+
+/*
+    string bufferName;
+    for (int i=0; i < inputString.size();i++) {
+        while (inputString[i] != ' ') {
+            bufferName.push_back(inputString[i]);
+            if (i == inputString.size() - 1){ //ПЕРЕДЕЛАТЬ ОШИБКИ
+                cout<<"Error."<<endl;
+                return;
+            } else{
+                i++;
+            }
+        }
+        i++; //проходим пробел
+        addStation(Station(bufferName)); //создает объект непосредственно в конце вектора, т.е. без лишнего копирования (или перемещения)
+        i++; //еще один пробел, если это не конец
+        bufferName.clear();
+}*/
+void Route::inputFromString(string &inputString) {
+    //--------------------------------------------------------------------------------------------------------------------------РЕАЛИЗОВАТЬ
 }

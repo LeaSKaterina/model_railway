@@ -19,14 +19,6 @@ enum StatusOfTheTrain{
     IS_BEING_UPLOADED
 };
 
-enum Action {
-    START,
-    TRANSIT,
-    TEMPORARY_PARKING, // 10 мин
-    LOADING,
-    UNLOADING,
-};
-
 enum Load {
     IS_LOADED = true,
     IS_NOT_LOADED = false
@@ -39,11 +31,12 @@ enum KindOfStationOrVanOrResources {
     PASSENGER_AND_FREIGHT
 };
 
+
 namespace rw {
 
+    class Station;
     namespace train {
 
-        //у вагона должно быть макс.количество чего-то и текущее количество чего-то
         class Van {
         private:
             static int counter;
@@ -93,27 +86,14 @@ namespace rw {
             void uploading(int numberOfGoods) override;
         };
 
-        class Stop {
+        class Route{
         private:
-            string nameOfStation;
-            short int action;
+            vector<Station*> listOfStations;
+            Station *currentDepartureStation; //<-показывает последнюю станцию, с которой отправлялся поезд
+            // (или на какой он находится в данный момент, т.к. станция по прибытию становится пунктом отправления)
         public:
-            Stop(string nameOfStation, short int action);
-
-            short int getAction();
-
-            void setAction(short int newAction);
-
-            string* getNameOfStation();
-
-            void setNameOfStation(string newNameOfStation);
-        };
-
-        class Schedule {
-        private:
-            vector<Stop> stops;
-        public:
-            void inputFromString(string &inputString);
+            void addStation(Station *station);
+            void inputFromString(string &inputString); //-----------------------------------------------------------------------------РЕАЛИЗОВАТЬ
         };
 
         class Locomotive {
@@ -132,32 +112,27 @@ namespace rw {
         };
 
         class Train {
-            //пассажирские вагоны загружаются быстро за фиксированный срок
-            //товарные вагоны загружаются/разгружабтся дольше
-            //загрузка и тех, и тех - сумма по времени
         private:
             string name;
-            Schedule schedule;
-            //Stop *currentDepartureStation; <-показывает последнюю станцию, с которой отправлялся поезд (на какой он стоит в даннй момент)
-            //short int
+            Route route;
             Locomotive locomotive;
             vector<Van*> listOfVans;
-            //bool status;
+            //bool status; //----------------------------------------------------------------------------------------------------------РЕАЛИЗОВАТЬ
             int speed{};
             void calculateSpeed();
             void inputListOfVansFromString(string &inputString);
             void updateTractionForceOfLocomotive();
-            void updateTheParametersOfTheTrain();
+            void updateTheParametersOfTheTrain(); //------------------------------------------------------------------------------------ПЕРЕДЕЛАТЬ
         public:
-            Train(string &name, int &locomotiveAge, string &listOfVans, string &schedule);
+            Train(string &name, int &locomotiveAge, string &listOfVans, string &route);
 
             int loadingOfPassengerVans(int numberOfPersons);
 
             int loadingOfFreightVans(int numberOfGoods);
 
-            void uploadingOfPassengerVans(int numberOfPersons);
+            void uploadingOfPassengerVans(int numberOfPersons); //-----------------------------------------------------------------------ПЕРЕДЕЛАТЬ
 
-            void uploadingOfFreightVans(int numberOfGoods);
+            void uploadingOfFreightVans(int numberOfGoods); //---------------------------------------------------------------------------ПЕРЕДЕЛАТЬ
         };
 
     }
@@ -177,13 +152,10 @@ namespace rw {
     };
 
     class Station {
-        //у станции должно быть текущее количество ресурса
-        //затем у станции - вектор ресурсов
-        //ресурсы должны обновляться со временем (т.е. вагоны забирают или отдают что-то, логично)
     private:
         string name;
         int id;
-        static int counter; //чтоб у каждый вершины был номер, так проще формировать карту
+        static int counter;
     protected:
         vector<Resource> resources{};
         short int type;
@@ -195,6 +167,10 @@ namespace rw {
         void setName(string newName);
 
         string getName();
+
+        //пассажирские вагоны загружаются быстро за фиксированный срок
+        //товарные вагоны загружаются/разгружаются дольше
+        //загрузка и тех, и тех - сумма по времени
 
         //virtual void loading(Train train);
 
@@ -245,18 +221,23 @@ namespace rw {
         void inputPathsFromFile(const char *path);
 
         void inputMapFromFile(const char *path);
+
+        Station* getStation(string &nameOfStation);
     };
 
     //на выходе должен быть список событий в хронологическом порядке
-    //можно попробовать высчитывать характерные моменты времени для каждого поезда и заносить в расписание
-    //затем в соответствии с расписанием менять статус поезда и указатель на текущую станцию отправления
-    //можно подумать, как реализовать динамическое расчитывание статусов в помощью переменной "интервал времени" для каждого поезда
-    //по истечению этого "интервала времени" параметры поезда будут обновляться
-    //если он был в пути, значит смещаем указатель на следующую станцию и смотрим, что там делать
-    //если это транзит, то меняем станцию отправления, высчитываем новый интервал (не меняя скорость)
-    //если он разгружался/загружался/стоял, то высчитываем новую скорость, новый интервал и статус меняем на "в пути"
-    //если в расписании закончились станции, он благополучно доехал до последней, то выполняется действие последней станции и после статус меняется на "маршрут пройден"
-    //в случае с динамическим обновлением нужно будет каждый такт обновлять поезда. если есть изменения - выводятся на консоль
+    //с течением времени необходимо менять указатель на текущую станцию отправления в соответствии с маршрутом
+    //нужно реализовать динамическое расчитывание статусов поезда с помощью переменной "время до прибытия/отправления" для каждого поезда
+    //каждый такт обновляются поля "время до прибытия/отправления" всех поездов".
+        // Когда это поле зануляется (по истечению "времени"), происходит изменение(обновление) остальных полей поезда. Изменения выводятся на консоль
+
+    //если поезд был в пути, значит смещаем указатель на станцию прибытия и смотрим, что там делать
+    //в зависимости от действия на станции присваиваем "времени до отправления" соответствующее значение
+                    //транзит - меняем станцию отправления, высчитываем "время до прибытия" (не меняя скорость), меняем статус на "в пути"
+                    //стоянка - статус меняем на "стоит", по истечению соответствующего количества времени высчитываем новое "время до прибытия" и статус меняем на "в пути"
+                    //разгрузка/загрузка - статус меняем на "стоит", по истечению соответствующего количества времени высчитываем новую скорость,
+                        // новое "время до прибытия" и статус меняем на "в пути"
+    //если в расписании закончились станции, поезд благополучно доехал до последней, то статус меняется на "маршрут пройден"
 
     //автоматическое моделирование - вывод от t=0 до t=момент, когда последний поезд доедет (станет неактивным)
     //режим работы - поле класса Railway, не читается из файла, а вводится вместе с названием файла входных данных
