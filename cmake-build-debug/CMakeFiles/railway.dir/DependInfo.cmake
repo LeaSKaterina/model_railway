@@ -4,7 +4,6 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "D:/railway/Station.cpp" "D:/railway/cmake-build-debug/CMakeFiles/railway.dir/Station.cpp.obj"
   "D:/railway/main.cpp" "D:/railway/cmake-build-debug/CMakeFiles/railway.dir/main.cpp.obj"
   "D:/railway/railway.cpp" "D:/railway/cmake-build-debug/CMakeFiles/railway.dir/railway.cpp.obj"
   )

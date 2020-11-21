@@ -1,5 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/railway.dir/Station.cpp.obj"
   "CMakeFiles/railway.dir/main.cpp.obj"
   "CMakeFiles/railway.dir/railway.cpp.obj"
   "librailway.dll.a"

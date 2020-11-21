@@ -122,33 +122,6 @@ railway/fast:
 	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/build
 .PHONY : railway/fast
 
-Station.obj: Station.cpp.obj
-
-.PHONY : Station.obj
-
-# target to build an object file
-Station.cpp.obj:
-	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/Station.cpp.obj
-.PHONY : Station.cpp.obj
-
-Station.i: Station.cpp.i
-
-.PHONY : Station.i
-
-# target to preprocess a source file
-Station.cpp.i:
-	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/Station.cpp.i
-.PHONY : Station.cpp.i
-
-Station.s: Station.cpp.s
-
-.PHONY : Station.s
-
-# target to generate assembly for a file
-Station.cpp.s:
-	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/Station.cpp.s
-.PHONY : Station.cpp.s
-
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -212,9 +185,6 @@ help:
 	@echo ... edit_cache
 	@echo ... railway
 	@echo ... rebuild_cache
-	@echo ... Station.obj
-	@echo ... Station.i
-	@echo ... Station.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
