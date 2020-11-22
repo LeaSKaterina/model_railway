@@ -10,7 +10,7 @@
 
 using namespace std;
 
-enum StatusOfTheTrain{
+enum StatusOfTheTrain {
     REMOVED_FROM_THE_ROUTE = 0,
     PASSED_THE_ROUTE = 0,
     STANDING,
@@ -31,40 +31,60 @@ enum KindOfStationOrVanOrResources {
     PASSENGER_AND_FREIGHT
 };
 
-enum Action{
+enum Action {
     LOADING,
     UNLOADING,
     TRANSIT,
     TEMPORARY_STOP
 };
 
+bool checkThatTheFileIsOpen(ifstream &F);
+
+void goToTheNextLine(ifstream &F);
+
 namespace rw {
 
-    class Resource{
+    class Resource {
     private:
         int type;
         int amount;
     public:
         explicit Resource();
+
         explicit Resource(int type, int amount);
+
         int getType();
+
         int getAmount();
+
         void setAmount(int amount);
-        Resource& operator +=(int right);
-        Resource& operator -=(int right);
-        bool operator !=(Resource& right);
-        bool operator ==(Resource& right);
-        bool operator >(Resource& right);
-        bool operator <(Resource& right);
-        bool operator <(int right);
-        bool operator >(int right);
-        int operator-(Resource& right);
+
+        Resource &operator+=(int right);
+
+        Resource &operator-=(int right);
+
+        bool operator!=(Resource &right);
+
+        bool operator==(Resource &right);
+
+        bool operator>(Resource &right);
+
+        bool operator<(Resource &right);
+
+        bool operator<(int right);
+
+        bool operator>(int right);
+
+        int operator-(Resource &right);
+
         int operator-(int right);
     };
 
-    int operator-(int left, Resource& right);
-    bool operator<(int left, Resource& right);
-    bool operator>(int left, Resource& right);
+    int operator-(int left, Resource &right);
+
+    bool operator<(int left, Resource &right);
+
+    bool operator>(int left, Resource &right);
 
     class Station;
     namespace train {
@@ -85,7 +105,7 @@ namespace rw {
 
             virtual int loading(int numberOfResource);
 
-            virtual void uploading(int numberOfResource);
+            virtual void unloading(int numberOfResource);
 
             bool vanIsLoaded();
 
@@ -104,7 +124,7 @@ namespace rw {
 
             int loading(int numberOfPersons) override;
 
-            void uploading(int numberOfPersons) override;
+            void unloading(int numberOfPersons) override;
         };
 
         class FreightVan : public Van {
@@ -115,17 +135,20 @@ namespace rw {
 
             int loading(int numberOfGoods) override;
 
-            void uploading(int numberOfGoods) override;
+            void unloading(int numberOfGoods) override;
         };
 
-        class Route{
+        class Route {
         private:
-            vector<Station*> listOfStops;
+            vector<Station *> listOfStops;
         public:
             void addStation(Station *station);
+
             void inputFromString(string &inputString);
-            vector<Station*> * getListOfStops();
-            Station* getThePointOfDeparture();
+
+            vector<Station *> *getListOfStops();
+
+            Station *getThePointOfDeparture();
         };
 
         class Locomotive {
@@ -133,13 +156,20 @@ namespace rw {
             int tractionForce{};
             int initialSpeed{};
             int age;
+
             void calculateInitialSpeed();
+
         public:
             Locomotive();
+
             explicit Locomotive(int age);
-            void calculateTractionForce(vector<Van*> &vans);
+
+            void calculateTractionForce(vector<Van *> &vans);
+
             int getInitialSpeed();
+
             int getTractionForce();
+
             void setAge(int newAge);
         };
 
@@ -147,40 +177,57 @@ namespace rw {
         private:
             string name;
             Route route;
-            Station *currentDepartureStation; //<-показывает последнюю станцию, с которой отправлялся поезд
-            // (или на какой он находится в данный момент, т.к. станция по прибытию становится пунктом отправления)
+            Station *currentDepartureStation;
             Locomotive locomotive;
-            vector<Van*> listOfVans;
+            vector<Van *> listOfVans;
             int timeBeforeArrivalOrDeparture = 0;
             int status;
             int speed{};
+
             void inputListOfVansFromString(string &inputString);
+
             void moveAlongTheRoute();
+
             void updateTractionForceOfLocomotive();
+
         public:
             Train(string &name, int &locomotiveAge, string &listOfVans, string &route);
 
-            vector<Station*>* getRoute();
+            vector<Station *> *getRoute();
 
             int getTimeBeforeArrivalOrDeparture();
 
             int getStatus();
 
+            int getSpeed();
+
+            Station *getDepartureStation();
+
+            Station *getArrivalStation();
+
             void calculateSpeed();
 
-            int loadingOfPassengerVans(int numberOfPersons);
+            //--------------------------------------------------------------------------------------------------------------------------ДОДЕЛАТЬ-----------
+            int loadingOfPassengerVan(int number, int numberOfPersons);
 
-            int loadingOfFreightVans(int numberOfGoods);
+            int loadingOfFreightVan(int number, int numberOfGoods);
 
-            void uploadingOfPassengerVans(int numberOfPersons); //-----------------------------------------------------------------------ПЕРЕДЕЛАТЬ(СДЕЛАТЬ)
+            void unloadingOfPassengerVan(int number, int numberOfPersons);
 
-            void uploadingOfFreightVans(int numberOfGoods); //---------------------------------------------------------------------------ПЕРЕДЕЛАТЬ(СДЕЛАТЬ)
+            void unloadingOfFreightVan(int number, int numberOfGoods);
+            //----------------------------------------------------------------------------------------------------------------------------------------------
 
             void isArrived();
 
             void departedFrom();
 
             void simplyExist();
+
+            void setTravelTime(int time);
+
+            void removeFromRoute();
+
+            void passTheRoute();
         };
 
     }
@@ -202,77 +249,110 @@ namespace rw {
 
         void setName(string newName);
 
-        string& getName();
+        string &getName();
 
         static void deleteTheStation(Station *station);
 
-        //virtual void loading(Train train);
+        int getId();
 
-        //virtual void uploading(Train train);
-
-        //void temporaryStop();
-        //void transit();
+        //virtual void loading(Train *train);
+        //virtual void unloading(Train *train);
+        //void temporaryStop(Train *train);
+        //void transit(Train *train);
     };
 
     class PassengerStation : public Station {
     public:
         explicit PassengerStation(string name, int numberOfPassengers);
-        // explicit - предотвращает неявное преобразование типов
-        // (выполняется всякий раз, когда требуется один фундаментальный тип данных,
-        // но предоставляется другой, и пользователь не указывает компилятору, как выполнить конвертацию )
-        // рекомендуется явно объявлять конструкторы explicit всегда, кроме случаев, когда неявное преобразование семантически оправдано.
+        /* explicit - предотвращает неявное преобразование типов
+         (выполняется всякий раз, когда требуется один фундаментальный тип данных,
+         но предоставляется другой, и пользователь не указывает компилятору, как выполнить конвертацию )
+         рекомендуется явно объявлять конструкторы explicit всегда, кроме случаев, когда неявное преобразование семантически оправдано.
+        */
+        //void loading(Train *train) override;
 
-        //void loading(Train train) override;
-
-        //void uploading(Train train) override;
+        //void unloading(Train *train) override;
     };
 
     class FreightStation : public Station {
     public:
         explicit FreightStation(string name, int numberOfGoods);
 
-        //void loading(Train train) override;
+        //void loading(Train *train) override;
 
-        //void uploading(Train train) override;
+        //void unloading(Train *train) override;
     };
 
     class PassengerAndFreightStation : public Station {
     public:
         explicit PassengerAndFreightStation(string name, int numberOfPassengers, int numberOfGoods);
 
-        //void loading(Train train) override;
+        //void loading(Train *train) override;
 
-        //void uploading(Train train) override;
+        //void unloading(Train *train) override;
     };
 
     class Map {
     private:
-        vector<Station*> listOfStations;
+        vector<Station *> listOfStations;
         vector<vector<int>> listOfPaths;
+
+        void moveTheFileToPaths(ifstream &F, int numberOfStations);
+
+        void inputAdjacencyMatrix(ifstream &F, int numberOfStations);
+
+        int getElementOfTheAdjacencyMatrix(int i, int j);
+
+        void inputANewStationFromFile(ifstream& F);
+
+        void inputANewStationWithUnknownType(ifstream &F);
+
+        void inputANewPassengerStation(ifstream &F);
+
+        void inputANewFreightStation(ifstream &F);
+
+        void inputANewPassengerAndFreightStation(ifstream &F);
+
     public:
+
         void inputStationsFromFile(const char *path);
 
         void inputPathsFromFile(const char *path);
 
         void inputMapFromFile(const char *path);
 
-        Station* getStation(string &nameOfStation);
+        Station *getStation(string &nameOfStation);
+
+        int getPath(Station *station1, Station *station2);
     };
 
     //на выходе должен быть список событий в хронологическом порядке
     //автоматическое моделирование - вывод от t=0 до t=момент, когда последний поезд доедет (станет неактивным)
     //режим работы - поле класса Railway, не читается из файла, а вводится вместе с названием файла входных данных
+
     class Railway {
     private:
         Map map;
         vector<Train> listOfTrains;
         static int clock;
+
         static int getRandomAction();
+
+        void calculateTravelTime(Train *train);
+
+        void moveTheFileToTrains(ifstream &F);
+
+        void inputANewTrainFromFile(ifstream& F);
+
     public:
         explicit Railway(const char *path);
+
         void inputListOfTrainsFromFile(const char *path);
+
         void inputModelFromFile(const char *path);
+
         void putTrainsOnTheMap();
+
         void liveAUnitOfTime();
     };
 

@@ -3,12 +3,27 @@
 //
 
 #include "railway.h"
+
 using namespace rw;
 
 #include <iostream>
 #include <fstream>
 #include <ctime>
 //#include <utility>
+
+bool checkThatTheFileIsOpen(ifstream &F){
+    if (!F.is_open()) {
+        cout << "Error" << endl;
+        //throw 123;
+        return false;
+    }
+    return true;
+}
+
+void goToTheNextLine(ifstream &F) {
+    string bufferString;
+    getline(F,bufferString);
+}
 
 int Station::counter = 0;
 
@@ -19,14 +34,14 @@ int Van::counter = 0;
 Van::Van(int numberOfResource) {
     type = UNKNOWN_TYPE;
     maximumLoad.setAmount(100);
-    if (numberOfResource < maximumLoad){
+    if (numberOfResource < maximumLoad) {
         currentLoad.setAmount(numberOfResource);
         load = IS_NOT_LOADED;
-    } else{
+    } else {
         currentLoad = maximumLoad;
         load = IS_LOADED;
-        if (numberOfResource > maximumLoad){
-            cout<<"Error."<<endl;
+        if (numberOfResource > maximumLoad) {
+            cout << "Error." << endl;
             //выбросить ошибку(?), мол вагон загружен, но количество ресурса утеряно
         }
     }
@@ -36,38 +51,39 @@ Van::Van(int numberOfResource) {
 
 int Van::loading(int numberOfResource) {
     if (vanIsLoaded()) {
-        cout<<"Error. Van is overloaded."<<endl;
-        return  numberOfResource;
+        cout << "Error. Van is overloaded." << endl;
+        return numberOfResource;
         //throw что-то
     } else {
         if (numberOfResource < maximumLoad - currentLoad) {
             currentLoad += numberOfResource;
             load = IS_NOT_LOADED;
-            cout<<numberOfResource<<" units are loaded into the van. There is still free space."<<endl;
+            cout << numberOfResource << " units are loaded into the van. There is still free space." << endl;
         } else {
             currentLoad = maximumLoad;
             load = IS_LOADED;
             if (numberOfResource > maximumLoad - currentLoad) {
-                cout<<"Error. Van is overloaded.";
-                cout<<"Only "<<numberOfResource - maximumLoad <<" units are loaded into the van."<<endl; //-----------------------------------------ПЕРЕДЕЛАТЬ
+                cout << "Error. Van is overloaded.";
+                cout << "Only " << numberOfResource - maximumLoad << " units are loaded into the van."
+                     << endl; //-----------------------------------------ПЕРЕДЕЛАТЬ
                 return numberOfResource - maximumLoad;
                 //выбросить ошибку(?),
             }
-            cout<<numberOfResource<<" units are loaded into the van. Van is loaded."<<endl;
+            cout << numberOfResource << " units are loaded into the van. Van is loaded." << endl;
         }
         return 0;
     }
 }
 
-void Van::uploading(int numberOfResource) {
-    if (currentLoad < numberOfResource){
+void Van::unloading(int numberOfResource) {
+    if (currentLoad < numberOfResource) {
         //throw 123;
-        cout<<"Error: There are not enough resources. ";
-        cout<<currentLoad.getAmount()<<" units are uploaded."<<endl;
+        cout << "Error: There are not enough resources. ";
+        cout << currentLoad.getAmount() << " units are uploaded." << endl;
         currentLoad.setAmount(0);
-    } else{
+    } else {
         currentLoad -= numberOfResource;
-        cout<<numberOfResource<<" units are uploaded from the van number "<<getNumber()<<"."<<endl;
+        cout << numberOfResource << " units are uploaded from the van number " << getNumber() << "." << endl;
     }
     load = IS_NOT_LOADED;
 }
@@ -94,25 +110,27 @@ Van::Van() {
 }
 
 double Van::getLoadCoefficient() {
-    return double(currentLoad.getAmount())/maximumLoad.getAmount();
+    return double(currentLoad.getAmount()) / maximumLoad.getAmount();
 }
 
 int PassengerVan::loading(int numberOfPersons) {
     if (vanIsLoaded()) {
-        cout<<"Error. Van is overloaded."<<endl;
-        return  numberOfPersons;
+        cout << "Error. Van is overloaded." << endl;
+        return numberOfPersons;
         //throw что-то
     } else {
         if (numberOfPersons < maximumLoad - currentLoad) {
             currentLoad += numberOfPersons;
             load = IS_NOT_LOADED;
-            cout<<numberOfPersons<<" persons got on the van number" <<getNumber() <<". There is still available seats."<<endl;
+            cout << numberOfPersons << " persons got on the van number" << getNumber()
+                 << ". There is still available seats." << endl;
         } else {
             currentLoad = maximumLoad;
             load = IS_LOADED;
             if (numberOfPersons > maximumLoad - currentLoad) {
-                cout<<"Error. Van is overloaded.";
-                cout<<"Only "<<numberOfPersons - maximumLoad <<" persons got on the van number" <<getNumber() <<"."<<endl;
+                cout << "Error. Van is overloaded.";
+                cout << "Only " << numberOfPersons - maximumLoad << " persons got on the van number" << getNumber()
+                     << "." << endl;
                 return numberOfPersons - maximumLoad;
                 //выбросить ошибку(?),
             }
@@ -121,20 +139,20 @@ int PassengerVan::loading(int numberOfPersons) {
     }
 }
 
-void PassengerVan::uploading(int numberOfPersons) {
-    if (currentLoad < numberOfPersons){
+void PassengerVan::unloading(int numberOfPersons) {
+    if (currentLoad < numberOfPersons) {
         //throw 123;
-        cout<<"Error: There are not enough persons at the van number "<<getNumber()<<"."<<endl;
-        cout<<currentLoad.getAmount()<<" persons got off the train."<<endl;
+        cout << "Error: There are not enough persons at the van number " << getNumber() << "." << endl;
+        cout << currentLoad.getAmount() << " persons got off the train." << endl;
         currentLoad.setAmount(0);
-    } else{
+    } else {
         currentLoad -= numberOfPersons;
-        cout<<numberOfPersons<<" persons got off the van number "<<getNumber()<<"."<<endl;
+        cout << numberOfPersons << " persons got off the van number " << getNumber() << "." << endl;
     }
     load = IS_NOT_LOADED;
 }
 
-PassengerVan::PassengerVan(int numberOfPersons){
+PassengerVan::PassengerVan(int numberOfPersons) {
     type = PASSENGER;
     maximumLoad.setAmount(40);
     Van::loading(numberOfPersons);
@@ -147,20 +165,22 @@ PassengerVan::PassengerVan() {
 
 int FreightVan::loading(int numberOfGoods) {
     if (vanIsLoaded()) {
-        cout<<"Error. Van is overloaded."<<endl;
-        return  numberOfGoods;
+        cout << "Error. Van is overloaded." << endl;
+        return numberOfGoods;
         //throw что-то
     } else {
         if (numberOfGoods < maximumLoad - currentLoad) {
             currentLoad += numberOfGoods;
             load = numberOfGoods;
-            cout<<numberOfGoods<<" goods are loaded into the van number" <<getNumber() <<". There is still free space."<<endl;
+            cout << numberOfGoods << " goods are loaded into the van number" << getNumber()
+                 << ". There is still free space." << endl;
         } else {
             currentLoad = maximumLoad;
             load = IS_LOADED;
             if (numberOfGoods > maximumLoad - currentLoad) {
-                cout<<"Error. Van is overloaded.";
-                cout<<"Only "<<numberOfGoods - maximumLoad <<" goods are loaded into the van  number"<<getNumber()<<"."<<endl;
+                cout << "Error. Van is overloaded.";
+                cout << "Only " << numberOfGoods - maximumLoad << " goods are loaded into the van  number"
+                     << getNumber() << "." << endl;
                 return numberOfGoods - maximumLoad;
                 //выбросить ошибку(?),
             }
@@ -169,15 +189,15 @@ int FreightVan::loading(int numberOfGoods) {
     }
 }
 
-void FreightVan::uploading(int numberOfGoods) {
-    if (currentLoad < numberOfGoods){
+void FreightVan::unloading(int numberOfGoods) {
+    if (currentLoad < numberOfGoods) {
         //throw 123;
-        cout<<"Error: There are not enough goods at the van number "<<getNumber()<<"."<<endl;
-        cout<<currentLoad.getAmount()<<" persons got off the train."<<endl;
+        cout << "Error: There are not enough goods at the van number " << getNumber() << "." << endl;
+        cout << currentLoad.getAmount() << " persons got off the train." << endl;
         currentLoad.setAmount(0);
-    } else{
+    } else {
         currentLoad -= numberOfGoods;
-        cout<<numberOfGoods<<" goods are uploaded from the van number "<<getNumber()<<"."<<endl;
+        cout << numberOfGoods << " goods are uploaded from the van number " << getNumber() << "." << endl;
     }
     load = IS_NOT_LOADED;
 }
@@ -187,72 +207,64 @@ FreightVan::FreightVan() {
     maximumLoad.setAmount(100);
 }
 
-FreightVan::FreightVan(int numberOfGoods){
+FreightVan::FreightVan(int numberOfGoods) {
     type = FREIGHT;
     maximumLoad.setAmount(100);
     Van::loading(numberOfGoods);
 }
 
-int Train::loadingOfPassengerVans(int numberOfPersons) {
-    for (auto & van : Train::listOfVans){
-        if (van->getTypeOfVan() == PASSENGER) {
-            numberOfPersons = van->loading(numberOfPersons);
-            if (!numberOfPersons) {
-                cout<<"All of people successfully got on the train."<<endl; //--------------------------------------------------------эта надпись должна быть по окончанию загрузки, а не в начале
-                return 0;
-            }
+int Train::loadingOfPassengerVan(int number, int numberOfPersons) {
+    for (auto &van : Train::listOfVans) {
+        if (van->getTypeOfVan() == PASSENGER && van->getNumber() == number) {
+            return van->loading(numberOfPersons);
         }
     }
-    cout <<"There weren't enough seats for everybody, so "<<numberOfPersons<<" persons had to stay."<<endl;
-    //throw
+    //throw 123; //нет такого вагона
     return numberOfPersons;
 }
 
-int Train::loadingOfFreightVans(int numberOfGoods) {
-    for (auto & van : Train::listOfVans){
-        if (van->getTypeOfVan() == FREIGHT) {
-            numberOfGoods = van->loading(numberOfGoods);
-            if (!numberOfGoods){
-                cout<<"All of goods are loaded on the train successfully."<<endl;
-                return 0;
-            }
+int Train::loadingOfFreightVan(int number, int numberOfGoods) {
+    for (auto &van : Train::listOfVans) {
+        if (van->getTypeOfVan() == FREIGHT && van->getNumber() == number) {
+            return van->loading(numberOfGoods);
         }
     }
-    cout <<"There wasn't enough space for all, so "<<numberOfGoods<<" goods is left at the station."<<endl;
-    //throw
+    //throw 123; //нет такого вагона
     return numberOfGoods;
 }
 
 
-void Train::uploadingOfPassengerVans(int numberOfPersons) {
-    //--------------------------------------------------------------------------------------------------------------------------ПЕРЕДЕЛАТЬ
-    for (auto & van : Train::listOfVans){
-        if (van->getTypeOfVan() == PASSENGER)
-            van->uploading(numberOfPersons);
+void Train::unloadingOfPassengerVan(int number, int numberOfPersons) {
+    for (auto &van : Train::listOfVans) {
+        if (van->getTypeOfVan() == PASSENGER && van->getNumber() == number) {
+            van->unloading(numberOfPersons);
+        }
     }
+    //throw 123; //нет такого вагона
 }
 
-void Train::uploadingOfFreightVans(int numberOfGoods) {
-    //--------------------------------------------------------------------------------------------------------------------------ПЕРЕДЕЛАТЬ
-    for (auto & van : Train::listOfVans){
-        if (van->getTypeOfVan() == FREIGHT)
-            van->uploading(numberOfGoods);
+void Train::unloadingOfFreightVan(int number, int numberOfGoods) {
+    for (auto &van : Train::listOfVans) {
+        if (van->getTypeOfVan() == FREIGHT && van->getNumber() == number) {
+            van->unloading(numberOfGoods);
+        }
     }
+    //throw 123; //нет такого вагона
 }
 
 void Train::inputListOfVansFromString(string &inputString) {
-    for (int i=0; i<inputString.length();i++){
-        switch (int(inputString[i])-48){
-            case PASSENGER:{
+    for (int i = 0; i < inputString.length(); i++) {
+        switch (int(inputString[i]) - 48) {
+            case PASSENGER: {
                 Train::listOfVans.push_back(new PassengerVan);
                 break;
             }
-            case FREIGHT:{
+            case FREIGHT: {
                 Train::listOfVans.push_back(new FreightVan);
                 break;
             }
-            default:{
-                cout<<"Error."<<endl;
+            default: {
+                cout << "Error." << endl;
                 return;
             }
         }
@@ -273,14 +285,14 @@ Train::Train(string &name, int &locomotive, string &listOfVans, string &route) {
 
 void Train::calculateSpeed() {
     updateTractionForceOfLocomotive();
-    Train::speed = Train::locomotive.getInitialSpeed() - int(0.25*Train::locomotive.getTractionForce());
+    Train::speed = Train::locomotive.getInitialSpeed() - int(0.25 * Train::locomotive.getTractionForce());
 }
 
 void Train::updateTractionForceOfLocomotive() {
     Train::locomotive.calculateTractionForce(listOfVans);
 }
 
-vector<Station*>* Train::getRoute() {
+vector<Station *> *Train::getRoute() {
     return route.getListOfStops();
 }
 
@@ -310,7 +322,7 @@ string &Station::getName() {
 Station::Station(string name, int numberOfResource) {
     Station::name = move(name);
     Station::type = UNKNOWN_TYPE;
-    Station::resources.emplace_back(0,numberOfResource);
+    Station::resources.emplace_back(0, numberOfResource);
     Station::id = Station::counter;
     Station::counter++;
 }
@@ -320,92 +332,46 @@ void Station::deleteTheStation(Station *station) {
     counter--;
 }
 
+int Station::getId() {
+    return id;
+}
+
 PassengerStation::PassengerStation(string name, int numberOfPassengers) : Station(move(name)) {
     type = PASSENGER;
-    resources.emplace_back(Resource(PASSENGER,numberOfPassengers));
+    resources.emplace_back(Resource(PASSENGER, numberOfPassengers));
 }
 
 FreightStation::FreightStation(string name, int numberOfGoods) : Station(move(name)) {
     type = FREIGHT;
-    resources.emplace_back(Resource(FREIGHT,numberOfGoods));
+    resources.emplace_back(Resource(FREIGHT, numberOfGoods));
 }
 
-PassengerAndFreightStation::PassengerAndFreightStation(string name, int numberOfPassengers, int numberOfGoods) : Station(move(name)) {
+PassengerAndFreightStation::PassengerAndFreightStation(string name, int numberOfPassengers, int numberOfGoods)
+        : Station(move(name)) {
     type = PASSENGER_AND_FREIGHT;
     resources.emplace_back(Resource(PASSENGER, numberOfPassengers));
-    resources.emplace_back(Resource(FREIGHT,numberOfGoods));
+    resources.emplace_back(Resource(FREIGHT, numberOfGoods));
 }
 
 void Map::inputStationsFromFile(const char *path) {
     ifstream F;
     F.open(path);
-    if (!F.is_open()) {
-        cout<<"Error"<<endl;
-        return;
-    }
+    checkThatTheFileIsOpen(F);
     short int amountOfStations;
-    F>>amountOfStations;
-    short int bufferType;
-    string bufferName;
-        for (int i=0; i<amountOfStations; i++){
-            F>>bufferName>>bufferType;
-            switch (bufferType){
-            case UNKNOWN_TYPE:{
-                Map::listOfStations.push_back(new Station(bufferName));
-                break;
-            }
-            case PASSENGER:{
-                int bufferNumberOfPassengers;
-                F >> bufferNumberOfPassengers;
-                Map::listOfStations.push_back(new PassengerStation(bufferName, bufferNumberOfPassengers));
-                break;
-            }
-            case FREIGHT:{
-                int bufferNumberOfGoods;
-                F>>bufferNumberOfGoods;
-                Map::listOfStations.push_back(new FreightStation(bufferName, bufferNumberOfGoods));
-                break;
-            }
-            case PASSENGER_AND_FREIGHT:{
-                int bufferNumberOfPassengers;
-                F >> bufferNumberOfPassengers;
-                int bufferNumberOfGoods;
-                F>>bufferNumberOfGoods;
-                Map::listOfStations.push_back(new PassengerAndFreightStation(bufferName, bufferNumberOfPassengers, bufferNumberOfGoods));
-                break;
-            }
-            default:{
-                cout<<"Error."<<endl;
-            }
-        }
-        bufferName.clear();
-        bufferType = UNKNOWN_TYPE;
+    F >> amountOfStations;
+    for (int i = 0; i < amountOfStations; i++) {
+        inputANewStationFromFile(F);
     }
     F.close();
 }
 
 void Map::inputPathsFromFile(const char *path) {
     ifstream F;
-    F.open(path);
-    if (!F.is_open()) {
-        cout<<"Error"<<endl;
-        return;
-    }
-    short int amountOfStations;
-    F>>amountOfStations;
-    string bufferString;
-    int buffer;
-    for (int i=0; i<=amountOfStations; i++){
-        getline(F,bufferString);
-    }
-    for (int i=0; i<amountOfStations; i++){
-        vector<int> bufferVector;
-        for (int j=0; j<amountOfStations; j++){
-            F>>buffer;
-            bufferVector.push_back(buffer);
-        }
-        Map::listOfPaths.push_back(bufferVector);
-    }
+    checkThatTheFileIsOpen(F);
+    short int numberOfStations;
+    F >> numberOfStations;
+    moveTheFileToPaths(F, numberOfStations);
+    inputAdjacencyMatrix(F, numberOfStations);
     F.close();
 }
 
@@ -415,8 +381,8 @@ void Map::inputMapFromFile(const char *path) {
 }
 
 Station *Map::getStation(string &nameOfStation) {
-    for (auto & station : listOfStations){
-        if (station->getName() == nameOfStation){
+    for (auto &station : listOfStations) {
+        if (station->getName() == nameOfStation) {
             return station;
         }
     }
@@ -424,24 +390,109 @@ Station *Map::getStation(string &nameOfStation) {
     return nullptr;
 }
 
+int Map::getPath(Station *station1, Station *station2) {
+    return getElementOfTheAdjacencyMatrix(station1->getId(), station2->getId());
+}
 
-void Locomotive::calculateTractionForce(vector<Van*> &vans) {
-    Locomotive::tractionForce = 0;
-    for (auto & van : vans){
-        int force;
-        if (van->getTypeOfVan() == 0 || van->getTypeOfVan() == 1){
-            force = 10;
-        } else{
-            force = 10*van->getTypeOfVan();
+int Map::getElementOfTheAdjacencyMatrix(int i, int j) { //---------------------------------проверить корректность работы
+    return listOfPaths[i][j];
+}
+
+void Map::moveTheFileToPaths(ifstream &F, int numberOfStations) {
+    string bufferString;
+    for (int i = 0; i <= numberOfStations; i++) {
+        getline(F, bufferString);
+    }
+}
+
+void Map::inputAdjacencyMatrix(ifstream &F, int numberOfStations) {
+    int buffer{};
+    for (int i = 0; i < numberOfStations; i++) {
+        vector<int> bufferVector;
+        for (int j = 0; j < numberOfStations; j++) {
+            F >> buffer;
+            bufferVector.push_back(buffer);
         }
-        Locomotive::tractionForce += int(van->getLoadCoefficient()*force);
+        Map::listOfPaths.push_back(bufferVector);
+    }
+}
+
+void Map::inputANewStationFromFile(ifstream &F) {
+    short int bufferType;
+    F>>bufferType;
+    switch (bufferType) {
+        case UNKNOWN_TYPE: {
+            inputANewStationWithUnknownType(F);
+            break;
+        }
+        case PASSENGER: {
+            inputANewPassengerStation(F);
+            break;
+        }
+        case FREIGHT: {
+            inputANewFreightStation(F);
+            break;
+        }
+        case PASSENGER_AND_FREIGHT: {
+            inputANewPassengerAndFreightStation(F);
+            break;
+        }
+        default: {
+            cout << "Error." << endl;
+        }
+    }
+}
+
+void Map::inputANewStationWithUnknownType(ifstream &F) {
+    string bufferName;
+    F >> bufferName;
+    Map::listOfStations.push_back(new Station(bufferName));
+}
+
+void Map::inputANewPassengerStation(ifstream &F) {
+    string bufferName;
+    F >> bufferName;
+    int bufferNumberOfPassengers;
+    F >> bufferNumberOfPassengers;
+    Map::listOfStations.push_back(new PassengerStation(bufferName, bufferNumberOfPassengers));
+}
+
+void Map::inputANewFreightStation(ifstream &F) {
+    string bufferName;
+    F >> bufferName;
+    int bufferNumberOfGoods;
+    F >> bufferNumberOfGoods;
+    Map::listOfStations.push_back(new FreightStation(bufferName, bufferNumberOfGoods));
+}
+
+void Map::inputANewPassengerAndFreightStation(ifstream &F) {
+    string bufferName;
+    F >> bufferName;
+    int bufferNumberOfPassengers;
+    F >> bufferNumberOfPassengers;
+    int bufferNumberOfGoods;
+    F >> bufferNumberOfGoods;
+    Map::listOfStations.push_back(
+            new PassengerAndFreightStation(bufferName, bufferNumberOfPassengers, bufferNumberOfGoods));
+}
+
+void Locomotive::calculateTractionForce(vector<Van *> &vans) {
+    Locomotive::tractionForce = 0;
+    for (auto &van : vans) {
+        int force;
+        if (van->getTypeOfVan() == 0 || van->getTypeOfVan() == 1) {
+            force = 10;
+        } else {
+            force = 10 * van->getTypeOfVan();
+        }
+        Locomotive::tractionForce += int(van->getLoadCoefficient() * force);
     }
 }
 
 void Locomotive::calculateInitialSpeed() {
     if (age != 0) {
         initialSpeed = 100 / age;
-    } else{
+    } else {
         //trow
         initialSpeed = 10;
     }
@@ -480,41 +531,22 @@ void Railway::inputModelFromFile(const char *path) {
 void Railway::inputListOfTrainsFromFile(const char *path) {
     ifstream F;
     F.open(path);
-    if (!F.is_open()){
-        cout<<"Error"<<endl;
-        return;
-    }
-    string bufferString;
-    {
-        short int bufferInt;
-        F >> bufferInt;
-        for (int i = 0; i <= bufferInt * 2; i++) {
-            getline(F, bufferString);
-        }
-    }
+    checkThatTheFileIsOpen(F);
+    moveTheFileToTrains(F);
     int amountOfTrains;
-    F>>amountOfTrains;
-    getline(F,bufferString);//спускаемся со строки с количеством поездов
-    string bufferName;
-    int bufferLocomotiveAge;
-    string bufferVans;
-    string bufferRoute;
-    for (int i=0; i<amountOfTrains; i++){
-        getline(F, bufferName);
-        F >> bufferLocomotiveAge;
-        getline(F,bufferString);//спускаемся со строки с возрастом
-        getline(F, bufferVans);
-        getline(F, bufferRoute);
-        Railway::listOfTrains.emplace_back(bufferName, bufferLocomotiveAge, bufferVans, bufferRoute);
+    F >> amountOfTrains;
+    goToTheNextLine(F);
+    for (int i = 0; i < amountOfTrains; i++) {
+        inputANewTrainFromFile(F);
     }
 }
 
-void Railway::putTrainsOnTheMap() {//--------------------------------------------------------------------------------------ПРОВЕРИТЬ, МЕНЯЕТСЯ ЛИ МАРШРУТ (РАБОТА С ССЫЛКАМИ)
-    vector<Station*> *route{};
-    Station* buffer{};
-    for ( auto &train : listOfTrains){
+void Railway::putTrainsOnTheMap() {//---------------------------------ПРОВЕРИТЬ, МЕНЯЕТСЯ ЛИ МАРШРУТ (РАБОТА С ССЫЛКАМИ)
+    vector<Station *> *route{};
+    Station *buffer{};
+    for (auto &train : listOfTrains) {
         route = train.getRoute();
-        for (auto &stop : *route){
+        for (auto &stop : *route) {
             buffer = stop;
             stop = map.getStation(stop->getName());
             Station::deleteTheStation(buffer);
@@ -529,33 +561,34 @@ Railway::Railway(const char *path) {
 }
 
 void Railway::liveAUnitOfTime() {
-    for (auto &train : listOfTrains){
+    for (auto &train : listOfTrains) {
         if (train.getStatus() != REMOVED_FROM_THE_ROUTE && train.getStatus() != PASSED_THE_ROUTE) {
             if (train.getTimeBeforeArrivalOrDeparture() == 0) {
                 switch (train.getStatus()) {
-                    case ON_THE_WAY:{
-                        train.isArrived();
-                        //каким-то образом определяется действие, которое нужно совершить на станции
-                        /* Смена статуса:
-                         * при транзите не меняем cтатус. не забыть, что он как бы прибыл. но проехал мимо. расчитываем время на путь до следующей станции
-                         * в остальных случаях: статус, выбранный пользователем || статус, который генерируется рандомайзером
+                    case ON_THE_WAY: {
+                        train.isArrived(); //смена станции отправления
+                        /*определяется действие, которое нужно совершить на станции
+                         *действие определяется рандомно || действие выбирает пользователь
+                            транзит - calculateTravelTime(&train); train.departedFrom();
+                            стоянка - "время до отправления" = 10 || "время до отправления" задает пользователь, статус меняем на "стоит"
+                            разгрузка/загрузка - "время до отправления" задает пользователь || "время до отправления" = t,
+                                                    t = const, разная для различный вагонов (сделать пассажирские, грузовые и миксованные поезда?)
+                                                    - пассажирские вагоны загружаются быстро за фиксированный срок
+                                                    - товарные вагоны загружаются/разгружаются дольше
+                                                    - загрузка и тех, и тех - сумма по времени
+                                                статус меняем на "загружается"/"разгружается"
+                         *если поезд прибыл на конечную станцию, то uploadAll(station, train); train.passThaRoute();
                          */
-                            //транзит - меняем станцию отправления, высчитываем "время до прибытия" (не меняя скорость), меняем статус на "в пути"
-                            //стоянка - статус меняем на "стоит", по истечению соответствующего количества времени высчитываем новое "время до прибытия" и статус меняем на "в пути"
-                            //разгрузка/загрузка - статус меняем, по истечению соответствующего количества времени высчитываем новую скорость,
-
-                        //в зависимости от действия присваивается новое значение для timeBeforeArrivalOrDeparture (либо здесь, либо внутри функций загрузки/разгрузки)
-                        //пассажирские вагоны загружаются быстро за фиксированный срок
-                        //товарные вагоны загружаются/разгружаются дольше
-                        //загрузка и тех, и тех - сумма по времени
                         break;
                     }
-                    case STANDING:{
+                    case STANDING: {
+                        calculateTravelTime(&train);
                         train.departedFrom();
                         break;
                     }
-                    case IS_BEING_LOADED | IS_BEING_UNLOADED:{
+                    case IS_BEING_LOADED | IS_BEING_UNLOADED: {
                         train.calculateSpeed();
+                        calculateTravelTime(&train);
                         train.departedFrom();
                         break;
                     }
@@ -567,8 +600,9 @@ void Railway::liveAUnitOfTime() {
     }
 }
 
-int Railway::getRandomAction() { //--------------------------------------------------------------------------------------------------ПОДУМАТЬ НАД ЭТИМ, МОЖЕТ КАК-ТО ПО-ДРУГОМУ РЕАЛИЗОВАТЬ
-    srand ( time(NULL) );
+int
+Railway::getRandomAction() { //-----------------------------------ПОДУМАТЬ НАД ЭТИМ, МОЖЕТ КАК-ТО ПО-ДРУГОМУ РЕАЛИЗОВАТЬ
+    srand(time(nullptr));
     return rand() % 4 + 1;
 }
 
@@ -627,22 +661,22 @@ bool Resource::operator>(Resource &right) {
     /*if (this->type != resource.type){
         throw 123;
     }*/
-    return this->amount > right.amount ;
+    return this->amount > right.amount;
 }
 
 bool Resource::operator<(Resource &right) {
     /*if (this->type != resource.type){
         throw 123;
     }*/
-    return this->amount < right.amount ;
+    return this->amount < right.amount;
 }
 
 bool Resource::operator<(int right) {
-    return this->getAmount()<right;
+    return this->getAmount() < right;
 }
 
 bool Resource::operator>(int right) {
-    return this->getAmount()>right;
+    return this->getAmount() > right;
 }
 
 int operator-(int left, Resource &right) {
@@ -666,7 +700,7 @@ void Route::inputFromString(string &inputString) {
     for (int i = 0; i < inputString.size(); i++) {
         while (inputString[i] != ' ' && i < inputString.size()) {
             bufferName.push_back(inputString[i]);
-                i++;
+            i++;
         }
         addStation(new Station(bufferName));
         bufferName.clear();
@@ -682,21 +716,78 @@ Station *Route::getThePointOfDeparture() {
 }
 
 void Train::moveAlongTheRoute() {
-    currentDepartureStation++; //---------------------------------------------------------------------------------------------------------------------ПРОВЕРИТЬ РАБОТУ
+    currentDepartureStation++; //-----------------------------------------------------------------------ПРОВЕРИТЬ РАБОТУ
 }
 
 void Train::isArrived() {
     moveAlongTheRoute();
-    cout<<"The \""<<name<<"\" train is arrived at \""<<currentDepartureStation<<"\" station."<<endl;//-----------------------------------------------COUT?
+    cout << "The \"" << name << "\" train is arrived at \"" << currentDepartureStation << "\" station."
+         << endl;//-----------------------------------------------COUT?
 }
 
 void Train::departedFrom() {
-    //здесь нужен расчет времени на дорогу до след.станции (расстояние/скорость) --------------------------------------------------------------------СДЕЛАТЬ
-    cout<<"The \""<<name<<"\" train departed from \""<<currentDepartureStation<<"\" station."<<endl;//-----------------------------------------------COUT?
+    cout << "The \"" << name << "\" train departed from \"" << currentDepartureStation << "\" station."
+         << endl;//-----------------------------------------------COUT?
     Train::status = ON_THE_WAY;
     //если в расписании закончились станции, поезд благополучно доехал до последней, то статус меняется на "маршрут пройден" ------------------------ПРОВЕРКА НА ВОТ ЭТО ВОТ
 }
 
 void Train::simplyExist() {
-    timeBeforeArrivalOrDeparture++;
+    timeBeforeArrivalOrDeparture--;
+}
+
+Station *Train::getArrivalStation() {
+    Station *nextDepartureStation = currentDepartureStation;
+    return nextDepartureStation++; //-----------------------------------------ПРОВЕРИТЬ, НЕ СМЕЩАЕТСЯ ЛИ ТЕКУЩАЯ СТАНЦИЯ
+}
+
+Station *Train::getDepartureStation() {
+    return currentDepartureStation;
+}
+
+void Train::removeFromRoute() {
+    status = REMOVED_FROM_THE_ROUTE;
+}
+
+void Train::setTravelTime(int time) {
+    timeBeforeArrivalOrDeparture = time;
+}
+
+int Train::getSpeed() {
+    return speed;
+}
+
+void Train::passTheRoute() {
+    status = PASSED_THE_ROUTE;
+}
+
+void Railway::calculateTravelTime(Train *train) {
+    if (!map.getPath(train->getDepartureStation(), train->getArrivalStation())) {
+        //throw 123; //нет пути между этими станциями.
+        train->removeFromRoute(); //внутри catch
+    }
+    train->setTravelTime(
+            int(map.getPath(train->getDepartureStation(), train->getArrivalStation()) / train->getSpeed()));
+}
+
+void Railway::moveTheFileToTrains(ifstream &F) {
+    short int numberOfStations;
+    F >> numberOfStations;
+    string bufferString;
+    for (int i = 0; i <= numberOfStations * 2; i++) {
+        getline(F, bufferString);
+    }
+}
+
+void Railway::inputANewTrainFromFile(ifstream &F) {
+    string bufferName;
+    getline(F, bufferName);
+    int bufferLocomotiveAge;
+    F >> bufferLocomotiveAge;
+    goToTheNextLine(F);
+    string bufferVans;
+    getline(F, bufferVans);
+    string bufferRoute;
+    getline(F, bufferRoute);
+    Railway::listOfTrains.emplace_back(bufferName, bufferLocomotiveAge, bufferVans, bufferRoute);
 }
