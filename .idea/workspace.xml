@@ -13,14 +13,11 @@
   <component name="ChangeListManager">
     <list default="true" id="5dfa12ea-abc3-44b6-a62f-ecca603283ad" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/main.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/objects.a" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Model1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Model1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/railway.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/railway.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/railway.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/railway.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/railway.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/railway.h" beforeDir="false" afterPath="$PROJECT_DIR$/railway.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/переделать.txt" beforeDir="false" afterPath="$PROJECT_DIR$/переделать.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/правила для input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/правила для input.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +98,7 @@
       <workItem from="1605865662118" duration="188000" />
       <workItem from="1605941814232" duration="1736000" />
       <workItem from="1605957330653" duration="19817000" />
-      <workItem from="1606044708098" duration="17863000" />
+      <workItem from="1606044708098" duration="19340000" />
     </task>
     <servers />
   </component>

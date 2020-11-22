@@ -255,6 +255,8 @@ namespace rw {
 
         int getId();
 
+        
+
         //virtual void loading(Train *train);
         //virtual void unloading(Train *train);
         //void temporaryStop(Train *train);
@@ -353,7 +355,7 @@ namespace rw {
 
         void putTrainsOnTheMap();
 
-        void liveAUnitOfTime();
+        void liveAUnitOfTime(); //-------------------------------------------------------------------------------------------------------ДОДЕЛАТЬ
     };
 
 }
