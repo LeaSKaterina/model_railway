@@ -122,6 +122,168 @@ railway/fast:
 	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/build
 .PHONY : railway/fast
 
+classes/map.obj: classes/map.cpp.obj
+
+.PHONY : classes/map.obj
+
+# target to build an object file
+classes/map.cpp.obj:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/map.cpp.obj
+.PHONY : classes/map.cpp.obj
+
+classes/map.i: classes/map.cpp.i
+
+.PHONY : classes/map.i
+
+# target to preprocess a source file
+classes/map.cpp.i:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/map.cpp.i
+.PHONY : classes/map.cpp.i
+
+classes/map.s: classes/map.cpp.s
+
+.PHONY : classes/map.s
+
+# target to generate assembly for a file
+classes/map.cpp.s:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/map.cpp.s
+.PHONY : classes/map.cpp.s
+
+classes/railway.obj: classes/railway.cpp.obj
+
+.PHONY : classes/railway.obj
+
+# target to build an object file
+classes/railway.cpp.obj:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/railway.cpp.obj
+.PHONY : classes/railway.cpp.obj
+
+classes/railway.i: classes/railway.cpp.i
+
+.PHONY : classes/railway.i
+
+# target to preprocess a source file
+classes/railway.cpp.i:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/railway.cpp.i
+.PHONY : classes/railway.cpp.i
+
+classes/railway.s: classes/railway.cpp.s
+
+.PHONY : classes/railway.s
+
+# target to generate assembly for a file
+classes/railway.cpp.s:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/railway.cpp.s
+.PHONY : classes/railway.cpp.s
+
+classes/resource.obj: classes/resource.cpp.obj
+
+.PHONY : classes/resource.obj
+
+# target to build an object file
+classes/resource.cpp.obj:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/resource.cpp.obj
+.PHONY : classes/resource.cpp.obj
+
+classes/resource.i: classes/resource.cpp.i
+
+.PHONY : classes/resource.i
+
+# target to preprocess a source file
+classes/resource.cpp.i:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/resource.cpp.i
+.PHONY : classes/resource.cpp.i
+
+classes/resource.s: classes/resource.cpp.s
+
+.PHONY : classes/resource.s
+
+# target to generate assembly for a file
+classes/resource.cpp.s:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/resource.cpp.s
+.PHONY : classes/resource.cpp.s
+
+classes/station.obj: classes/station.cpp.obj
+
+.PHONY : classes/station.obj
+
+# target to build an object file
+classes/station.cpp.obj:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/station.cpp.obj
+.PHONY : classes/station.cpp.obj
+
+classes/station.i: classes/station.cpp.i
+
+.PHONY : classes/station.i
+
+# target to preprocess a source file
+classes/station.cpp.i:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/station.cpp.i
+.PHONY : classes/station.cpp.i
+
+classes/station.s: classes/station.cpp.s
+
+.PHONY : classes/station.s
+
+# target to generate assembly for a file
+classes/station.cpp.s:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/station.cpp.s
+.PHONY : classes/station.cpp.s
+
+classes/train.obj: classes/train.cpp.obj
+
+.PHONY : classes/train.obj
+
+# target to build an object file
+classes/train.cpp.obj:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/train.cpp.obj
+.PHONY : classes/train.cpp.obj
+
+classes/train.i: classes/train.cpp.i
+
+.PHONY : classes/train.i
+
+# target to preprocess a source file
+classes/train.cpp.i:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/train.cpp.i
+.PHONY : classes/train.cpp.i
+
+classes/train.s: classes/train.cpp.s
+
+.PHONY : classes/train.s
+
+# target to generate assembly for a file
+classes/train.cpp.s:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/train.cpp.s
+.PHONY : classes/train.cpp.s
+
+classes/van.obj: classes/van.cpp.obj
+
+.PHONY : classes/van.obj
+
+# target to build an object file
+classes/van.cpp.obj:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/van.cpp.obj
+.PHONY : classes/van.cpp.obj
+
+classes/van.i: classes/van.cpp.i
+
+.PHONY : classes/van.i
+
+# target to preprocess a source file
+classes/van.cpp.i:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/van.cpp.i
+.PHONY : classes/van.cpp.i
+
+classes/van.s: classes/van.cpp.s
+
+.PHONY : classes/van.s
+
+# target to generate assembly for a file
+classes/van.cpp.s:
+	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/classes/van.cpp.s
+.PHONY : classes/van.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -149,33 +311,6 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-railway.obj: railway.cpp.obj
-
-.PHONY : railway.obj
-
-# target to build an object file
-railway.cpp.obj:
-	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/railway.cpp.obj
-.PHONY : railway.cpp.obj
-
-railway.i: railway.cpp.i
-
-.PHONY : railway.i
-
-# target to preprocess a source file
-railway.cpp.i:
-	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/railway.cpp.i
-.PHONY : railway.cpp.i
-
-railway.s: railway.cpp.s
-
-.PHONY : railway.s
-
-# target to generate assembly for a file
-railway.cpp.s:
-	$(MAKE) -f CMakeFiles\railway.dir\build.make CMakeFiles/railway.dir/railway.cpp.s
-.PHONY : railway.cpp.s
-
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -185,12 +320,27 @@ help:
 	@echo ... edit_cache
 	@echo ... railway
 	@echo ... rebuild_cache
+	@echo ... classes/map.obj
+	@echo ... classes/map.i
+	@echo ... classes/map.s
+	@echo ... classes/railway.obj
+	@echo ... classes/railway.i
+	@echo ... classes/railway.s
+	@echo ... classes/resource.obj
+	@echo ... classes/resource.i
+	@echo ... classes/resource.s
+	@echo ... classes/station.obj
+	@echo ... classes/station.i
+	@echo ... classes/station.s
+	@echo ... classes/train.obj
+	@echo ... classes/train.i
+	@echo ... classes/train.s
+	@echo ... classes/van.obj
+	@echo ... classes/van.i
+	@echo ... classes/van.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
-	@echo ... railway.obj
-	@echo ... railway.i
-	@echo ... railway.s
 .PHONY : help
 
 

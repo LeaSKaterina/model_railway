@@ -80,13 +80,43 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="D:/railway/classes/map.cpp">
+			<Option target="railway"/>
+		</Unit>
+		<Unit filename="D:/railway/classes/map.h">
+			<Option target="railway"/>
+		</Unit>
+		<Unit filename="D:/railway/classes/railway.cpp">
+			<Option target="railway"/>
+		</Unit>
+		<Unit filename="D:/railway/classes/railway.h">
+			<Option target="railway"/>
+		</Unit>
+		<Unit filename="D:/railway/classes/resource.cpp">
+			<Option target="railway"/>
+		</Unit>
+		<Unit filename="D:/railway/classes/resource.h">
+			<Option target="railway"/>
+		</Unit>
+		<Unit filename="D:/railway/classes/station.cpp">
+			<Option target="railway"/>
+		</Unit>
+		<Unit filename="D:/railway/classes/station.h">
+			<Option target="railway"/>
+		</Unit>
+		<Unit filename="D:/railway/classes/train.cpp">
+			<Option target="railway"/>
+		</Unit>
+		<Unit filename="D:/railway/classes/train.h">
+			<Option target="railway"/>
+		</Unit>
+		<Unit filename="D:/railway/classes/van.cpp">
+			<Option target="railway"/>
+		</Unit>
+		<Unit filename="D:/railway/classes/van.h">
+			<Option target="railway"/>
+		</Unit>
 		<Unit filename="D:/railway/main.cpp">
-			<Option target="railway"/>
-		</Unit>
-		<Unit filename="D:/railway/railway.cpp">
-			<Option target="railway"/>
-		</Unit>
-		<Unit filename="D:/railway/railway.h">
 			<Option target="railway"/>
 		</Unit>
 		<Unit filename="D:/railway/CMakeLists.txt">

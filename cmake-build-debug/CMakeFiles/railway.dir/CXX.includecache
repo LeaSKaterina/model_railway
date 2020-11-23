@@ -6,15 +6,25 @@
 
 #IncludeRegexTransform: 
 
-D:/railway/main.cpp
-railway.h
-D:/railway/railway.h
+D:/railway/classes/map.cpp
+map.h
+D:/railway/classes/map.h
 iostream
 -
+fstream
+-
 
-D:/railway/railway.cpp
+D:/railway/classes/map.h
+station.h
+D:/railway/classes/station.h
+string
+-
+vector
+-
+
+D:/railway/classes/railway.cpp
 railway.h
-D:/railway/railway.h
+D:/railway/classes/railway.h
 iostream
 -
 fstream
@@ -22,9 +32,43 @@ fstream
 ctime
 -
 
-D:/railway/railway.h
+D:/railway/classes/railway.h
 string
 -
 vector
+-
+map.h
+D:/railway/classes/map.h
+
+D:/railway/classes/resource.h
+
+D:/railway/classes/station.h
+train.h
+D:/railway/classes/train.h
+string
+-
+vector
+-
+iostream
+-
+
+D:/railway/classes/train.h
+van.h
+D:/railway/classes/van.h
+station.h
+D:/railway/classes/station.h
+string
+-
+vector
+-
+
+D:/railway/classes/van.h
+resource.h
+D:/railway/classes/resource.h
+
+D:/railway/main.cpp
+classes/railway.h
+D:/railway/classes/railway.h
+iostream
 -
 
