@@ -45,7 +45,7 @@ int Resource::operator-(Resource &right) {
 }
 
 int Resource::operator-(int right) {
-    return right - this->getAmount();
+    return this->getAmount() - right;
 }
 
 bool Resource::operator==(Resource &right) {
@@ -78,14 +78,14 @@ bool Resource::operator>(int right) {
     return this->getAmount() > right;
 }
 
-inline int rw::operator-(int left, rw::Resource &right) {
+ int rw::operator-(int left, rw::Resource &right) {
     return left - right.getAmount();
 }
 
-inline bool rw::operator<(int left, rw::Resource &right) {
+ bool rw::operator<(int left, rw::Resource &right) {
     return left < right.getAmount();
 }
 
-inline bool rw::operator>(int left, rw::Resource &right) {
+ bool rw::operator>(int left, rw::Resource &right) {
     return left > right.getAmount();
 }

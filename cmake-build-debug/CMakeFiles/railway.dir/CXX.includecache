@@ -40,7 +40,15 @@ vector
 map.h
 D:/railway/classes/map.h
 
+D:/railway/classes/resource.cpp
+resource.h
 D:/railway/classes/resource.h
+
+D:/railway/classes/resource.h
+
+D:/railway/classes/station.cpp
+station.h
+D:/railway/classes/station.h
 
 D:/railway/classes/station.h
 train.h
@@ -52,6 +60,12 @@ vector
 iostream
 -
 
+D:/railway/classes/train.cpp
+train.h
+D:/railway/classes/train.h
+van.h
+D:/railway/classes/van.h
+
 D:/railway/classes/train.h
 van.h
 D:/railway/classes/van.h
@@ -60,6 +74,12 @@ D:/railway/classes/station.h
 string
 -
 vector
+-
+
+D:/railway/classes/van.cpp
+van.h
+D:/railway/classes/van.h
+iostream
 -
 
 D:/railway/classes/van.h

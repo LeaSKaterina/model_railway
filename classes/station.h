@@ -11,6 +11,7 @@
 #include <iostream>
 using namespace rw;
 using namespace train;
+using namespace std;
 
 namespace rw {
     class Station {
