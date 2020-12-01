@@ -5,6 +5,13 @@
 #ifndef RAILWAY_RESOURCE_H
 #define RAILWAY_RESOURCE_H
 
+#include "exception.h"
+
+class RecourseException : public Exception{
+public:
+    explicit RecourseException(string error) : Exception(move(error)){};
+};
+
 enum KindOfStationOrVanOrResources {
     UNKNOWN_TYPE,
     PASSENGER,
@@ -28,6 +35,10 @@ namespace rw {
         int getAmount();
 
         void setAmount(int amount);
+
+        void restock(int additionalAmount);
+
+        void reduce(int quantity);
 
         Resource &operator+=(int right);
 

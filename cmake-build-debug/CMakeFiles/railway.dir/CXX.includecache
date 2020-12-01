@@ -6,6 +6,10 @@
 
 #IncludeRegexTransform: 
 
+D:/railway/classes/exception.h
+string
+-
+
 D:/railway/classes/map.cpp
 map.h
 D:/railway/classes/map.h
@@ -40,11 +44,9 @@ vector
 map.h
 D:/railway/classes/map.h
 
-D:/railway/classes/resource.cpp
-resource.h
 D:/railway/classes/resource.h
-
-D:/railway/classes/resource.h
+exception.h
+D:/railway/classes/exception.h
 
 D:/railway/classes/station.cpp
 station.h
@@ -74,12 +76,6 @@ D:/railway/classes/station.h
 string
 -
 vector
--
-
-D:/railway/classes/van.cpp
-van.h
-D:/railway/classes/van.h
-iostream
 -
 
 D:/railway/classes/van.h

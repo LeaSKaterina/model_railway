@@ -29,7 +29,17 @@ vector<Station *> *Route::getListOfStops() {
 }
 
 Station *Route::getThePointOfDeparture() {
+    if (listOfStops.empty()){
+        throw TrainException("List of stops is empty."); //-------------------------------------------------try catch (?)
+    }
     return listOfStops[0];
+}
+
+Station *Route::getThePointOfArrival() {
+    if (listOfStops.empty()){
+        throw TrainException("List of stops is empty."); //-------------------------------------------------try catch (?)
+    }
+    return listOfStops[listOfStops.size()-1];
 }
 
 void Train::moveAlongTheRoute() {
@@ -43,10 +53,13 @@ void Train::isArrived() {
 }
 
 void Train::departedFrom() {
-    cout << "The \"" << name << "\" train departed from \"" << currentDepartureStation << "\" station."
-         << endl;//-----------------------------------------------COUT?
-    Train::status = ON_THE_WAY;
-    //если в расписании закончились станции, поезд благополучно доехал до последней, то статус меняется на "маршрут пройден" ------------------------ПРОВЕРКА НА ВОТ ЭТО ВОТ
+    if (currentDepartureStation == route.getThePointOfArrival()){
+        Train::passTheRoute();
+    } else {
+        cout << "The \"" << name << "\" train departed from \"" << currentDepartureStation << "\" station."
+             << endl;//-----------------------------------------------COUT?
+        Train::status = ON_THE_WAY;
+    }
 }
 
 void Train::simplyExist() {
@@ -63,6 +76,8 @@ Station *Train::getDepartureStation() {
 }
 
 void Train::removeFromRoute() {
+    cout<<"Train "<<Train::name<<" is removed from the route. "<<endl;
+    //Train::currentDepartureStation->unloading(this); //------------------------------------------------РАЗГРУЗИТЬ ВСЕ
     status = REMOVED_FROM_THE_ROUTE;
 }
 
@@ -75,7 +90,9 @@ int Train::getSpeed() {
 }
 
 void Train::passTheRoute() {
-    status = PASSED_THE_ROUTE;
+    cout<<"Train "<<Train::name<<" has passed the route. "<<endl;
+    //Train::currentDepartureStation->unloading(this); //------------------------------------------------РАЗГРУЗИТЬ ВСЕ
+    Train::status = PASSED_THE_ROUTE;
 }
 
 void Locomotive::calculateTractionForce(vector<Van *> &vans) {
@@ -95,7 +112,6 @@ void Locomotive::calculateInitialSpeed() {
     if (age != 0) {
         initialSpeed = 100 / age;
     } else {
-        //trow
         initialSpeed = 10;
     }
 }
@@ -125,43 +141,50 @@ void Locomotive::setAge(int newAge) {
     Locomotive::calculateInitialSpeed();
 }
 
-int Train::loadingOfPassengerVan(int number, int numberOfPersons) {
-    for (auto &van : Train::listOfVans) {
-        if (van->getTypeOfVan() == PASSENGER && van->getNumber() == number) {
-            return van->loading(numberOfPersons);
+int Train::loading(Resource resource){
+    while (resource.getAmount()!=0 && !Train::isFullyLoaded() ) {
+        for (auto &van : Train::listOfVans) {
+            try {
+                if (resource.getType() == van->getTypeOfVan()) {
+                    if ((resource.getAmount() / 2) % 2 == 1) {
+                        van->loading((resource.getAmount() / 2) + 1);
+                    } else {
+                        van->loading(resource.getAmount() / 2);
+                    }
+                    resource.setAmount(resource.getAmount() / 2);
+                }
+            }
+            catch(VanException& exception){
+                cout<<"The van №"<<van->getNumber()<<": ";
+                cout << exception.getError() << exception.getAmountOfExceptionalResource() << " aren't loaded." << endl;
+                resource-=van->getMaximumLoad();
+            }
         }
     }
-    //throw 123; //нет такого вагона
-    return numberOfPersons;
+    return resource.getAmount(); //-------------------------------------throw TrainException("There're not enough free space. The following amount of resource isn't loaded. ", resource.getAmount);
 }
 
-int Train::loadingOfFreightVan(int number, int numberOfGoods) {
-    for (auto &van : Train::listOfVans) {
-        if (van->getTypeOfVan() == FREIGHT && van->getNumber() == number) {
-            return van->loading(numberOfGoods);
+void Train::unloading(Resource resource) {
+    while (resource.getAmount()!=0 && !Train::isFullyUnloaded() ) {
+        for (auto &van : Train::listOfVans) {
+            try {
+                if (resource.getType() == van->getTypeOfVan()) {
+                    if ((resource.getAmount() / 2) % 2 == 1) {
+                        van->unloading((resource.getAmount() / 2) + 1);
+                    } else {
+                        van->unloading(resource.getAmount() / 2);
+                    }
+                    resource.setAmount(resource.getAmount() / 2);
+                }
+            }
+            catch(VanException& exception){
+                cout<<"The van №"<<van->getNumber()<<": ";
+                cout << exception.getError() << exception.getAmountOfExceptionalResource() << " aren't unloaded." << endl;
+                resource -= exception.getAmountOfExceptionalResource();
+            }
         }
     }
-    //throw 123; //нет такого вагона
-    return numberOfGoods;
-}
-
-
-void Train::unloadingOfPassengerVan(int number, int numberOfPersons) {
-    for (auto &van : Train::listOfVans) {
-        if (van->getTypeOfVan() == PASSENGER && van->getNumber() == number) {
-            van->unloading(numberOfPersons);
-        }
-    }
-    //throw 123; //нет такого вагона
-}
-
-void Train::unloadingOfFreightVan(int number, int numberOfGoods) {
-    for (auto &van : Train::listOfVans) {
-        if (van->getTypeOfVan() == FREIGHT && van->getNumber() == number) {
-            van->unloading(numberOfGoods);
-        }
-    }
-    //throw 123; //нет такого вагона
+    //throw TrainException("There're not enough resources. The following amount of resource isn't unloaded. ", resource.getAmount);
 }
 
 void Train::inputListOfVansFromString(string &inputString) {
@@ -180,11 +203,11 @@ void Train::inputListOfVansFromString(string &inputString) {
                 return;
             }
         }
-        i++; //пробел, если это не конец
+        i++;
     }
 }
 
-Train::Train(string &name, int &locomotive, string &listOfVans, string &route) {
+Train::Train(string &name, int &locomotiveAge, string &listOfVans, string &route) {
     Train::name = name;
     Train::inputListOfVansFromString(listOfVans);
     Train::route.inputFromString(route);
@@ -215,3 +238,38 @@ int Train::getTimeBeforeArrivalOrDeparture() {
 int Train::getStatus() {
     return status;
 }
+
+void Train::setStatus(int action) {
+    if (action < 0 || action > 4){
+        throw TrainException("Incorrect input: invalid train status value. "); //-------------------------------------------------try catch (?)
+    }
+    status = action;
+}
+
+string &Train::getName() {
+    return name;
+}
+
+Station *Train::getCurrentStation() {
+    return currentDepartureStation;
+}
+
+bool Train::isFullyLoaded() {
+    for (auto van : listOfVans){
+        if (!van->isLoaded()){
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Train::isFullyUnloaded() {
+    for (auto van : listOfVans){
+        if (!van->isEmpty()){
+            return false;
+        }
+    }
+    return true;
+}
+
+

@@ -53,35 +53,7 @@ void Railway::liveAUnitOfTime() {
     for (auto &train : listOfTrains) {
         if (train.getStatus() != REMOVED_FROM_THE_ROUTE && train.getStatus() != PASSED_THE_ROUTE) {
             if (train.getTimeBeforeArrivalOrDeparture() == 0) {
-                switch (train.getStatus()) {
-                    case ON_THE_WAY: {
-                        train.isArrived(); //смена станции отправления
-                        /*определяется действие, которое нужно совершить на станции
-                         *действие определяется рандомно || действие выбирает пользователь
-                            транзит - calculateTravelTime(&train); train.departedFrom();
-                            стоянка - "время до отправления" = 10 || "время до отправления" задает пользователь, статус меняем на "стоит"
-                            разгрузка/загрузка - "время до отправления" задает пользователь || "время до отправления" = t,
-                                                    t = const, разная для различный вагонов (сделать пассажирские, грузовые и миксованные поезда?)
-                                                    - пассажирские вагоны загружаются быстро за фиксированный срок
-                                                    - товарные вагоны загружаются/разгружаются дольше
-                                                    - загрузка и тех, и тех - сумма по времени
-                                                статус меняем на "загружается"/"разгружается"
-                         *если поезд прибыл на конечную станцию, то uploadAll(station, train); train.passThaRoute();
-                         */
-                        break;
-                    }
-                    case STANDING: {
-                        calculateTravelTime(&train);
-                        train.departedFrom();
-                        break;
-                    }
-                    case IS_BEING_LOADED | IS_BEING_UNLOADED: {
-                        train.calculateSpeed();
-                        calculateTravelTime(&train);
-                        train.departedFrom();
-                        break;
-                    }
-                }
+                goToTheNextAction(train);
             } else {
                 train.simplyExist();
             }
@@ -90,9 +62,13 @@ void Railway::liveAUnitOfTime() {
 }
 
 int
-Railway::getRandomAction() { //-----------------------------------ПОДУМАТЬ НАД ЭТИМ, МОЖЕТ КАК-ТО ПО-ДРУГОМУ РЕАЛИЗОВАТЬ
-    srand(time(nullptr));
+Railway::getRandomAction() {
+    //srand(time(nullptr)); //-----------------------------------------------------------------------------randomize()??
     return rand() % 4 + 1;
+}
+
+int Railway::getRandomNumberOfResource() {
+    return rand() % 1000 + 1;
 }
 
 void Railway::calculateTravelTime(Train *train) {
@@ -124,4 +100,54 @@ void Railway::inputANewTrainFromFile(ifstream &F) {
     string bufferRoute;
     getline(F, bufferRoute);
     Railway::listOfTrains.emplace_back(bufferName, bufferLocomotiveAge, bufferVans, bufferRoute);
+}
+
+void Railway::goToTheNextAction(Train &train) {
+    switch (train.getStatus()) {
+        case ON_THE_WAY: {
+            train.isArrived(); //смена станции отправления
+            train.setStatus(getRandomAction()); //смена статуса в автоматическом режиме
+            performAnActionAtTheStation(train);
+            break;
+        }
+        case STANDING: {
+            calculateTravelTime(&train);
+            train.departedFrom();
+            break;
+        }
+        case IS_BEING_LOADED | IS_BEING_UNLOADED: {
+            train.calculateSpeed();
+            calculateTravelTime(&train);
+            train.departedFrom();
+            break;
+        }
+        default:{
+            throw 123;
+        }
+    }
+}
+
+void Railway::performAnActionAtTheStation(Train &train) {
+    switch (train.getStatus()){
+        case STANDING:{
+            train.getCurrentStation()->temporaryStop(&train, 10); //автоматический режим (в пользовательнском stopTime вводит пользователь?)
+            break;
+        }
+        case ON_THE_WAY:{
+            train.getCurrentStation()->transit(&train);
+            calculateTravelTime(&train);
+            break;
+        }
+        case IS_BEING_LOADED:{
+            //train.getCurrentStation()->loading(&train);
+            break;
+        }
+        case IS_BEING_UNLOADED:{
+            //train.getCurrentStation()->unloading(&train);
+            break;
+        }
+        default:{
+            //throw 123;
+        }
+    }
 }

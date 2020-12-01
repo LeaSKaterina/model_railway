@@ -35,10 +35,20 @@ namespace rw {
 
         int getId();
 
-        //virtual void loading(Train *train);
-        //virtual void unloading(Train *train);
-        //void temporaryStop(Train *train);
-        //void transit(Train *train);
+        int getAmountOfResources();
+
+        void setTheFirstResource(int type, int amount);
+
+        void addTheResource(int type, int amount);
+
+        void deleteTheResource(int type);
+
+        //уменьшить количество определенного ресурса
+/*
+        virtual void loading(Train *train);
+        virtual void unloading(Train *train);*/
+        virtual void temporaryStop(Train *train, int stopTime);
+        virtual void transit(Train *train);
     };
 
     class PassengerStation : public Station {
@@ -49,27 +59,30 @@ namespace rw {
          но предоставляется другой, и пользователь не указывает компилятору, как выполнить конвертацию )
          рекомендуется явно объявлять конструкторы explicit всегда, кроме случаев, когда неявное преобразование семантически оправдано.
         */
-        //void loading(Train *train) override;
-
-        //void unloading(Train *train) override;
+        /*void loading(Train *train) override;
+        void unloading(Train *train) override;*/
+        void temporaryStop(Train *train, int stopTime) override;
+        void transit(Train *train) override;
     };
 
     class FreightStation : public Station {
     public:
         explicit FreightStation(string name, int numberOfGoods);
 
-        //void loading(Train *train) override;
-
-        //void unloading(Train *train) override;
+        /*void loading(Train *train) override;
+        void unloading(Train *train) override;*/
+        void temporaryStop(Train *train, int stopTime) override;
+        void transit(Train *train) override;
     };
 
     class PassengerAndFreightStation : public Station {
     public:
         explicit PassengerAndFreightStation(string name, int numberOfPassengers, int numberOfGoods);
 
-        //void loading(Train *train) override;
-
-        //void unloading(Train *train) override;
+        /*void loading(Train *train) override;
+        void unloading(Train *train) override;*/
+        void temporaryStop(Train *train, int stopTime) override;
+        void transit(Train *train) override;
     };
 
 }

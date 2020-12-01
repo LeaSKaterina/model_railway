@@ -12,10 +12,15 @@
 using namespace std;
 
 enum Action {
-    LOADING,
-    UNLOADING,
+    TEMPORARY_STOP = 1,
     TRANSIT,
-    TEMPORARY_STOP
+    LOADING,
+    UNLOADING
+};
+
+enum Mode{
+    AUTOMATIC,
+    USER
 };
 
 namespace rw {
@@ -38,6 +43,12 @@ namespace rw {
 
         void inputANewTrainFromFile(ifstream& F);
 
+        int getRandomNumberOfResource();
+
+        void goToTheNextAction(Train &train);
+
+        void performAnActionAtTheStation(Train &train);
+
     public:
         explicit Railway(const char *path);
 
@@ -46,6 +57,9 @@ namespace rw {
         void inputModelFromFile(const char *path);
 
         void putTrainsOnTheMap();
+
+        //в старте или где-то (подумать, где) прописать srand(time(nullptr));
+        //void start();
 
         void liveAUnitOfTime(); //-------------------------------------------------------------------------------------------------------ДОДЕЛАТЬ
     };

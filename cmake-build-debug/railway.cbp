@@ -80,6 +80,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="D:/railway/classes/exception.h">
+			<Option target="railway"/>
+		</Unit>
 		<Unit filename="D:/railway/classes/map.cpp">
 			<Option target="railway"/>
 		</Unit>

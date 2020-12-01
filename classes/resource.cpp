@@ -38,9 +38,9 @@ Resource &Resource::operator-=(int right) {
 }
 
 int Resource::operator-(Resource &right) {
-    /*if (this->type != resource.type){
-        throw 123;
-    }*/
+    if (this->type != right.type){
+        throw RecourseException("Mismatch of types of resources."); //------------------------------------------------try catch(?)
+    }
     return this->getAmount() - right.getAmount();
 }
 
@@ -57,16 +57,16 @@ bool Resource::operator!=(Resource &right) {
 }
 
 bool Resource::operator>(Resource &right) {
-    /*if (this->type != resource.type){
-        throw 123;
-    }*/
+    if (this->type != right.type){
+        throw RecourseException("Mismatch of types of resources."); //------------------------------------------------try catch(?)
+    }
     return this->amount > right.amount;
 }
 
 bool Resource::operator<(Resource &right) {
-    /*if (this->type != resource.type){
-        throw 123;
-    }*/
+    if (this->type != right.type){
+        throw RecourseException("Mismatch of types of resources."); //------------------------------------------------try catch(?)
+    }
     return this->amount < right.amount;
 }
 
@@ -78,7 +78,15 @@ bool Resource::operator>(int right) {
     return this->getAmount() > right;
 }
 
- int rw::operator-(int left, rw::Resource &right) {
+void Resource::restock(int additionalAmount) {
+    Resource::amount+=additionalAmount;
+}
+
+void Resource::reduce(int quantity) {
+    amount-=quantity;
+}
+
+int rw::operator-(int left, rw::Resource &right) {
     return left - right.getAmount();
 }
 

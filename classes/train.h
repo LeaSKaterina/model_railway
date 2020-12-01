@@ -11,6 +11,11 @@
 #include <vector>
 using namespace std;
 
+class TrainException : public Exception{
+public:
+    TrainException(string error) : Exception(move(error)){};
+};
+
 enum StatusOfTheTrain {
     REMOVED_FROM_THE_ROUTE = 0,
     PASSED_THE_ROUTE = 0,
@@ -37,6 +42,8 @@ namespace rw {
             vector<Station *> *getListOfStops();
 
             Station *getThePointOfDeparture();
+
+            Station *getThePointOfArrival();
         };
 
         class Locomotive {
@@ -79,6 +86,10 @@ namespace rw {
 
             void updateTractionForceOfLocomotive();
 
+            bool isFullyLoaded();
+
+            bool isFullyUnloaded();
+
         public:
             Train(string &name, int &locomotiveAge, string &listOfVans, string &route);
 
@@ -92,18 +103,20 @@ namespace rw {
 
             Station *getDepartureStation();
 
+            Station *getCurrentStation();
+
             Station *getArrivalStation();
+
+            string &getName();
 
             void calculateSpeed();
 
+            void setStatus(int action);
+
             //--------------------------------------------------------------------------------------------------------------------------ДОДЕЛАТЬ-----------
-            int loadingOfPassengerVan(int number, int numberOfPersons);
+            int loading(Resource resource);
 
-            int loadingOfFreightVan(int number, int numberOfGoods);
-
-            void unloadingOfPassengerVan(int number, int numberOfPersons);
-
-            void unloadingOfFreightVan(int number, int numberOfGoods);
+            void unloading(Resource resource);
             //----------------------------------------------------------------------------------------------------------------------------------------------
 
             void isArrived();

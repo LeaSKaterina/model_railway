@@ -7,6 +7,14 @@
 
 #include "resource.h"
 
+class VanException : public Exception{
+private:
+    int amountOfExceptionalResource;
+public:
+    VanException(string error, int amountOfResource);
+    int getAmountOfExceptionalResource();
+};
+
 enum Load {
     IS_LOADED = true,
     IS_NOT_LOADED = false
@@ -29,13 +37,17 @@ namespace rw {
 
             explicit Van(int numberOfResource);
 
-            virtual int loading(int numberOfResource);
+            virtual void loading(int numberOfResource);
 
             virtual void unloading(int numberOfResource);
 
-            bool vanIsLoaded();
+            bool isLoaded();
+
+            bool isEmpty();
 
             short int getTypeOfVan();
+
+            int getMaximumLoad();
 
             int getNumber();
 
@@ -48,7 +60,7 @@ namespace rw {
 
             explicit PassengerVan(int numberOfPersons);
 
-            int loading(int numberOfPersons) override;
+            void loading(int numberOfPersons) override;
 
             void unloading(int numberOfPersons) override;
         };
@@ -59,7 +71,7 @@ namespace rw {
 
             explicit FreightVan(int numberOfGoods);
 
-            int loading(int numberOfGoods) override;
+            void loading(int numberOfGoods) override;
 
             void unloading(int numberOfGoods) override;
         };
