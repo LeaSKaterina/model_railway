@@ -10,6 +10,11 @@
 #include <string>
 #include <vector>
 
+class MapException : public Exception{
+public:
+    explicit MapException(string error) : Exception(move(error)){};
+};
+
 bool checkThatTheFileIsOpen(ifstream &F);
 void goToTheNextLine(ifstream &F);
 
@@ -20,7 +25,7 @@ namespace rw{
         vector<Station *> listOfStations;
         vector<vector<int>> listOfPaths;
 
-        void moveTheFileToPaths(ifstream &F, int numberOfStations);
+        static void moveTheFileToPaths(ifstream &F, int numberOfStations);
 
         void inputAdjacencyMatrix(ifstream &F, int numberOfStations);
 

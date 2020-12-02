@@ -7,9 +7,9 @@
 
 #include "exception.h"
 
-class RecourseException : public Exception{
+class ResourceException : public Exception{
 public:
-    explicit RecourseException(string error) : Exception(move(error)){};
+    explicit ResourceException(string error) : Exception(move(error)){};
 };
 
 enum KindOfStationOrVanOrResources {

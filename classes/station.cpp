@@ -21,10 +21,10 @@ string &Station::getName() {
     return Station::name;
 }
 
-Station::Station(string name, int numberOfResource) {
+Station::Station(string name, Resource resource) {
     Station::name = move(name);
     Station::type = UNKNOWN_TYPE;
-    Station::resources.emplace_back(0, numberOfResource);
+    Station::resources.emplace_back(resource);
     Station::id = Station::counter;
     Station::counter++;
 }
@@ -47,35 +47,72 @@ void Station::temporaryStop(Train *train, int stopTime) {
     train->setTravelTime(stopTime);
 }
 
-int Station::getAmountOfResources() {
-    int amountOfResources = 0;
+int Station::getAmountOfResource(int typeOfResource) {
+    checkTypeOfResource(typeOfResource);
     for (auto resource : resources){
-        amountOfResources+=resource.getAmount();
+        if (resource.getType() == typeOfResource){
+            return resource.getAmount();
+        }
     }
-    return amountOfResources;
+    throw StationException("There isn't such resource. Check the type of resource. ");
 }
 
-void Station::setTheFirstResource(int type, int amount) {
-    resources.emplace_back(Resource(type, amount));
+void Station::setTheFirstResource(Resource theFirstRecourse) {
+    resources.emplace_back(theFirstRecourse);
 }
 
-void Station::addTheResource(int type, int amount) {
+void Station::addTheResource(Resource newRecourse) {
     for (auto resource : resources){
-        if (resource.getType() == type){
-            resource.restock(amount);
+        if (resource.getType() == newRecourse.getType()){
+            resource.restock(newRecourse.getAmount());
             return;
         }
     }
-    resources.emplace_back(Resource(type, amount));
+    resources.emplace_back(newRecourse);
 }
 
-void Station::deleteTheResource(int type) {
+void Station::deleteTheResource(int typeOfDeletedResource) {
+    checkTypeOfResource(typeOfDeletedResource);
     for (int i = 0; i< resources.size();i++){
-        if (resources[i].getType() == type){
+        if (resources[i].getType() == typeOfDeletedResource){
             resources.erase(resources.begin() + i);
+            return;
         }
     }
-    throw 123; //there aren't such resources
+    throw StationException("There isn't such resource. Check the type of deleted resource .");
+}
+
+/*void Station::reduceTheNumberOfResource(int typeOfResource, int numberOfResource) {
+    checkTypeOfResource(typeOfResource);
+    try {
+        for (auto resource : resources) {
+            if (resource.getType() == typeOfResource) {
+                resource.reduce(numberOfResource);
+                return;
+            }
+        }
+    }
+    catch (ResourceException exception){
+
+    }
+    throw StationException("There isn't such resource. Check the type of resource .");
+}*/
+
+void Station::checkTypeOfResource(int type) {
+    if (type < 0 || type > 3){
+        throw ResourceException("Incorrect input: invalid type value. "); //------------------------------------------------try catch(?)
+    }
+}
+
+void Station::restockTheNumberOfResource(int typeOfResource, int numberOfResource) {
+    checkTypeOfResource(typeOfResource);
+    for (auto resource : resources){
+        if (resource.getType() == typeOfResource){
+            resource.restock(numberOfResource);
+            return;
+        }
+    }
+    throw StationException("There isn't such resource. Check the type of resource .");
 }
 
 PassengerStation::PassengerStation(string name, int numberOfPassengers) : Station(move(name)) {

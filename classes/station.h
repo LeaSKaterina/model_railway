@@ -13,6 +13,11 @@ using namespace rw;
 using namespace train;
 using namespace std;
 
+class StationException : public Exception{
+public:
+    StationException(string error) : Exception(move(error)){};
+};
+
 namespace rw {
     class Station {
     private:
@@ -22,10 +27,11 @@ namespace rw {
     protected:
         vector <Resource> resources{};
         short int type;
+        static void checkTypeOfResource(int type);
     public:
         explicit Station(string name);
 
-        explicit Station(string name, int resource);
+        explicit Station(string name, Resource resource);
 
         void setName(string newName);
 
@@ -35,15 +41,17 @@ namespace rw {
 
         int getId();
 
-        int getAmountOfResources();
+        int getAmountOfResource(int typeOfResource);
 
-        void setTheFirstResource(int type, int amount);
+        void setTheFirstResource(Resource theFirstRecourse);
 
-        void addTheResource(int type, int amount);
+        void addTheResource(Resource newRecourse);
 
-        void deleteTheResource(int type);
+        void deleteTheResource(int typeOfDeletedResource);
 
-        //уменьшить количество определенного ресурса
+        //void reduceTheNumberOfResource(int typeOfResource, int numberOfResource);
+
+        void restockTheNumberOfResource(int typeOfResource, int numberOfResource);
 /*
         virtual void loading(Train *train);
         virtual void unloading(Train *train);*/

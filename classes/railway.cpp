@@ -14,8 +14,13 @@ using namespace rw;
 int Railway::clock = 0;
 
 void Railway::inputModelFromFile(const char *path) {
-    Railway::map.inputMapFromFile(path);
-    Railway::inputListOfTrainsFromFile(path);
+    try {
+        Railway::map.inputMapFromFile(path);
+        Railway::inputListOfTrainsFromFile(path);
+    }
+    catch (Exception &exception){
+        cout<<exception.getError()<<endl;
+    }
 }
 
 void Railway::inputListOfTrainsFromFile(const char *path) {

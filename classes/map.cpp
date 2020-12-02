@@ -9,9 +9,7 @@ using namespace rw;
 
 bool checkThatTheFileIsOpen(ifstream &F){
     if (!F.is_open()) {
-        cout << "Error" << endl;
-        //throw 123;
-        return false;
+        throw Exception("File not found. ");
     }
     return true;
 }
@@ -55,8 +53,7 @@ Station *Map::getStation(string &nameOfStation) {
             return station;
         }
     }
-    //throw 13; нет такой станции
-    return nullptr;
+    throw MapException("There's not such station. Check the name of station. ");
 }
 
 int Map::getPath(Station *station1, Station *station2) {
@@ -107,7 +104,7 @@ void Map::inputANewStationFromFile(ifstream &F) {
             break;
         }
         default: {
-            cout << "Error." << endl;
+            throw MapException("Incorrect input: invalid type of new station. Check the data from file. ");
         }
     }
 }
