@@ -39,7 +39,7 @@ namespace rw {
 
         void calculateTravelTime(Train *train);
 
-        void moveTheFileToTrains(ifstream &F);
+        static void moveTheFileToTrains(ifstream &F);
 
         void inputANewTrainFromFile(ifstream& F);
 
@@ -49,6 +49,11 @@ namespace rw {
 
         void performAnActionAtTheStation(Train &train);
 
+        static void printCurrentTime();
+
+        bool allTrainsFinishedMoving();
+
+        void createRouteForTheTrain(Train *train, string inputString);
     public:
         explicit Railway(const char *path);
 
@@ -56,10 +61,10 @@ namespace rw {
 
         void inputModelFromFile(const char *path);
 
-        void putTrainsOnTheMap();
+        //void putTrainsOnTheMap();
 
         //в старте или где-то (подумать, где) прописать srand(time(nullptr));
-        //void start();
+        void start();
 
         void liveAUnitOfTime(); //-------------------------------------------------------------------------------------------------------ДОДЕЛАТЬ
     };

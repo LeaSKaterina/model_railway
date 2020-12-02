@@ -36,7 +36,7 @@ void Railway::inputListOfTrainsFromFile(const char *path) {
     }
 }
 
-void Railway::putTrainsOnTheMap() {//---------------------------------ПРОВЕРИТЬ, МЕНЯЕТСЯ ЛИ МАРШРУТ (РАБОТА С ССЫЛКАМИ)
+/*void Railway::putTrainsOnTheMap() {//---------------------------------ПРОВЕРИТЬ, МЕНЯЕТСЯ ЛИ МАРШРУТ (РАБОТА С ССЫЛКАМИ)
     vector<Station *> *route{};
     Station *buffer{};
     for (auto &train : listOfTrains) {
@@ -47,11 +47,11 @@ void Railway::putTrainsOnTheMap() {//---------------------------------ПРОВЕ
             Station::deleteTheStation(buffer);
         }
     }
-}
+}*/
 
 Railway::Railway(const char *path) {
     inputModelFromFile(path);
-    putTrainsOnTheMap();
+    //putTrainsOnTheMap();
 }
 
 void Railway::liveAUnitOfTime() {
@@ -78,7 +78,7 @@ int Railway::getRandomNumberOfResource() {
 
 void Railway::calculateTravelTime(Train *train) {
     if (!map.getPath(train->getDepartureStation(), train->getArrivalStation())) {
-        //throw 123; //нет пути между этими станциями.
+        throw MapException("There's no way between these stations. Check the map. Train is removed form the route. ");
         train->removeFromRoute(); //внутри catch
     }
     train->setTravelTime(
@@ -102,9 +102,11 @@ void Railway::inputANewTrainFromFile(ifstream &F) {
     goToTheNextLine(F);
     string bufferVans;
     getline(F, bufferVans);
+    Railway::listOfTrains.emplace_back(bufferName, bufferLocomotiveAge, bufferVans);
     string bufferRoute;
     getline(F, bufferRoute);
-    Railway::listOfTrains.emplace_back(bufferName, bufferLocomotiveAge, bufferVans, bufferRoute);
+    createRouteForTheTrain(&listOfTrains[listOfTrains.size() - 1], bufferRoute);
+    listOfTrains[listOfTrains.size() - 1].putAtTheBeginningOfTheRoute();
 }
 
 void Railway::goToTheNextAction(Train &train) {
@@ -127,7 +129,7 @@ void Railway::goToTheNextAction(Train &train) {
             break;
         }
         default:{
-            throw 123;
+            throw TrainException("Incorrect input: invalid status of train. ");
         }
     }
 }
@@ -152,7 +154,41 @@ void Railway::performAnActionAtTheStation(Train &train) {
             break;
         }
         default:{
-            //throw 123;
+            throw TrainException("Incorrect input: invalid type of action on the station. ");
         }
+    }
+}
+
+void Railway::start() {
+    while (!allTrainsFinishedMoving()){
+        printCurrentTime();
+        liveAUnitOfTime();
+        clock++;
+    }
+}
+
+void Railway::printCurrentTime() {
+    cout <<"Time: "<<clock<<"."<<endl;
+}
+
+bool Railway::allTrainsFinishedMoving() {
+    for (auto train : listOfTrains){
+        if (train.getStatus()){
+            return false;
+        }
+    }
+    return true;
+}
+
+void Railway::createRouteForTheTrain(Train *train, string inputString) {
+    string bufferName;
+    for (int i = 0; i < inputString.size(); i++) {
+        while (inputString[i] != ' ' && i < inputString.size()) {
+            bufferName.push_back(inputString[i]);
+            i++;
+        }
+
+        train->addStationToTheRoute(map.getStation(bufferName));
+        bufferName.clear();
     }
 }

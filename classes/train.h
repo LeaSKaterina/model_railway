@@ -6,14 +6,18 @@
 #define RAILWAY_TRAIN_H
 
 #include "van.h"
-#include "station.h"
+//#include "station.h"
 #include <string>
 #include <vector>
 using namespace std;
 
 class TrainException : public Exception{
+    int amountOfExceptionalResource{};
 public:
-    TrainException(string error) : Exception(move(error)){};
+    explicit TrainException(string error) : Exception(move(error)){};
+    TrainException(string error, int amountOfExceptionalResource) : Exception(move(error)){
+        TrainException::amountOfExceptionalResource = amountOfExceptionalResource ;
+    };
 };
 
 enum StatusOfTheTrain {
@@ -36,8 +40,6 @@ namespace rw {
             vector<Station *> listOfStops;
         public:
             void addStation(Station *station);
-
-            void inputFromString(string &inputString);
 
             vector<Station *> *getListOfStops();
 
@@ -72,8 +74,8 @@ namespace rw {
         class Train {
         private:
             string name;
-            Route route;
-            Station *currentDepartureStation;
+            Route route{};
+            Station *currentDepartureStation{};
             Locomotive locomotive;
             vector<Van *> listOfVans;
             int timeBeforeArrivalOrDeparture = 0;
@@ -91,7 +93,7 @@ namespace rw {
             bool isFullyUnloaded();
 
         public:
-            Train(string &name, int &locomotiveAge, string &listOfVans, string &route);
+            Train(string &name, int &locomotiveAge, string &listOfVans);
 
             vector<Station *> *getRoute();
 
@@ -105,16 +107,20 @@ namespace rw {
 
             Station *getCurrentStation();
 
-            Station *getArrivalStation();
+            Station *getArrivalStation(); //----------------------------------------------------------------------------------------------ПЕРЕДЕЛАТЬ
 
             string &getName();
+
+            void putAtTheBeginningOfTheRoute();
 
             void calculateSpeed();
 
             void setStatus(int action);
 
+            void addStationToTheRoute(Station *newStation);
+
             //--------------------------------------------------------------------------------------------------------------------------ДОДЕЛАТЬ-----------
-            int loading(Resource resource);
+            void loading(Resource resource);
 
             void unloading(Resource resource);
             //----------------------------------------------------------------------------------------------------------------------------------------------

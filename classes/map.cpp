@@ -23,9 +23,8 @@ void Map::inputStationsFromFile(const char *path) {
     ifstream F;
     F.open(path);
     checkThatTheFileIsOpen(F);
-    short int amountOfStations;
-    F >> amountOfStations;
-    for (int i = 0; i < amountOfStations; i++) {
+    int numberOfStations = inputNumberOfStationsFromFile(F);
+    for (int i = 0; i < numberOfStations; i++) {
         inputANewStationFromFile(F);
     }
     F.close();
@@ -35,8 +34,7 @@ void Map::inputPathsFromFile(const char *path) {
     ifstream F;
     F.open(path);
     checkThatTheFileIsOpen(F);
-    short int numberOfStations;
-    F >> numberOfStations;
+    int numberOfStations = inputNumberOfStationsFromFile(F);
     moveTheFileToPaths(F, numberOfStations);
     inputAdjacencyMatrix(F, numberOfStations);
     F.close();
@@ -77,6 +75,9 @@ void Map::inputAdjacencyMatrix(ifstream &F, int numberOfStations) {
         vector<int> bufferVector;
         for (int j = 0; j < numberOfStations; j++) {
             F >> buffer;
+            if (cin.fail()){
+                throw MapException("Incorrect input: invalid value in adjacency matrix. Check the data from file. ");
+            }
             bufferVector.push_back(buffer);
         }
         Map::listOfPaths.push_back(bufferVector);
@@ -140,4 +141,13 @@ void Map::inputANewPassengerAndFreightStation(ifstream &F) {
     F >> bufferNumberOfGoods;
     Map::listOfStations.push_back(
             new PassengerAndFreightStation(bufferName, bufferNumberOfPassengers, bufferNumberOfGoods));
+}
+
+int Map::inputNumberOfStationsFromFile(ifstream &F) {
+    int numberOfStations;
+    F >> numberOfStations;
+    if (cin.fail()){
+        throw Exception("Incorrect input: invalid number of stations. Check the data from file. ");
+    }
+    return numberOfStations;
 }

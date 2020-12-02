@@ -15,7 +15,7 @@ using namespace std;
 
 class StationException : public Exception{
 public:
-    StationException(string error) : Exception(move(error)){};
+    explicit StationException(string error) : Exception(move(error)){};
 };
 
 namespace rw {

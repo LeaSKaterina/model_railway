@@ -2,26 +2,17 @@
 // Created by HP on 23.11.2020.
 //
 
-#include "train.h"
+//#include "train.h"
+#include "station.h"
 #include "van.h"
+#include "train.h"
+
 
 using namespace rw;
 using namespace train;
 
 void Route::addStation(Station *station) {
     listOfStops.push_back(station);
-}
-
-void Route::inputFromString(string &inputString) {
-    string bufferName;
-    for (int i = 0; i < inputString.size(); i++) {
-        while (inputString[i] != ' ' && i < inputString.size()) {
-            bufferName.push_back(inputString[i]);
-            i++;
-        }
-        addStation(new Station(bufferName));
-        bufferName.clear();
-    }
 }
 
 vector<Station *> *Route::getListOfStops() {
@@ -68,7 +59,7 @@ void Train::simplyExist() {
 
 Station *Train::getArrivalStation() {
     Station *nextDepartureStation = currentDepartureStation;
-    return nextDepartureStation++; //-----------------------------------------ПРОВЕРИТЬ, НЕ СМЕЩАЕТСЯ ЛИ ТЕКУЩАЯ СТАНЦИЯ
+    return nextDepartureStation++; //----------------------------------------------------------------------------------------------ПЕРЕДЕЛАТЬ
 }
 
 Station *Train::getDepartureStation() {
@@ -141,7 +132,7 @@ void Locomotive::setAge(int newAge) {
     Locomotive::calculateInitialSpeed();
 }
 
-int Train::loading(Resource resource){
+void Train::loading(Resource resource){
     while (resource.getAmount()!=0 && !Train::isFullyLoaded() ) {
         for (auto &van : Train::listOfVans) {
             try {
@@ -161,7 +152,9 @@ int Train::loading(Resource resource){
             }
         }
     }
-    return resource.getAmount(); //-------------------------------------throw TrainException("There're not enough free space. The following amount of resource isn't loaded. ", resource.getAmount);
+    if (!resource.getAmount()){
+        throw TrainException("There're not enough free space. The following amount of resource isn't loaded. ", resource.getAmount());
+    }
 }
 
 void Train::unloading(Resource resource) {
@@ -184,7 +177,10 @@ void Train::unloading(Resource resource) {
             }
         }
     }
-    //throw TrainException("There're not enough resources. The following amount of resource isn't unloaded. ", resource.getAmount);
+    if (!resource.getAmount()) {
+        throw TrainException("There're not enough resources. The following amount of resource isn't unloaded. ",
+                             resource.getAmount());
+    }
 }
 
 void Train::inputListOfVansFromString(string &inputString) {
@@ -199,23 +195,21 @@ void Train::inputListOfVansFromString(string &inputString) {
                 break;
             }
             default: {
-                cout << "Error." << endl;
-                return;
+                throw TrainException("Incorrect input: invalid type of van. Check the data from file. ");
             }
         }
         i++;
     }
 }
 
-Train::Train(string &name, int &locomotiveAge, string &listOfVans, string &route) {
+Train::Train(string &name, int &locomotiveAge, string &listOfVans) {
     Train::name = name;
     Train::inputListOfVansFromString(listOfVans);
-    Train::route.inputFromString(route);
+    //Train::route.inputFromString(route);
     Train::locomotive = Locomotive(locomotive);
     Train::updateTractionForceOfLocomotive();
     Train::calculateSpeed();
     Train::status = STANDING;
-    currentDepartureStation = Train::route.getThePointOfDeparture();
 }
 
 void Train::calculateSpeed() {
@@ -270,6 +264,14 @@ bool Train::isFullyUnloaded() {
         }
     }
     return true;
+}
+
+void Train::addStationToTheRoute(Station *newStation) {
+    route.addStation(newStation);
+}
+
+void Train::putAtTheBeginningOfTheRoute() {
+    currentDepartureStation = route.getThePointOfDeparture();
 }
 
 

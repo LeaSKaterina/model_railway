@@ -41,6 +41,8 @@ namespace rw{
 
         void inputANewPassengerAndFreightStation(ifstream &F);
 
+        static int inputNumberOfStationsFromFile(ifstream &F);
+
     public:
 
         void inputStationsFromFile(const char *path);
