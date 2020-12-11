@@ -52,6 +52,8 @@ namespace rw {
             int getNumber();
 
             double getLoadCoefficient();
+
+            int getCurrentLoad();
         };
 
         class PassengerVan : public Van {

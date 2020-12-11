@@ -54,6 +54,8 @@ namespace rw {
         bool allTrainsFinishedMoving();
 
         void createRouteForTheTrain(Train *train, string inputString);
+
+        void trainsDepart();
     public:
         explicit Railway(const char *path);
 
@@ -66,7 +68,9 @@ namespace rw {
         //в старте или где-то (подумать, где) прописать srand(time(nullptr));
         void start();
 
-        void liveAUnitOfTime(); //-------------------------------------------------------------------------------------------------------ДОДЕЛАТЬ
+        void liveAUnitOfTime();
+
+        void printParametersOfTrains();
     };
 
 }

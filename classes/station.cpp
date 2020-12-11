@@ -10,6 +10,7 @@ Station::Station(string name) {
     Station::name = move(name);
     Station::type = UNKNOWN_TYPE;
     Station::id = Station::counter;
+    Station::setTheFirstResource(Resource(UNKNOWN_TYPE,100));
     Station::counter++;
 }
 
@@ -39,7 +40,8 @@ int Station::getId() {
 }
 
 void Station::transit(Train *train) {
-    cout<<"Train "<<train->getName()<<" - passed the station "<<Station::getName()<<"."<<endl;
+    cout<<"Train "<<train->getName()<<" - passed the station (transit)"<<Station::getName()<<"."<<endl;
+    train->departedFrom();
 }
 
 void Station::temporaryStop(Train *train, int stopTime) {
@@ -115,6 +117,14 @@ void Station::restockTheNumberOfResource(int typeOfResource, int numberOfResourc
     throw StationException("There isn't such resource. Check the type of resource .");
 }
 
+void Station::loading(Train *train) {
+    cout<<"It have to be loading of the train \""<< train->getName()<<"\", but it's impossible with the unknown-type station."<<endl;
+}
+
+void Station::unloading(Train *train) {
+    cout<<"It have to be loading of the train \""<< train->getName()<<"\", but it's impossible with the unknown-type station."<<endl;
+}
+
 PassengerStation::PassengerStation(string name, int numberOfPassengers) : Station(move(name)) {
     type = PASSENGER;
     resources.emplace_back(Resource(PASSENGER, numberOfPassengers));
@@ -130,6 +140,44 @@ void PassengerStation::temporaryStop(Train *train, int stopTime) {
     train->setTravelTime(stopTime);
 }
 
+void PassengerStation::loading(Train *train) {
+    bool flagOfException = false;
+    for (auto resource : resources){
+        if (resource.getType() == PASSENGER){
+            try {
+                train->loading(resource);
+            }
+            catch(TrainException& exception){
+                resource.setAmount(exception.getAmountOfExceptionalResource());
+                flagOfException = true;
+            }
+            if (!flagOfException){
+                resource.setAmount(0);
+            }
+            cout<<"The train \""<<train->getName()<<"\" is loaded. "<<resource.getAmount()<<" passengers are stayed on the station \""<<getName()<<"\"."<<endl;
+        }
+    }
+}
+
+void PassengerStation::unloading(Train *train) {
+    bool flagOfException = false;
+    for (auto resource : resources){
+        if (resource.getType() == PASSENGER){
+            try {
+                train->unloading(resource);
+            }
+            catch(TrainException& exception){
+                resource.setAmount(exception.getAmountOfExceptionalResource());
+                flagOfException = true;
+            }
+            if (!flagOfException){
+                resource.setAmount(0);
+            }
+            cout<<"The train \""<<train->getName()<<"\" is unloaded. "<<resource.getAmount()<<" passengers aren't stayed on the station \""<<getName()<<"\"."<<endl;
+        }
+    }
+}
+
 FreightStation::FreightStation(string name, int numberOfGoods) : Station(move(name)) {
     type = FREIGHT;
     resources.emplace_back(Resource(FREIGHT, numberOfGoods));
@@ -137,11 +185,50 @@ FreightStation::FreightStation(string name, int numberOfGoods) : Station(move(na
 
 void FreightStation::transit(Train *train) {
     cout<<"Train "<<train->getName()<<" - passed the freight station "<<Station::getName()<<"."<<endl;
+    train->departedFrom();
 }
 
 void FreightStation::temporaryStop(Train *train, int stopTime) {
     cout<<"The train"<<train->getName()<<" has a temporary stop on the freight station "<<Station::getName()<<"."<<endl;
     train->setTravelTime(stopTime);
+}
+
+void FreightStation::loading(Train *train) {
+    bool flagOfException = false;
+    for (auto resource : resources){
+        if (resource.getType() == FREIGHT){
+            try {
+                train->loading(resource);
+            }
+            catch(TrainException& exception){
+                resource.setAmount(exception.getAmountOfExceptionalResource());
+                flagOfException = true;
+            }
+            if (!flagOfException){
+                resource.setAmount(0);
+            }
+            cout<<"The train \""<<train->getName()<<"\" is loaded. "<<resource.getAmount()<<" passengers are stayed on the station \""<<getName()<<"\"."<<endl;
+        }
+    }
+}
+
+void FreightStation::unloading(Train *train) {
+    bool flagOfException = false;
+    for (auto resource : resources){
+        if (resource.getType() == FREIGHT){
+            try {
+                train->unloading(resource);
+            }
+            catch(TrainException& exception){
+                resource.setAmount(exception.getAmountOfExceptionalResource());
+                flagOfException = true;
+            }
+            if (!flagOfException){
+                resource.setAmount(0);
+            }
+            cout<<"The train \""<<train->getName()<<"\" is unloaded. "<<resource.getAmount()<<" passengers aren't stayed on the station \""<<getName()<<"\"."<<endl;
+        }
+    }
 }
 
 PassengerAndFreightStation::PassengerAndFreightStation(string name, int numberOfPassengers, int numberOfGoods)
@@ -153,6 +240,7 @@ PassengerAndFreightStation::PassengerAndFreightStation(string name, int numberOf
 
 void PassengerAndFreightStation::transit(Train *train) {
     cout<<"Train "<<train->getName()<<" - passed the passenger and freight station "<<Station::getName()<<"."<<endl;
+    train->departedFrom();
 }
 
 void PassengerAndFreightStation::temporaryStop(Train *train, int stopTime) {

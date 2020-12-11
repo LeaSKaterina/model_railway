@@ -14,10 +14,13 @@ using namespace std;
 class TrainException : public Exception{
     int amountOfExceptionalResource{};
 public:
-    explicit TrainException(string error) : Exception(move(error)){};
+    explicit TrainException(string error) : Exception(move(error)){ amountOfExceptionalResource = 0;};
     TrainException(string error, int amountOfExceptionalResource) : Exception(move(error)){
         TrainException::amountOfExceptionalResource = amountOfExceptionalResource ;
     };
+    int getAmountOfExceptionalResource(){
+        return amountOfExceptionalResource;
+    }
 };
 
 enum StatusOfTheTrain {
@@ -46,6 +49,8 @@ namespace rw {
             Station *getThePointOfDeparture();
 
             Station *getThePointOfArrival();
+
+            Station *getTheNextStop(Station *currentStop);
         };
 
         class Locomotive {
@@ -91,7 +96,6 @@ namespace rw {
             bool isFullyLoaded();
 
             bool isFullyUnloaded();
-
         public:
             Train(string &name, int &locomotiveAge, string &listOfVans);
 
@@ -110,6 +114,8 @@ namespace rw {
             Station *getArrivalStation(); //----------------------------------------------------------------------------------------------ПЕРЕДЕЛАТЬ
 
             string &getName();
+
+            int getAmountOfResource(int type);
 
             void putAtTheBeginningOfTheRoute();
 
@@ -136,6 +142,8 @@ namespace rw {
             void removeFromRoute();
 
             void passTheRoute();
+
+            bool theRouteIsNotPassed();
         };
 
     }

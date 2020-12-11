@@ -33,21 +33,33 @@ Station *Route::getThePointOfArrival() {
     return listOfStops[listOfStops.size()-1];
 }
 
+Station *Route::getTheNextStop(Station *currentStop) {
+    for (int i=0; i < listOfStops.size(); i++){
+        if (listOfStops[i]->getId() == currentStop->getId()){
+            return listOfStops[i+1];
+        }
+    }
+    throw TrainException("There isn't such station in the route of this train.");
+}
+
 void Train::moveAlongTheRoute() {
-    currentDepartureStation++; //-----------------------------------------------------------------------ПРОВЕРИТЬ РАБОТУ
+    currentDepartureStation = route.getTheNextStop(currentDepartureStation);
 }
 
 void Train::isArrived() {
     moveAlongTheRoute();
-    cout << "The \"" << name << "\" train is arrived at \"" << currentDepartureStation << "\" station."
-         << endl;//-----------------------------------------------COUT?
+    cout << "The \"" << name << "\" train is arrived at \"" << currentDepartureStation->getName() << "\" station."
+         << endl;
+    if (currentDepartureStation == route.getThePointOfArrival()){
+        Train::passTheRoute();
+    }
 }
 
 void Train::departedFrom() {
     if (currentDepartureStation == route.getThePointOfArrival()){
         Train::passTheRoute();
     } else {
-        cout << "The \"" << name << "\" train departed from \"" << currentDepartureStation << "\" station."
+        cout << "The \"" << name << "\" train departed from \"" << currentDepartureStation->getName() << "\" station."
              << endl;//-----------------------------------------------COUT?
         Train::status = ON_THE_WAY;
     }
@@ -58,8 +70,7 @@ void Train::simplyExist() {
 }
 
 Station *Train::getArrivalStation() {
-    Station *nextDepartureStation = currentDepartureStation;
-    return nextDepartureStation++; //----------------------------------------------------------------------------------------------ПЕРЕДЕЛАТЬ
+    return route.getTheNextStop(currentDepartureStation);
 }
 
 Station *Train::getDepartureStation() {
@@ -95,7 +106,7 @@ void Locomotive::calculateTractionForce(vector<Van *> &vans) {
         } else {
             force = 10 * van->getTypeOfVan();
         }
-        Locomotive::tractionForce += int(van->getLoadCoefficient() * force);
+        Locomotive::tractionForce += int((1 + van->getLoadCoefficient()) * force);
     }
 }
 
@@ -103,13 +114,13 @@ void Locomotive::calculateInitialSpeed() {
     if (age != 0) {
         initialSpeed = 100 / age;
     } else {
-        initialSpeed = 10;
+        initialSpeed = 30;
     }
 }
 
 Locomotive::Locomotive() {
     age = 0;
-    initialSpeed = 10;
+    initialSpeed = 30;
     tractionForce = 1;
 }
 
@@ -152,7 +163,7 @@ void Train::loading(Resource resource){
             }
         }
     }
-    if (!resource.getAmount()){
+    if (resource.getAmount()){
         throw TrainException("There're not enough free space. The following amount of resource isn't loaded. ", resource.getAmount());
     }
 }
@@ -177,7 +188,7 @@ void Train::unloading(Resource resource) {
             }
         }
     }
-    if (!resource.getAmount()) {
+    if (resource.getAmount()) {
         throw TrainException("There're not enough resources. The following amount of resource isn't unloaded. ",
                              resource.getAmount());
     }
@@ -213,8 +224,12 @@ Train::Train(string &name, int &locomotiveAge, string &listOfVans) {
 }
 
 void Train::calculateSpeed() {
+    const int minTrainSpeed = 1;
     updateTractionForceOfLocomotive();
-    Train::speed = Train::locomotive.getInitialSpeed() - int(0.25 * Train::locomotive.getTractionForce());
+    Train::speed = Train::locomotive.getInitialSpeed() - int(0.1 * Train::locomotive.getTractionForce());
+    if (Train::speed <= 0){
+        Train::speed = minTrainSpeed;
+    }
 }
 
 void Train::updateTractionForceOfLocomotive() {
@@ -272,6 +287,19 @@ void Train::addStationToTheRoute(Station *newStation) {
 
 void Train::putAtTheBeginningOfTheRoute() {
     currentDepartureStation = route.getThePointOfDeparture();
+}
+
+bool Train::theRouteIsNotPassed() {
+    return status;
+}
+
+int Train::getAmountOfResource(int type) {
+    int amountOfResource = 0;
+    for (auto van : listOfVans){
+        if (van->getTypeOfVan() == type)
+            amountOfResource+=van->getCurrentLoad();
+    }
+    return amountOfResource;
 }
 
 

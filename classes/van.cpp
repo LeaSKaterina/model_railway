@@ -89,6 +89,10 @@ int Van::getMaximumLoad() {
     return maximumLoad.getAmount();
 }
 
+int Van::getCurrentLoad() {
+    return currentLoad.getAmount();
+}
+
 void PassengerVan::loading(int numberOfPersons) {
     if (Van::isLoaded()) {
         throw VanException("Passenger van is fully loaded, so there's no opportunity to load this amount of people. ", numberOfPersons);

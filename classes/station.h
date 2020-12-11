@@ -52,11 +52,10 @@ namespace rw {
         //void reduceTheNumberOfResource(int typeOfResource, int numberOfResource);
 
         void restockTheNumberOfResource(int typeOfResource, int numberOfResource);
-/*
-        virtual void loading(Train *train);
-        virtual void unloading(Train *train);*/
         virtual void temporaryStop(Train *train, int stopTime);
         virtual void transit(Train *train);
+        virtual void loading(Train *train);
+        virtual void unloading(Train *train);
     };
 
     class PassengerStation : public Station {
@@ -67,8 +66,8 @@ namespace rw {
          но предоставляется другой, и пользователь не указывает компилятору, как выполнить конвертацию )
          рекомендуется явно объявлять конструкторы explicit всегда, кроме случаев, когда неявное преобразование семантически оправдано.
         */
-        /*void loading(Train *train) override;
-        void unloading(Train *train) override;*/
+        void loading(Train *train) override;
+        void unloading(Train *train) override;
         void temporaryStop(Train *train, int stopTime) override;
         void transit(Train *train) override;
     };
@@ -77,8 +76,8 @@ namespace rw {
     public:
         explicit FreightStation(string name, int numberOfGoods);
 
-        /*void loading(Train *train) override;
-        void unloading(Train *train) override;*/
+        void loading(Train *train) override;
+        void unloading(Train *train) override;
         void temporaryStop(Train *train, int stopTime) override;
         void transit(Train *train) override;
     };

@@ -59,7 +59,6 @@ namespace rw {
         int operator-(Resource &right);
 
         int operator-(int right);
-
     };
 
     int operator-(int left, Resource &right);

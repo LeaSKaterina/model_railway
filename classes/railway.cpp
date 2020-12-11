@@ -82,7 +82,7 @@ void Railway::calculateTravelTime(Train *train) {
         train->removeFromRoute(); //внутри catch
     }
     train->setTravelTime(
-            int(map.getPath(train->getDepartureStation(), train->getArrivalStation()) / train->getSpeed()));
+            int(10*map.getPath(train->getDepartureStation(), train->getArrivalStation()) / train->getSpeed()));
 }
 
 void Railway::moveTheFileToTrains(ifstream &F) {
@@ -112,9 +112,11 @@ void Railway::inputANewTrainFromFile(ifstream &F) {
 void Railway::goToTheNextAction(Train &train) {
     switch (train.getStatus()) {
         case ON_THE_WAY: {
-            train.isArrived(); //смена станции отправления
-            train.setStatus(getRandomAction()); //смена статуса в автоматическом режиме
-            performAnActionAtTheStation(train);
+            train.isArrived();
+            if (train.theRouteIsNotPassed()) {
+                train.setStatus(getRandomAction()); //смена статуса в автоматическом режиме
+                performAnActionAtTheStation(train);
+            }
             break;
         }
         case STANDING: {
@@ -122,7 +124,8 @@ void Railway::goToTheNextAction(Train &train) {
             train.departedFrom();
             break;
         }
-        case IS_BEING_LOADED | IS_BEING_UNLOADED: {
+        case IS_BEING_LOADED:
+        case IS_BEING_UNLOADED: {
             train.calculateSpeed();
             calculateTravelTime(&train);
             train.departedFrom();
@@ -142,15 +145,17 @@ void Railway::performAnActionAtTheStation(Train &train) {
         }
         case ON_THE_WAY:{
             train.getCurrentStation()->transit(&train);
-            calculateTravelTime(&train);
+            if (train.theRouteIsNotPassed()){
+                calculateTravelTime(&train);
+            }
             break;
         }
         case IS_BEING_LOADED:{
-            //train.getCurrentStation()->loading(&train);
+            train.getCurrentStation()->loading(&train);
             break;
         }
         case IS_BEING_UNLOADED:{
-            //train.getCurrentStation()->unloading(&train);
+            train.getCurrentStation()->unloading(&train);
             break;
         }
         default:{
@@ -160,11 +165,14 @@ void Railway::performAnActionAtTheStation(Train &train) {
 }
 
 void Railway::start() {
+    trainsDepart();
+    clock++;
     while (!allTrainsFinishedMoving()){
         printCurrentTime();
         liveAUnitOfTime();
         clock++;
     }
+
 }
 
 void Railway::printCurrentTime() {
@@ -190,5 +198,21 @@ void Railway::createRouteForTheTrain(Train *train, string inputString) {
 
         train->addStationToTheRoute(map.getStation(bufferName));
         bufferName.clear();
+    }
+}
+
+void Railway::trainsDepart() {
+    for (auto & train : listOfTrains){
+        calculateTravelTime(&train);
+        train.departedFrom();
+    }
+}
+
+void Railway::printParametersOfTrains() {
+    for (auto &train : listOfTrains){
+        cout<<train.getName()<<": ";
+        cout<<"passengers : "<<train.getAmountOfResource(PASSENGER)<<", ";
+        cout<<"freight: "<<train.getAmountOfResource(FREIGHT)<<". "<<endl;
+        cout<<"Current station: "<<train.getCurrentStation()->getName()<<endl;
     }
 }
