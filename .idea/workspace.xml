@@ -15,6 +15,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/railway.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/classes/railway.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/railway.h" beforeDir="false" afterPath="$PROJECT_DIR$/classes/railway.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/resource.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/classes/resource.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/resource.h" beforeDir="false" afterPath="$PROJECT_DIR$/classes/resource.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/station.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/classes/station.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/station.h" beforeDir="false" afterPath="$PROJECT_DIR$/classes/station.h" afterDir="false" />
@@ -23,12 +24,12 @@
       <change beforePath="$PROJECT_DIR$/classes/van.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/classes/van.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/van.h" beforeDir="false" afterPath="$PROJECT_DIR$/classes/van.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/classes/railway.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/classes/railway.cpp.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/classes/station.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/classes/station.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/classes/train.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/classes/train.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/main.cpp.obj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/objects.a" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/railway.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/railway.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/исключения.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/переделать.txt" beforeDir="false" afterPath="$PROJECT_DIR$/переделать.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -122,7 +123,8 @@
       <workItem from="1606913190046" duration="13031000" />
       <workItem from="1607673008929" duration="9738000" />
       <workItem from="1607684934400" duration="1678000" />
-      <workItem from="1607696130922" duration="1090000" />
+      <workItem from="1607696130922" duration="1993000" />
+      <workItem from="1607755988306" duration="18722000" />
     </task>
     <servers />
   </component>
@@ -134,38 +136,38 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="170" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605785434079" />
-    <state width="1493" height="551" key="GridCell.Tab.0.bottom" timestamp="1607697322564">
+    <state width="1493" height="661" key="GridCell.Tab.0.bottom" timestamp="1607784330646">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="551" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1607697322564" />
-    <state width="1493" height="551" key="GridCell.Tab.0.center" timestamp="1607697322564">
+    <state width="1493" height="661" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1607784330646" />
+    <state width="1493" height="661" key="GridCell.Tab.0.center" timestamp="1607784330646">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="551" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1607697322564" />
-    <state width="1493" height="551" key="GridCell.Tab.0.left" timestamp="1607697322564">
+    <state width="1493" height="661" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1607784330646" />
+    <state width="1493" height="661" key="GridCell.Tab.0.left" timestamp="1607784330646">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="551" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1607697322564" />
-    <state width="1493" height="551" key="GridCell.Tab.0.right" timestamp="1607697322564">
+    <state width="1493" height="661" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1607784330646" />
+    <state width="1493" height="661" key="GridCell.Tab.0.right" timestamp="1607784330646">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="551" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1607697322564" />
-    <state width="1493" height="236" key="GridCell.Tab.1.bottom" timestamp="1607696601231">
+    <state width="1493" height="661" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1607784330646" />
+    <state width="1493" height="214" key="GridCell.Tab.1.bottom" timestamp="1607782126822">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="236" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1607696601231" />
-    <state width="1493" height="236" key="GridCell.Tab.1.center" timestamp="1607696601231">
+    <state width="1493" height="214" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1607782126822" />
+    <state width="1493" height="214" key="GridCell.Tab.1.center" timestamp="1607782126822">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="236" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1607696601231" />
-    <state width="1493" height="236" key="GridCell.Tab.1.left" timestamp="1607696601231">
+    <state width="1493" height="214" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1607782126822" />
+    <state width="1493" height="214" key="GridCell.Tab.1.left" timestamp="1607782126822">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="236" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1607696601231" />
-    <state width="1493" height="236" key="GridCell.Tab.1.right" timestamp="1607696601231">
+    <state width="1493" height="214" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1607782126822" />
+    <state width="1493" height="214" key="GridCell.Tab.1.right" timestamp="1607782126822">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="236" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1607696601231" />
+    <state width="1493" height="214" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1607782126822" />
     <state x="510" y="60" key="refactoring.ChangeSignatureDialog" timestamp="1605636344517">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -183,9 +185,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/classes/railway.cpp</url>
-          <line>153</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/classes/station.cpp</url>
+          <line>233</line>
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

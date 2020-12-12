@@ -92,6 +92,10 @@ void Resource::reduce(int quantity) {
     amount-=quantity;
 }
 
+void Resource::setType(int newType) {
+    Resource::type = newType;
+}
+
 int rw::operator-(int left, rw::Resource &right) {
     return left - right.getAmount();
 }

@@ -36,6 +36,8 @@ namespace rw {
 
         void setAmount(int amount);
 
+        void setType(int newType);
+
         void restock(int additionalAmount);
 
         void reduce(int quantity);

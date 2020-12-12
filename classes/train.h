@@ -6,21 +6,13 @@
 #define RAILWAY_TRAIN_H
 
 #include "van.h"
-//#include "station.h"
 #include <string>
 #include <vector>
 using namespace std;
 
 class TrainException : public Exception{
-    int amountOfExceptionalResource{};
 public:
-    explicit TrainException(string error) : Exception(move(error)){ amountOfExceptionalResource = 0;};
-    TrainException(string error, int amountOfExceptionalResource) : Exception(move(error)){
-        TrainException::amountOfExceptionalResource = amountOfExceptionalResource ;
-    };
-    int getAmountOfExceptionalResource(){
-        return amountOfExceptionalResource;
-    }
+    explicit TrainException(string error) : Exception(move(error)){};
 };
 
 enum StatusOfTheTrain {
@@ -93,9 +85,9 @@ namespace rw {
 
             void updateTractionForceOfLocomotive();
 
-            bool isFullyLoaded();
+            bool isFullyLoadedBy(int typeOfResource);
 
-            bool isFullyUnloaded();
+            bool isFullyUnloadedBy(int typeOfResource);
         public:
             Train(string &name, int &locomotiveAge, string &listOfVans);
 
@@ -106,6 +98,12 @@ namespace rw {
             int getStatus();
 
             int getSpeed();
+
+            int getAmountOfPassengerVans();
+
+            int getAmountOfFreightVans();
+
+            int getAmountOfVans();
 
             Station *getDepartureStation();
 
@@ -125,11 +123,9 @@ namespace rw {
 
             void addStationToTheRoute(Station *newStation);
 
-            //--------------------------------------------------------------------------------------------------------------------------ДОДЕЛАТЬ-----------
-            void loading(Resource resource);
+            int loading(Resource resource);
 
-            void unloading(Resource resource);
-            //----------------------------------------------------------------------------------------------------------------------------------------------
+            int unloading(Resource resource);
 
             void isArrived();
 

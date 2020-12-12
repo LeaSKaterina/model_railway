@@ -28,6 +28,8 @@ namespace rw {
         vector <Resource> resources{};
         short int type;
         static void checkTypeOfResource(int type);
+        static bool thereAreNotPassengerVans(Train *train);
+        static bool thereAreNotFreightVans(Train *train);
     public:
         explicit Station(string name);
 
@@ -50,8 +52,7 @@ namespace rw {
         void deleteTheResource(int typeOfDeletedResource);
 
         //void reduceTheNumberOfResource(int typeOfResource, int numberOfResource);
-
-        void restockTheNumberOfResource(int typeOfResource, int numberOfResource);
+        //void restockTheNumberOfResource(int typeOfResource, int numberOfResource);
         virtual void temporaryStop(Train *train, int stopTime);
         virtual void transit(Train *train);
         virtual void loading(Train *train);
@@ -75,7 +76,6 @@ namespace rw {
     class FreightStation : public Station {
     public:
         explicit FreightStation(string name, int numberOfGoods);
-
         void loading(Train *train) override;
         void unloading(Train *train) override;
         void temporaryStop(Train *train, int stopTime) override;
@@ -85,9 +85,8 @@ namespace rw {
     class PassengerAndFreightStation : public Station {
     public:
         explicit PassengerAndFreightStation(string name, int numberOfPassengers, int numberOfGoods);
-
-        /*void loading(Train *train) override;
-        void unloading(Train *train) override;*/
+        void loading(Train *train) override;
+        void unloading(Train *train) override;
         void temporaryStop(Train *train, int stopTime) override;
         void transit(Train *train) override;
     };

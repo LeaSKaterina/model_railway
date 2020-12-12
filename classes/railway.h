@@ -63,9 +63,6 @@ namespace rw {
 
         void inputModelFromFile(const char *path);
 
-        //void putTrainsOnTheMap();
-
-        //в старте или где-то (подумать, где) прописать srand(time(nullptr));
         void start();
 
         void liveAUnitOfTime();

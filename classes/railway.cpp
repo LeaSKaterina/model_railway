@@ -51,7 +51,6 @@ void Railway::inputListOfTrainsFromFile(const char *path) {
 
 Railway::Railway(const char *path) {
     inputModelFromFile(path);
-    //putTrainsOnTheMap();
 }
 
 void Railway::liveAUnitOfTime() {
@@ -68,7 +67,6 @@ void Railway::liveAUnitOfTime() {
 
 int
 Railway::getRandomAction() {
-    //srand(time(nullptr)); //-----------------------------------------------------------------------------randomize()??
     return rand() % 4 + 1;
 }
 
@@ -167,6 +165,7 @@ void Railway::performAnActionAtTheStation(Train &train) {
 void Railway::start() {
     trainsDepart();
     clock++;
+    srand(time(nullptr));
     while (!allTrainsFinishedMoving()){
         printCurrentTime();
         liveAUnitOfTime();

@@ -4,7 +4,6 @@
 
 #include "van.h"
 #include <iostream>
-#include <utility>
 using namespace std;
 using namespace rw;
 using namespace train;
@@ -18,49 +17,58 @@ Van::Van(int numberOfResource) {
         currentLoad.setAmount(numberOfResource);
         load = IS_NOT_LOADED;
     } else {
-        currentLoad = maximumLoad;
-        load = IS_LOADED;
-        if (numberOfResource > maximumLoad) {
-            throw VanException("The number of resource is too large. Try to load the following number of resource to another van. ",numberOfResource-maximumLoad);
+        try {
+            currentLoad = maximumLoad;
+            load = IS_LOADED;
+            if (numberOfResource > maximumLoad) {
+                throw ResourceException(
+                        "The number of resource is too large. The maximum possible amount is loaded.");
+            }
+        }
+        catch(ResourceException &exception) {
+            cout<<exception.getError()<<endl;
         }
     }
     counter++;
     number = counter;
 }
 
-void Van::loading(int numberOfResource) {
+int Van::loading(int numberOfResource) {
     if (Van::isLoaded()) {
-        throw VanException("Van is fully loaded, so there's no opportunity to load this amount of resource. ", numberOfResource);
-    } else {
-        if (numberOfResource < maximumLoad - currentLoad) {
-            currentLoad += numberOfResource;
-            load = IS_NOT_LOADED;
-        } else {
-            currentLoad = maximumLoad;
-            load = IS_LOADED;
-            if (numberOfResource > maximumLoad - currentLoad) {
-                throw VanException("Van is fully loaded, so there's no opportunity to load this amount of resource. ", numberOfResource - maximumLoad);
-            }
-        }
+        return 0;
     }
+    if (numberOfResource > maximumLoad - currentLoad) {
+        load = IS_LOADED;
+        currentLoad = maximumLoad;
+        return maximumLoad.getAmount();
+    }
+    if (numberOfResource == maximumLoad - currentLoad){
+        load = IS_LOADED;
+        currentLoad = maximumLoad;
+    } else {
+        load = IS_NOT_LOADED;
+        currentLoad += numberOfResource;
+    }
+    return numberOfResource;
 }
 
-void Van::unloading(int numberOfResource) {
-    if (currentLoad < numberOfResource) {
-        int amountOfUnloadedResource = currentLoad.getAmount();
-        currentLoad.setAmount(0);
-        throw VanException("There are not enough resources. ", amountOfUnloadedResource);
-    } else {
-        currentLoad -= numberOfResource;
-    }
+int Van::unloading(int numberOfUnloadedResource) {
     load = IS_NOT_LOADED;
+    if (currentLoad < numberOfUnloadedResource) {
+        int remainder = numberOfUnloadedResource - currentLoad;
+        currentLoad.setAmount(0);
+        return remainder;
+    } else {
+        currentLoad -= numberOfUnloadedResource;
+        return 0;
+    }
 }
 
 bool Van::isLoaded() {
     return load;
 }
 
-short int Van::getTypeOfVan() {
+int Van::getTypeOfVan() {
     return type;
 }
 
@@ -93,90 +101,58 @@ int Van::getCurrentLoad() {
     return currentLoad.getAmount();
 }
 
-void PassengerVan::loading(int numberOfPersons) {
-    if (Van::isLoaded()) {
-        throw VanException("Passenger van is fully loaded, so there's no opportunity to load this amount of people. ", numberOfPersons);
-    } else {
-        if (numberOfPersons < maximumLoad - currentLoad) {
-            currentLoad += numberOfPersons;
-            load = IS_NOT_LOADED;
-        } else {
-            currentLoad = maximumLoad;
-            load = IS_LOADED;
-            if (numberOfPersons > maximumLoad - currentLoad) {
-                throw VanException("Passenger van is fully loaded, so there's no opportunity to load this amount of people. ", numberOfPersons - maximumLoad);
-            }
-        }
-    }
+void Van::setTypeOfResources(int newType) {
+    currentLoad.setType(newType);
+    maximumLoad.setType(newType);
 }
 
-void PassengerVan::unloading(int numberOfPersons) {
-    if (currentLoad < numberOfPersons) {
-        int amountOfUnloadedPeople = currentLoad.getAmount();
-        currentLoad.setAmount(0);
-        throw VanException("There are not enough persons at this passenger van. ", amountOfUnloadedPeople);
-    } else {
-        currentLoad -= numberOfPersons;
-    }
-    load = IS_NOT_LOADED;
+int PassengerVan::loading(int numberOfPersons) {
+    numberOfPersons = Van::loading(numberOfPersons);
+    cout<<numberOfPersons<<" passengers are loading in the passenger van number "<<number<<"."<<endl;
+    return numberOfPersons;
+}
+
+int PassengerVan::unloading(int numberOfPersons) {
+    int remainder = Van::unloading(numberOfPersons);
+    cout<<numberOfPersons - remainder<<" passengers are unloading from the passenger van number "<<number<<"."<<endl;
+    return remainder;
 }
 
 PassengerVan::PassengerVan(int numberOfPersons) {
     type = PASSENGER;
+    setTypeOfResources(PASSENGER);
     maximumLoad.setAmount(40);
     Van::loading(numberOfPersons);
 }
 
 PassengerVan::PassengerVan() {
     type = PASSENGER;
+    setTypeOfResources(PASSENGER);
     maximumLoad.setAmount(40);
 }
 
-void FreightVan::loading(int numberOfGoods) {
-    if (Van::isLoaded()) {
-        throw VanException("Freight van is fully loaded, so there's no opportunity to load this amount of goods. ", numberOfGoods);
-    } else {
-        if (numberOfGoods < maximumLoad - currentLoad) {
-            currentLoad += numberOfGoods;
-            load = numberOfGoods;
-            cout << numberOfGoods << " goods are loaded into the van number" << getNumber()
-                 << ". There is still free space." << endl;
-        } else {
-            currentLoad = maximumLoad;
-            load = IS_LOADED;
-            if (numberOfGoods > maximumLoad - currentLoad) {
-                throw VanException("Freight van is fully loaded, so there's no opportunity to load this amount of goods. ", numberOfGoods - maximumLoad);
-            }
-        }
-    }
+int FreightVan::loading(int numberOfGoods) {
+    numberOfGoods = Van::loading(numberOfGoods);
+    cout<<numberOfGoods<<" goods are being loaded in the freight van number "<<number<<"."<<endl;
+    return numberOfGoods;
 }
 
-void FreightVan::unloading(int numberOfGoods) {
-    if (currentLoad < numberOfGoods) {
-        int amountOfUnloadedGoods = currentLoad.getAmount();
-        currentLoad.setAmount(0);
-        throw VanException("There are not enough goods at this freight van. ", amountOfUnloadedGoods);
-    } else {
-        currentLoad -= numberOfGoods;
-    }
-    load = IS_NOT_LOADED;
+int FreightVan::unloading(int numberOfGoods) {
+    int remainder = Van::unloading(numberOfGoods);
+    cout<<numberOfGoods - remainder<<" goods are being unloaded from the freight van number "<<number<<"."<<endl;
+    return remainder;
 }
 
 FreightVan::FreightVan() {
     type = FREIGHT;
+    setTypeOfResources(FREIGHT);
     maximumLoad.setAmount(100);
 }
 
 FreightVan::FreightVan(int numberOfGoods) {
     type = FREIGHT;
+    setTypeOfResources(FREIGHT);
     maximumLoad.setAmount(100);
     Van::loading(numberOfGoods);
 }
 
-VanException::VanException(string error, int amountOfResource) : Exception(move(error)){
-    VanException::amountOfExceptionalResource = amountOfResource;
-}
-
-int VanException::getAmountOfExceptionalResource() {
-    return amountOfExceptionalResource;
-}

@@ -143,55 +143,36 @@ void Locomotive::setAge(int newAge) {
     Locomotive::calculateInitialSpeed();
 }
 
-void Train::loading(Resource resource){
-    while (resource.getAmount()!=0 && !Train::isFullyLoaded() ) {
+int Train::loading(Resource resource){
+    while (resource.getAmount()!=0 && !Train::isFullyLoadedBy(resource.getType()) ) {
         for (auto &van : Train::listOfVans) {
-            try {
-                if (resource.getType() == van->getTypeOfVan()) {
-                    if ((resource.getAmount() / 2) % 2 == 1) {
-                        van->loading((resource.getAmount() / 2) + 1);
-                    } else {
-                        van->loading(resource.getAmount() / 2);
-                    }
-                    resource.setAmount(resource.getAmount() / 2);
+            if (resource.getType() == van->getTypeOfVan()) {
+                if ((resource.getAmount() / 2) % 2 == 1) {
+                    resource -= van->loading((resource.getAmount() / 2) + 1);
                 }
-            }
-            catch(VanException& exception){
-                cout<<"The van №"<<van->getNumber()<<": ";
-                cout << exception.getError() << exception.getAmountOfExceptionalResource() << " aren't loaded." << endl;
-                resource-=van->getMaximumLoad();
+                else {
+                    resource -= van->loading(resource.getAmount() / 2);
+                }
             }
         }
     }
-    if (resource.getAmount()){
-        throw TrainException("There're not enough free space. The following amount of resource isn't loaded. ", resource.getAmount());
-    }
+    return resource.getAmount();
 }
 
-void Train::unloading(Resource resource) {
-    while (resource.getAmount()!=0 && !Train::isFullyUnloaded() ) {
+int Train::unloading(Resource resource) {
+    while (resource.getAmount()!=0 && !Train::isFullyUnloadedBy(resource.getType()) ) {
         for (auto &van : Train::listOfVans) {
-            try {
-                if (resource.getType() == van->getTypeOfVan()) {
-                    if ((resource.getAmount() / 2) % 2 == 1) {
-                        van->unloading((resource.getAmount() / 2) + 1);
-                    } else {
-                        van->unloading(resource.getAmount() / 2);
-                    }
-                    resource.setAmount(resource.getAmount() / 2);
+            if (resource.getType() == van->getTypeOfVan()) {
+                if ((resource.getAmount() / 2) % 2 == 1) {
+                    resource.setAmount(resource.getAmount()/2 + van->unloading((resource.getAmount() / 2) + 1));
                 }
-            }
-            catch(VanException& exception){
-                cout<<"The van №"<<van->getNumber()<<": ";
-                cout << exception.getError() << exception.getAmountOfExceptionalResource() << " aren't unloaded." << endl;
-                resource -= exception.getAmountOfExceptionalResource();
+                else {
+                    resource.setAmount(resource.getAmount()/2 + van->unloading(resource.getAmount() / 2));
+                }
             }
         }
     }
-    if (resource.getAmount()) {
-        throw TrainException("There're not enough resources. The following amount of resource isn't unloaded. ",
-                             resource.getAmount());
-    }
+    return resource.getAmount();
 }
 
 void Train::inputListOfVansFromString(string &inputString) {
@@ -224,9 +205,9 @@ Train::Train(string &name, int &locomotiveAge, string &listOfVans) {
 }
 
 void Train::calculateSpeed() {
-    const int minTrainSpeed = 1;
+    const int minTrainSpeed = 10;
     updateTractionForceOfLocomotive();
-    Train::speed = Train::locomotive.getInitialSpeed() - int(0.1 * Train::locomotive.getTractionForce());
+    Train::speed = Train::locomotive.getInitialSpeed() - int(0.025 * Train::locomotive.getTractionForce());
     if (Train::speed <= 0){
         Train::speed = minTrainSpeed;
     }
@@ -263,24 +244,6 @@ Station *Train::getCurrentStation() {
     return currentDepartureStation;
 }
 
-bool Train::isFullyLoaded() {
-    for (auto van : listOfVans){
-        if (!van->isLoaded()){
-            return false;
-        }
-    }
-    return true;
-}
-
-bool Train::isFullyUnloaded() {
-    for (auto van : listOfVans){
-        if (!van->isEmpty()){
-            return false;
-        }
-    }
-    return true;
-}
-
 void Train::addStationToTheRoute(Station *newStation) {
     route.addStation(newStation);
 }
@@ -295,11 +258,53 @@ bool Train::theRouteIsNotPassed() {
 
 int Train::getAmountOfResource(int type) {
     int amountOfResource = 0;
-    for (auto van : listOfVans){
+    for (auto &van : listOfVans){
         if (van->getTypeOfVan() == type)
             amountOfResource+=van->getCurrentLoad();
     }
     return amountOfResource;
+}
+
+int Train::getAmountOfVans() {
+    return listOfVans.size();
+}
+
+int Train::getAmountOfPassengerVans(){
+    int amount = 0;
+    for (auto &van : listOfVans){
+        if (van->getTypeOfVan() == PASSENGER){
+            amount++;
+        }
+    }
+    return amount;
+}
+
+int Train::getAmountOfFreightVans() {
+    int amount = 0;
+    for (auto &van : listOfVans){
+        if (van->getTypeOfVan() == FREIGHT){
+            amount++;
+        }
+    }
+    return amount;
+}
+
+bool Train::isFullyLoadedBy(int typeOfResource) {
+    for (auto van : listOfVans){
+        if (van->getTypeOfVan() == typeOfResource && !van->isLoaded()){
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Train::isFullyUnloadedBy(int typeOfResource) {
+    for (auto van : listOfVans){
+        if (van->getTypeOfVan() == typeOfResource && van->getCurrentLoad()){
+            return false;
+        }
+    }
+    return true;
 }
 
 
