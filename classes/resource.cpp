@@ -3,6 +3,7 @@
 //
 
 #include "resource.h"
+
 using namespace rw;
 
 Resource::Resource() {
@@ -11,9 +12,6 @@ Resource::Resource() {
 }
 
 Resource::Resource(int type, int amount) {
-    if (type < 0 || type > 3){
-        throw ResourceException("Incorrect input: invalid type value. "); //------------------------------------------------try catch(?)
-    }
     Resource::type = type;
     Resource::amount = amount;
 }
@@ -41,8 +39,9 @@ Resource &Resource::operator-=(int right) {
 }
 
 int Resource::operator-(Resource &right) {
-    if (this->type != right.type){
-        throw ResourceException("Mismatch of types of resources."); //------------------------------------------------try catch(?)
+    if (this->type != right.type) {
+        throw ResourceException(
+                "Mismatch of types of resources."); //------------------------------------------------try catch(?)
     }
     return this->getAmount() - right.getAmount();
 }
@@ -60,15 +59,17 @@ bool Resource::operator!=(Resource &right) {
 }
 
 bool Resource::operator>(Resource &right) {
-    if (this->type != right.type){
-        throw ResourceException("Mismatch of types of resources."); //------------------------------------------------try catch(?)
+    if (this->type != right.type) {
+        throw ResourceException(
+                "Mismatch of types of resources."); //------------------------------------------------try catch(?)
     }
     return this->amount > right.amount;
 }
 
 bool Resource::operator<(Resource &right) {
-    if (this->type != right.type){
-        throw ResourceException("Mismatch of types of resources."); //------------------------------------------------try catch(?)
+    if (this->type != right.type) {
+        throw ResourceException(
+                "Mismatch of types of resources."); //------------------------------------------------try catch(?)
     }
     return this->amount < right.amount;
 }
@@ -82,14 +83,18 @@ bool Resource::operator>(int right) {
 }
 
 void Resource::restock(int additionalAmount) {
-    Resource::amount+=additionalAmount;
+    Resource::amount += additionalAmount;
 }
 
-void Resource::reduce(int quantity) {
-    if (amount < quantity){
-        throw ResourceException("There's not such amount of resource. ");
+int Resource::reduce(int quantity) {
+    int remainder = 0;
+    if (amount < quantity) {
+        remainder = quantity - amount;
+        amount = 0;
+    } else {
+        amount -= quantity;
     }
-    amount-=quantity;
+    return remainder;
 }
 
 void Resource::setType(int newType) {
@@ -100,10 +105,10 @@ int rw::operator-(int left, rw::Resource &right) {
     return left - right.getAmount();
 }
 
- bool rw::operator<(int left, rw::Resource &right) {
+bool rw::operator<(int left, rw::Resource &right) {
     return left < right.getAmount();
 }
 
- bool rw::operator>(int left, rw::Resource &right) {
+bool rw::operator>(int left, rw::Resource &right) {
     return left > right.getAmount();
 }

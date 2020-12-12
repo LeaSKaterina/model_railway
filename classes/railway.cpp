@@ -9,7 +9,6 @@ using namespace rw;
 #include <iostream>
 #include <fstream>
 #include <ctime>
-//#include <utility>
 
 int Railway::clock = 0;
 
@@ -18,8 +17,8 @@ void Railway::inputModelFromFile(const char *path) {
         Railway::map.inputMapFromFile(path);
         Railway::inputListOfTrainsFromFile(path);
     }
-    catch (Exception &exception){
-        cout<<exception.getError()<<endl;
+    catch (MapException &exception) {
+        cout << exception.getError() << endl;
     }
 }
 
@@ -35,19 +34,6 @@ void Railway::inputListOfTrainsFromFile(const char *path) {
         inputANewTrainFromFile(F);
     }
 }
-
-/*void Railway::putTrainsOnTheMap() {//---------------------------------ПРОВЕРИТЬ, МЕНЯЕТСЯ ЛИ МАРШРУТ (РАБОТА С ССЫЛКАМИ)
-    vector<Station *> *route{};
-    Station *buffer{};
-    for (auto &train : listOfTrains) {
-        route = train.getRoute();
-        for (auto &stop : *route) {
-            buffer = stop;
-            stop = map.getStation(stop->getName());
-            Station::deleteTheStation(buffer);
-        }
-    }
-}*/
 
 Railway::Railway(const char *path) {
     inputModelFromFile(path);
@@ -76,11 +62,10 @@ int Railway::getRandomNumberOfResource() {
 
 void Railway::calculateTravelTime(Train *train) {
     if (!map.getPath(train->getDepartureStation(), train->getArrivalStation())) {
-        throw MapException("There's no way between these stations. Check the map. Train is removed form the route. ");
-        train->removeFromRoute(); //внутри catch
+        throw MapException("There's no way between stations. Check the map. Train is removed form the route. ");
     }
     train->setTravelTime(
-            int(10*map.getPath(train->getDepartureStation(), train->getArrivalStation()) / train->getSpeed()));
+            int(10 * map.getPath(train->getDepartureStation(), train->getArrivalStation()) / train->getSpeed()));
 }
 
 void Railway::moveTheFileToTrains(ifstream &F) {
@@ -112,51 +97,66 @@ void Railway::goToTheNextAction(Train &train) {
         case ON_THE_WAY: {
             train.isArrived();
             if (train.theRouteIsNotPassed()) {
-                train.setStatus(getRandomAction()); //смена статуса в автоматическом режиме
+                train.setStatus(getRandomAction());
                 performAnActionAtTheStation(train);
             }
             break;
         }
         case STANDING: {
-            calculateTravelTime(&train);
-            train.departedFrom();
+            try {
+                calculateTravelTime(&train);
+                train.departedFrom();
+            }
+            catch (MapException &exception) {
+                cout << "There is a problem with the train \"" << train.getName() << "\" on the station \""
+                     << train.getCurrentStation()->getName() << "\":\n" << exception.getError() << endl;
+                train.removeFromRoute();
+            }
             break;
         }
         case IS_BEING_LOADED:
         case IS_BEING_UNLOADED: {
-            train.calculateSpeed();
-            calculateTravelTime(&train);
-            train.departedFrom();
+            try {
+                train.calculateSpeed();
+                calculateTravelTime(&train);
+                train.departedFrom();
+            }
+            catch (MapException &exception) {
+                cout << "There is a problem with the train \"" << train.getName() << "\" on the station \""
+                     << train.getCurrentStation()->getName() << "\":\n" << exception.getError() << endl;
+                train.removeFromRoute();
+            }
             break;
         }
-        default:{
+        default: {
             throw TrainException("Incorrect input: invalid status of train. ");
         }
     }
 }
 
 void Railway::performAnActionAtTheStation(Train &train) {
-    switch (train.getStatus()){
-        case STANDING:{
-            train.getCurrentStation()->temporaryStop(&train, 10); //автоматический режим (в пользовательнском stopTime вводит пользователь?)
+    switch (train.getStatus()) {
+        case STANDING: {
+            train.getCurrentStation()->temporaryStop(&train,
+                                                     10);
             break;
         }
-        case ON_THE_WAY:{
+        case ON_THE_WAY: {
             train.getCurrentStation()->transit(&train);
-            if (train.theRouteIsNotPassed()){
+            if (train.theRouteIsNotPassed()) {
                 calculateTravelTime(&train);
             }
             break;
         }
-        case IS_BEING_LOADED:{
+        case IS_BEING_LOADED: {
             train.getCurrentStation()->loading(&train);
             break;
         }
-        case IS_BEING_UNLOADED:{
+        case IS_BEING_UNLOADED: {
             train.getCurrentStation()->unloading(&train);
             break;
         }
-        default:{
+        default: {
             throw TrainException("Incorrect input: invalid type of action on the station. ");
         }
     }
@@ -166,7 +166,7 @@ void Railway::start() {
     trainsDepart();
     clock++;
     srand(time(nullptr));
-    while (!allTrainsFinishedMoving()){
+    while (!allTrainsFinishedMoving()) {
         printCurrentTime();
         liveAUnitOfTime();
         clock++;
@@ -175,12 +175,12 @@ void Railway::start() {
 }
 
 void Railway::printCurrentTime() {
-    cout <<"Time: "<<clock<<"."<<endl;
+    cout << "Time: " << clock << "." << endl;
 }
 
 bool Railway::allTrainsFinishedMoving() {
-    for (auto train : listOfTrains){
-        if (train.getStatus()){
+    for (auto train : listOfTrains) {
+        if (train.getStatus()) {
             return false;
         }
     }
@@ -201,17 +201,14 @@ void Railway::createRouteForTheTrain(Train *train, string inputString) {
 }
 
 void Railway::trainsDepart() {
-    for (auto & train : listOfTrains){
+    for (auto &train : listOfTrains) {
         calculateTravelTime(&train);
         train.departedFrom();
     }
 }
 
 void Railway::printParametersOfTrains() {
-    for (auto &train : listOfTrains){
-        cout<<train.getName()<<": ";
-        cout<<"passengers : "<<train.getAmountOfResource(PASSENGER)<<", ";
-        cout<<"freight: "<<train.getAmountOfResource(FREIGHT)<<". "<<endl;
-        cout<<"Current station: "<<train.getCurrentStation()->getName()<<endl;
+    for (auto &train : listOfTrains) {
+        train.printParameters();
     }
 }

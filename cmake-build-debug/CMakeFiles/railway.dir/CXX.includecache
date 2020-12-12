@@ -9,6 +9,16 @@
 D:/railway/classes/exception.h
 string
 -
+utility
+-
+
+D:/railway/classes/map.cpp
+map.h
+D:/railway/classes/map.h
+iostream
+-
+fstream
+-
 
 D:/railway/classes/map.h
 station.h
@@ -16,6 +26,16 @@ D:/railway/classes/station.h
 string
 -
 vector
+-
+
+D:/railway/classes/railway.cpp
+railway.h
+D:/railway/classes/railway.h
+iostream
+-
+fstream
+-
+ctime
 -
 
 D:/railway/classes/railway.h
@@ -26,9 +46,17 @@ vector
 map.h
 D:/railway/classes/map.h
 
+D:/railway/classes/resource.cpp
+resource.h
+D:/railway/classes/resource.h
+
 D:/railway/classes/resource.h
 exception.h
 D:/railway/classes/exception.h
+
+D:/railway/classes/station.cpp
+station.h
+D:/railway/classes/station.h
 
 D:/railway/classes/station.h
 train.h
@@ -40,12 +68,26 @@ vector
 iostream
 -
 
+D:/railway/classes/train.cpp
+station.h
+D:/railway/classes/station.h
+van.h
+D:/railway/classes/van.h
+train.h
+D:/railway/classes/train.h
+
 D:/railway/classes/train.h
 van.h
 D:/railway/classes/van.h
 string
 -
 vector
+-
+
+D:/railway/classes/van.cpp
+van.h
+D:/railway/classes/van.h
+iostream
 -
 
 D:/railway/classes/van.h

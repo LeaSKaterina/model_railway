@@ -7,9 +7,9 @@
 
 #include "exception.h"
 
-class ResourceException : public Exception{
+class ResourceException : public Exception {
 public:
-    explicit ResourceException(string error) : Exception(move(error)){};
+    explicit ResourceException(string error) : Exception(move(error)) {};
 };
 
 enum KindOfStationOrVanOrResources {
@@ -40,7 +40,7 @@ namespace rw {
 
         void restock(int additionalAmount);
 
-        void reduce(int quantity);
+        int reduce(int quantity);
 
         Resource &operator+=(int right);
 

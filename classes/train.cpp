@@ -2,7 +2,6 @@
 // Created by HP on 23.11.2020.
 //
 
-//#include "train.h"
 #include "station.h"
 #include "van.h"
 #include "train.h"
@@ -20,23 +19,25 @@ vector<Station *> *Route::getListOfStops() {
 }
 
 Station *Route::getThePointOfDeparture() {
-    if (listOfStops.empty()){
-        throw TrainException("List of stops is empty."); //-------------------------------------------------try catch (?)
+    if (listOfStops.empty()) {
+        throw TrainException(
+                "List of stops is empty."); //-------------------------------------------------try catch (?)
     }
     return listOfStops[0];
 }
 
 Station *Route::getThePointOfArrival() {
-    if (listOfStops.empty()){
-        throw TrainException("List of stops is empty."); //-------------------------------------------------try catch (?)
+    if (listOfStops.empty()) {
+        throw TrainException(
+                "List of stops is empty."); //-------------------------------------------------try catch (?)
     }
-    return listOfStops[listOfStops.size()-1];
+    return listOfStops[listOfStops.size() - 1];
 }
 
 Station *Route::getTheNextStop(Station *currentStop) {
-    for (int i=0; i < listOfStops.size(); i++){
-        if (listOfStops[i]->getId() == currentStop->getId()){
-            return listOfStops[i+1];
+    for (int i = 0; i < listOfStops.size(); i++) {
+        if (listOfStops[i]->getId() == currentStop->getId()) {
+            return listOfStops[i + 1];
         }
     }
     throw TrainException("There isn't such station in the route of this train.");
@@ -50,17 +51,17 @@ void Train::isArrived() {
     moveAlongTheRoute();
     cout << "The \"" << name << "\" train is arrived at \"" << currentDepartureStation->getName() << "\" station."
          << endl;
-    if (currentDepartureStation == route.getThePointOfArrival()){
+    if (currentDepartureStation == route.getThePointOfArrival()) {
         Train::passTheRoute();
     }
 }
 
 void Train::departedFrom() {
-    if (currentDepartureStation == route.getThePointOfArrival()){
+    if (currentDepartureStation == route.getThePointOfArrival()) {
         Train::passTheRoute();
     } else {
         cout << "The \"" << name << "\" train departed from \"" << currentDepartureStation->getName() << "\" station."
-             << endl;//-----------------------------------------------COUT?
+             << endl;
         Train::status = ON_THE_WAY;
     }
 }
@@ -78,8 +79,7 @@ Station *Train::getDepartureStation() {
 }
 
 void Train::removeFromRoute() {
-    cout<<"Train "<<Train::name<<" is removed from the route. "<<endl;
-    //Train::currentDepartureStation->unloading(this); //------------------------------------------------РАЗГРУЗИТЬ ВСЕ
+    cout << "Train " << Train::name << " is removed from the route. " << endl;
     status = REMOVED_FROM_THE_ROUTE;
 }
 
@@ -92,8 +92,7 @@ int Train::getSpeed() {
 }
 
 void Train::passTheRoute() {
-    cout<<"Train "<<Train::name<<" has passed the route. "<<endl;
-    //Train::currentDepartureStation->unloading(this); //------------------------------------------------РАЗГРУЗИТЬ ВСЕ
+    cout << "Train " << Train::name << " has passed the route. " << endl;
     Train::status = PASSED_THE_ROUTE;
 }
 
@@ -143,14 +142,13 @@ void Locomotive::setAge(int newAge) {
     Locomotive::calculateInitialSpeed();
 }
 
-int Train::loading(Resource resource){
-    while (resource.getAmount()!=0 && !Train::isFullyLoadedBy(resource.getType()) ) {
+int Train::loading(Resource resource) {
+    while (resource.getAmount() != 0 && !Train::isFullyLoadedBy(resource.getType())) {
         for (auto &van : Train::listOfVans) {
             if (resource.getType() == van->getTypeOfVan()) {
                 if ((resource.getAmount() / 2) % 2 == 1) {
                     resource -= van->loading((resource.getAmount() / 2) + 1);
-                }
-                else {
+                } else {
                     resource -= van->loading(resource.getAmount() / 2);
                 }
             }
@@ -160,14 +158,13 @@ int Train::loading(Resource resource){
 }
 
 int Train::unloading(Resource resource) {
-    while (resource.getAmount()!=0 && !Train::isFullyUnloadedBy(resource.getType()) ) {
+    while (resource.getAmount() != 0 && !Train::isFullyUnloadedBy(resource.getType())) {
         for (auto &van : Train::listOfVans) {
             if (resource.getType() == van->getTypeOfVan()) {
                 if ((resource.getAmount() / 2) % 2 == 1) {
-                    resource.setAmount(resource.getAmount()/2 + van->unloading((resource.getAmount() / 2) + 1));
-                }
-                else {
-                    resource.setAmount(resource.getAmount()/2 + van->unloading(resource.getAmount() / 2));
+                    resource.setAmount(resource.getAmount() / 2 + van->unloading((resource.getAmount() / 2) + 1));
+                } else {
+                    resource.setAmount(resource.getAmount() / 2 + van->unloading(resource.getAmount() / 2));
                 }
             }
         }
@@ -197,7 +194,6 @@ void Train::inputListOfVansFromString(string &inputString) {
 Train::Train(string &name, int &locomotiveAge, string &listOfVans) {
     Train::name = name;
     Train::inputListOfVansFromString(listOfVans);
-    //Train::route.inputFromString(route);
     Train::locomotive = Locomotive(locomotive);
     Train::updateTractionForceOfLocomotive();
     Train::calculateSpeed();
@@ -208,7 +204,7 @@ void Train::calculateSpeed() {
     const int minTrainSpeed = 10;
     updateTractionForceOfLocomotive();
     Train::speed = Train::locomotive.getInitialSpeed() - int(0.025 * Train::locomotive.getTractionForce());
-    if (Train::speed <= 0){
+    if (Train::speed <= 0) {
         Train::speed = minTrainSpeed;
     }
 }
@@ -230,8 +226,9 @@ int Train::getStatus() {
 }
 
 void Train::setStatus(int action) {
-    if (action < 0 || action > 4){
-        throw TrainException("Incorrect input: invalid train status value. "); //-------------------------------------------------try catch (?)
+    if (action < 0 || action > 4) {
+        throw TrainException(
+                "Incorrect input: invalid train status value. "); //-------------------------------------------------try catch (?)
     }
     status = action;
 }
@@ -258,9 +255,9 @@ bool Train::theRouteIsNotPassed() {
 
 int Train::getAmountOfResource(int type) {
     int amountOfResource = 0;
-    for (auto &van : listOfVans){
+    for (auto &van : listOfVans) {
         if (van->getTypeOfVan() == type)
-            amountOfResource+=van->getCurrentLoad();
+            amountOfResource += van->getCurrentLoad();
     }
     return amountOfResource;
 }
@@ -269,10 +266,10 @@ int Train::getAmountOfVans() {
     return listOfVans.size();
 }
 
-int Train::getAmountOfPassengerVans(){
+int Train::getAmountOfPassengerVans() {
     int amount = 0;
-    for (auto &van : listOfVans){
-        if (van->getTypeOfVan() == PASSENGER){
+    for (auto &van : listOfVans) {
+        if (van->getTypeOfVan() == PASSENGER) {
             amount++;
         }
     }
@@ -281,8 +278,8 @@ int Train::getAmountOfPassengerVans(){
 
 int Train::getAmountOfFreightVans() {
     int amount = 0;
-    for (auto &van : listOfVans){
-        if (van->getTypeOfVan() == FREIGHT){
+    for (auto &van : listOfVans) {
+        if (van->getTypeOfVan() == FREIGHT) {
             amount++;
         }
     }
@@ -290,8 +287,8 @@ int Train::getAmountOfFreightVans() {
 }
 
 bool Train::isFullyLoadedBy(int typeOfResource) {
-    for (auto van : listOfVans){
-        if (van->getTypeOfVan() == typeOfResource && !van->isLoaded()){
+    for (auto van : listOfVans) {
+        if (van->getTypeOfVan() == typeOfResource && !van->isLoaded()) {
             return false;
         }
     }
@@ -299,12 +296,19 @@ bool Train::isFullyLoadedBy(int typeOfResource) {
 }
 
 bool Train::isFullyUnloadedBy(int typeOfResource) {
-    for (auto van : listOfVans){
-        if (van->getTypeOfVan() == typeOfResource && van->getCurrentLoad()){
+    for (auto van : listOfVans) {
+        if (van->getTypeOfVan() == typeOfResource && van->getCurrentLoad()) {
             return false;
         }
     }
     return true;
+}
+
+void Train::printParameters() {
+    cout << getName() << ": ";
+    cout << "passengers : " << getAmountOfResource(PASSENGER) << ", ";
+    cout << "freight: " << getAmountOfResource(FREIGHT) << ". ";
+    cout << "Current station: " << getCurrentStation()->getName() << endl;
 }
 
 

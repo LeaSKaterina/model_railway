@@ -4,6 +4,7 @@
 
 #include "van.h"
 #include <iostream>
+
 using namespace std;
 using namespace rw;
 using namespace train;
@@ -25,8 +26,8 @@ Van::Van(int numberOfResource) {
                         "The number of resource is too large. The maximum possible amount is loaded.");
             }
         }
-        catch(ResourceException &exception) {
-            cout<<exception.getError()<<endl;
+        catch (ResourceException &exception) {
+            cout << exception.getError() << endl;
         }
     }
     counter++;
@@ -42,7 +43,7 @@ int Van::loading(int numberOfResource) {
         currentLoad = maximumLoad;
         return maximumLoad.getAmount();
     }
-    if (numberOfResource == maximumLoad - currentLoad){
+    if (numberOfResource == maximumLoad - currentLoad) {
         load = IS_LOADED;
         currentLoad = maximumLoad;
     } else {
@@ -108,13 +109,14 @@ void Van::setTypeOfResources(int newType) {
 
 int PassengerVan::loading(int numberOfPersons) {
     numberOfPersons = Van::loading(numberOfPersons);
-    cout<<numberOfPersons<<" passengers are loading in the passenger van number "<<number<<"."<<endl;
+    cout << numberOfPersons << " passengers are loading in the passenger van number " << number << "." << endl;
     return numberOfPersons;
 }
 
 int PassengerVan::unloading(int numberOfPersons) {
     int remainder = Van::unloading(numberOfPersons);
-    cout<<numberOfPersons - remainder<<" passengers are unloading from the passenger van number "<<number<<"."<<endl;
+    cout << numberOfPersons - remainder << " passengers are unloading from the passenger van number " << number << "."
+         << endl;
     return remainder;
 }
 
@@ -133,13 +135,14 @@ PassengerVan::PassengerVan() {
 
 int FreightVan::loading(int numberOfGoods) {
     numberOfGoods = Van::loading(numberOfGoods);
-    cout<<numberOfGoods<<" goods are being loaded in the freight van number "<<number<<"."<<endl;
+    cout << numberOfGoods << " goods are being loaded in the freight van number " << number << "." << endl;
     return numberOfGoods;
 }
 
 int FreightVan::unloading(int numberOfGoods) {
     int remainder = Van::unloading(numberOfGoods);
-    cout<<numberOfGoods - remainder<<" goods are being unloaded from the freight van number "<<number<<"."<<endl;
+    cout << numberOfGoods - remainder << " goods are being unloaded from the freight van number " << number << "."
+         << endl;
     return remainder;
 }
 

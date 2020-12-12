@@ -9,13 +9,14 @@
 #include <string>
 #include <vector>
 #include <iostream>
+
 using namespace rw;
 using namespace train;
 using namespace std;
 
-class StationException : public Exception{
+class StationException : public Exception {
 public:
-    explicit StationException(string error) : Exception(move(error)){};
+    explicit StationException(string error) : Exception(move(error)) {};
 };
 
 namespace rw {
@@ -25,11 +26,15 @@ namespace rw {
         int id;
         static int counter;
     protected:
-        vector <Resource> resources{};
+        vector<Resource> resources{};
         short int type;
+
         static void checkTypeOfResource(int type);
+
         static bool thereAreNotPassengerVans(Train *train);
+
         static bool thereAreNotFreightVans(Train *train);
+
     public:
         explicit Station(string name);
 
@@ -54,40 +59,50 @@ namespace rw {
         //void reduceTheNumberOfResource(int typeOfResource, int numberOfResource);
         //void restockTheNumberOfResource(int typeOfResource, int numberOfResource);
         virtual void temporaryStop(Train *train, int stopTime);
+
         virtual void transit(Train *train);
+
         virtual void loading(Train *train);
+
         virtual void unloading(Train *train);
     };
 
     class PassengerStation : public Station {
     public:
         explicit PassengerStation(string name, int numberOfPassengers);
-        /* explicit - предотвращает неявное преобразование типов
-         (выполняется всякий раз, когда требуется один фундаментальный тип данных,
-         но предоставляется другой, и пользователь не указывает компилятору, как выполнить конвертацию )
-         рекомендуется явно объявлять конструкторы explicit всегда, кроме случаев, когда неявное преобразование семантически оправдано.
-        */
+
         void loading(Train *train) override;
+
         void unloading(Train *train) override;
+
         void temporaryStop(Train *train, int stopTime) override;
+
         void transit(Train *train) override;
     };
 
     class FreightStation : public Station {
     public:
         explicit FreightStation(string name, int numberOfGoods);
+
         void loading(Train *train) override;
+
         void unloading(Train *train) override;
+
         void temporaryStop(Train *train, int stopTime) override;
+
         void transit(Train *train) override;
     };
 
     class PassengerAndFreightStation : public Station {
     public:
         explicit PassengerAndFreightStation(string name, int numberOfPassengers, int numberOfGoods);
+
         void loading(Train *train) override;
+
         void unloading(Train *train) override;
+
         void temporaryStop(Train *train, int stopTime) override;
+
         void transit(Train *train) override;
     };
 

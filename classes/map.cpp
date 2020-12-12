@@ -5,9 +5,10 @@
 #include "map.h"
 #include <iostream>
 #include <fstream>
+
 using namespace rw;
 
-bool checkThatTheFileIsOpen(ifstream &F){
+bool checkThatTheFileIsOpen(ifstream &F) {
     if (!F.is_open()) {
         throw Exception("File not found. ");
     }
@@ -16,7 +17,7 @@ bool checkThatTheFileIsOpen(ifstream &F){
 
 void goToTheNextLine(ifstream &F) {
     string bufferString;
-    getline(F,bufferString);
+    getline(F, bufferString);
 }
 
 void Map::inputStationsFromFile(const char *path) {
@@ -58,7 +59,7 @@ int Map::getPath(Station *station1, Station *station2) {
     return getElementOfTheAdjacencyMatrix(station1->getId(), station2->getId());
 }
 
-int Map::getElementOfTheAdjacencyMatrix(int i, int j) { //---------------------------------проверить корректность работы
+int Map::getElementOfTheAdjacencyMatrix(int i, int j) {
     return listOfPaths[i][j];
 }
 
@@ -75,7 +76,7 @@ void Map::inputAdjacencyMatrix(ifstream &F, int numberOfStations) {
         vector<int> bufferVector;
         for (int j = 0; j < numberOfStations; j++) {
             F >> buffer;
-            if (cin.fail()){
+            if (cin.fail()) {
                 throw MapException("Incorrect input: invalid value in adjacency matrix. Check the data from file. ");
             }
             bufferVector.push_back(buffer);
@@ -86,7 +87,7 @@ void Map::inputAdjacencyMatrix(ifstream &F, int numberOfStations) {
 
 void Map::inputANewStationFromFile(ifstream &F) {
     short int bufferType;
-    F>>bufferType;
+    F >> bufferType;
     switch (bufferType) {
         case UNKNOWN_TYPE: {
             inputANewStationWithUnknownType(F);
@@ -146,8 +147,8 @@ void Map::inputANewPassengerAndFreightStation(ifstream &F) {
 int Map::inputNumberOfStationsFromFile(ifstream &F) {
     int numberOfStations;
     F >> numberOfStations;
-    if (cin.fail()){
-        throw Exception("Incorrect input: invalid number of stations. Check the data from file. ");
+    if (cin.fail()) {
+        throw MapException("Incorrect input: invalid number of stations. Check the data from file. ");
     }
     return numberOfStations;
 }

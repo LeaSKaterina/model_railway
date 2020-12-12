@@ -24,7 +24,9 @@ namespace rw {
             int type;
             bool load;
             int number;
+
             void setTypeOfResources(int newType);
+
         public:
             Van();
 

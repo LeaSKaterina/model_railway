@@ -8,11 +8,12 @@
 #include "van.h"
 #include <string>
 #include <vector>
+
 using namespace std;
 
-class TrainException : public Exception{
+class TrainException : public Exception {
 public:
-    explicit TrainException(string error) : Exception(move(error)){};
+    explicit TrainException(string error) : Exception(move(error)) {};
 };
 
 enum StatusOfTheTrain {
@@ -88,6 +89,7 @@ namespace rw {
             bool isFullyLoadedBy(int typeOfResource);
 
             bool isFullyUnloadedBy(int typeOfResource);
+
         public:
             Train(string &name, int &locomotiveAge, string &listOfVans);
 
@@ -109,7 +111,7 @@ namespace rw {
 
             Station *getCurrentStation();
 
-            Station *getArrivalStation(); //----------------------------------------------------------------------------------------------ПЕРЕДЕЛАТЬ
+            Station *getArrivalStation();
 
             string &getName();
 
@@ -140,6 +142,8 @@ namespace rw {
             void passTheRoute();
 
             bool theRouteIsNotPassed();
+
+            void printParameters();
         };
 
     }

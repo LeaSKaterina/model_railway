@@ -10,15 +10,16 @@
 #include <string>
 #include <vector>
 
-class MapException : public Exception{
+class MapException : public Exception {
 public:
-    explicit MapException(string error) : Exception(move(error)){};
+    explicit MapException(string error) : Exception(move(error)) {};
 };
 
 bool checkThatTheFileIsOpen(ifstream &F);
+
 void goToTheNextLine(ifstream &F);
 
-namespace rw{
+namespace rw {
 
     class Map {
     private:
@@ -31,7 +32,7 @@ namespace rw{
 
         int getElementOfTheAdjacencyMatrix(int i, int j);
 
-        void inputANewStationFromFile(ifstream& F);
+        void inputANewStationFromFile(ifstream &F);
 
         void inputANewStationWithUnknownType(ifstream &F);
 

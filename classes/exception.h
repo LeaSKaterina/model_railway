@@ -6,16 +6,19 @@
 #define RAILWAY_EXCEPTION_H
 
 #include <string>
+#include <utility>
+
 using namespace std;
 
-class Exception : public exception{
+class Exception : public exception {
 private:
     string error;
 public:
-    explicit Exception(string error){
-        Exception::error = error;
+    explicit Exception(string error) {
+        Exception::error = std::move(error);
     }
-    string &getError(){
+
+    string &getError() {
         return error;
     }
 };

@@ -18,17 +18,13 @@ enum Action {
     UNLOADING
 };
 
-enum Mode{
+enum Mode {
     AUTOMATIC,
     USER
 };
 
 namespace rw {
-
-    //на выходе должен быть список событий в хронологическом порядке
-    //автоматическое моделирование - вывод от t=0 до t=момент, когда последний поезд доедет (станет неактивным)
     //режим работы - поле класса Railway, не читается из файла, а вводится вместе с названием файла входных данных
-
     class Railway {
     private:
         Map map;
@@ -41,9 +37,9 @@ namespace rw {
 
         static void moveTheFileToTrains(ifstream &F);
 
-        void inputANewTrainFromFile(ifstream& F);
+        void inputANewTrainFromFile(ifstream &F);
 
-        int getRandomNumberOfResource();
+        static int getRandomNumberOfResource();
 
         void goToTheNextAction(Train &train);
 
@@ -56,6 +52,7 @@ namespace rw {
         void createRouteForTheTrain(Train *train, string inputString);
 
         void trainsDepart();
+
     public:
         explicit Railway(const char *path);
 
