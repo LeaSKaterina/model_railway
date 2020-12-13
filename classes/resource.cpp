@@ -41,7 +41,7 @@ Resource &Resource::operator-=(int right) {
 int Resource::operator-(Resource &right) {
     if (this->type != right.type) {
         throw ResourceException(
-                "Mismatch of types of resources."); //------------------------------------------------try catch(?)
+                "Mismatch of types of resources.");
     }
     return this->getAmount() - right.getAmount();
 }
@@ -61,7 +61,7 @@ bool Resource::operator!=(Resource &right) {
 bool Resource::operator>(Resource &right) {
     if (this->type != right.type) {
         throw ResourceException(
-                "Mismatch of types of resources."); //------------------------------------------------try catch(?)
+                "Mismatch of types of resources.");
     }
     return this->amount > right.amount;
 }
@@ -69,7 +69,7 @@ bool Resource::operator>(Resource &right) {
 bool Resource::operator<(Resource &right) {
     if (this->type != right.type) {
         throw ResourceException(
-                "Mismatch of types of resources."); //------------------------------------------------try catch(?)
+                "Mismatch of types of resources.");
     }
     return this->amount < right.amount;
 }

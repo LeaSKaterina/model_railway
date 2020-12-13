@@ -90,6 +90,8 @@ namespace rw {
 
             bool isFullyUnloadedBy(int typeOfResource);
 
+            string getStatusAsAString();
+
         public:
             Train(string &name, int &locomotiveAge, string &listOfVans);
 

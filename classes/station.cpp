@@ -52,7 +52,7 @@ void Station::temporaryStop(Train *train, int stopTime) {
 
 int Station::getAmountOfResource(int typeOfResource) {
     checkTypeOfResource(typeOfResource);
-    for (auto resource : resources) {
+    for (auto &resource : resources) {
         if (resource.getType() == typeOfResource) {
             return resource.getAmount();
         }
@@ -65,7 +65,7 @@ void Station::setTheFirstResource(Resource theFirstRecourse) {
 }
 
 void Station::addTheResource(Resource newRecourse) {
-    for (auto resource : resources) {
+    for (auto &resource : resources) {
         if (resource.getType() == newRecourse.getType()) {
             resource.restock(newRecourse.getAmount());
             return;
@@ -85,42 +85,26 @@ void Station::deleteTheResource(int typeOfDeletedResource) {
     throw StationException("There isn't such resource. Check the type of deleted resource .");
 }
 
-/*void Station::reduceTheNumberOfResource(int typeOfResource, int numberOfResource) {
-    checkTypeOfResource(typeOfResource);
-    try {
-        for (auto resource : resources) {
-            if (resource.getType() == typeOfResource) {
-                resource.reduce(numberOfResource);
-                return;
-            }
-        }
-    }
-    catch (ResourceException exception){
-
-    }
-    throw StationException("There isn't such resource. Check the type of resource .");
-}*/
-
 void Station::checkTypeOfResource(int type) {
     if (type < 0 || type > 3) {
         throw ResourceException(
-                "Incorrect input: invalid type value. "); //------------------------------------------------try catch(?)
+                "Incorrect input: invalid type value. ");
     }
 }
 
-/*void Station::restockTheNumberOfResource(int typeOfResource, int numberOfResource) {
+void Station::restockTheNumberOfResource(int typeOfResource, int numberOfResource) {
     checkTypeOfResource(typeOfResource);
-    for (auto resource : resources){
+    for (auto &resource : resources){
         if (resource.getType() == typeOfResource){
             resource.restock(numberOfResource);
             return;
         }
     }
-    throw StationException("There isn't such resource. Check the type of resource .");
-}*/
+    throw StationException("There isn't such resource. Check the type of resource.");
+}
 
 void Station::loading(Train *train) {
-    for (auto resource : resources) {
+    for (auto &resource : resources) {
         resource.setAmount(train->loading(resource));
         cout << "Type of loaded resource: " << resource.getType() << ", " <<
              "The new amount of this resource: " << resource.getAmount() << ". " << endl;
@@ -130,7 +114,7 @@ void Station::loading(Train *train) {
 }
 
 void Station::unloading(Train *train) {
-    for (auto resource : resources) {
+    for (auto &resource : resources) {
         resource.setAmount(train->unloading(resource));
         cout << "Type of unloaded resource: " << resource.getType() << ", " <<
              "The new amount of this resource: " << resource.getAmount() << ". " << endl;
@@ -170,10 +154,18 @@ void PassengerStation::unloading(Train *train) {
     if (thereAreNotPassengerVans(train)) {
         return;
     }
-    resources[0].setAmount(train->unloading(resources[0]));
+    resources[0].setAmount(train->unloading(Resource(PASSENGER, train->getAmountOfResource(PASSENGER))));
     cout << "The train \"" << train->getName() << "\" is being unloaded on the passenger station \"" << getName()
          << "\". " << resources[0].getAmount() << " passengers will stayed in the train." << endl;
     train->setTravelTime(train->getAmountOfVans());
+}
+
+string PassengerStation::getTypeAsAString() {
+    return "passenger";
+}
+
+void PassengerStation::printParameters() {
+    cout << "\""<< getName() << "\" " << getTypeAsAString() <<" station, amount of passengers: "<<getAmountOfResource(PASSENGER) << endl;
 }
 
 bool Station::thereAreNotPassengerVans(Train *train) {
@@ -211,14 +203,31 @@ void FreightStation::unloading(Train *train) {
     if (thereAreNotFreightVans(train)) {
         return;
     }
-    resources[0].setAmount(train->unloading(resources[0]));
+    resources[0].setAmount(train->unloading(Resource(FREIGHT, train->getAmountOfResource(FREIGHT))));
     cout << "The train \"" << train->getName() << "\" is being unloaded on the freight station \"" << getName()
          << "\". " << resources[0].getAmount() << " goods will stayed in the train." << endl;
     train->setTravelTime(2 * train->getAmountOfVans());
 }
 
+string FreightStation::getTypeAsAString() {
+    return "freight";
+}
+
+void FreightStation::printParameters() {
+    cout <<"\""<< getName() << "\" " <<getTypeAsAString()<<" station, amount of goods: "
+         << getAmountOfResource(FREIGHT) << endl;
+}
+
 bool Station::thereAreNotFreightVans(Train *train) {
     return train->getAmountOfFreightVans() == 0;
+}
+
+void Station::printParameters() {
+    cout <<"\""<< getName() << "\" station, type " << getTypeAsAString()<<endl;
+}
+
+string Station::getTypeAsAString() {
+    return "unknown type";
 }
 
 PassengerAndFreightStation::PassengerAndFreightStation(string name, int numberOfPassengers, int numberOfGoods)
@@ -243,7 +252,31 @@ void PassengerAndFreightStation::temporaryStop(Train *train, int stopTime) {
 
 void PassengerAndFreightStation::loading(Train *train) {
     cout << "The train \"" << train->getName() << "\" is being loaded. " << endl;
-    for (auto resource : resources) {
+    loadingOfPassengerVans(train);
+    loadingOfFreightVans(train);
+    train->setTravelTime(train->getAmountOfPassengerVans() + 2 * train->getAmountOfFreightVans());
+}
+
+void PassengerAndFreightStation::unloading(Train *train) {
+    cout << "The train \"" << train->getName() << "\" is being unloaded on the passenger and freight station \""
+         << getName() << "\". ";
+    unloadingOfPassengerVans(train);
+    unloadingOfFreightVans(train);
+    cout << "will stayed in the train." << endl;
+    train->setTravelTime(train->getAmountOfPassengerVans() + 2 * train->getAmountOfFreightVans());
+}
+
+string PassengerAndFreightStation::getTypeAsAString() {
+    return "passenger and freight";
+}
+
+void PassengerAndFreightStation::printParameters() {
+    cout <<"\""<< getName() << "\" "<<getTypeAsAString()<<" station,\namount of passengers: "<<getAmountOfResource(PASSENGER) << ", amount of goods: "
+         << getAmountOfResource(FREIGHT) << endl;
+}
+
+void PassengerAndFreightStation::loadingOfPassengerVans(Train *train) {
+    for (auto &resource : resources) {
         if (resource.getType() == PASSENGER) {
             if (thereAreNotPassengerVans(train)) {
                 break;
@@ -252,6 +285,11 @@ void PassengerAndFreightStation::loading(Train *train) {
             cout << resource.getAmount() << " passengers will stayed on the passenger and freight station \""
                  << getName() << "\"." << endl;
         }
+    }
+}
+
+void PassengerAndFreightStation::loadingOfFreightVans(Train *train) {
+    for (auto &resource : resources) {
         if (resource.getType() == FREIGHT) {
             if (thereAreNotFreightVans(train)) {
                 break;
@@ -261,28 +299,28 @@ void PassengerAndFreightStation::loading(Train *train) {
                  << "\"." << endl;
         }
     }
-    train->setTravelTime(train->getAmountOfPassengerVans() + 2 * train->getAmountOfFreightVans());
 }
 
-void PassengerAndFreightStation::unloading(Train *train) {
-    cout << "The train \"" << train->getName() << "\" is being unloaded on the passenger and freight station \""
-         << getName() << "\". ";
-    for (auto resource : resources) {
+void PassengerAndFreightStation::unloadingOfPassengerVans(Train *train) {
+    for (auto &resource : resources) {
         if (resource.getType() == PASSENGER) {
             if (thereAreNotPassengerVans(train)) {
                 return;
             }
-            resource.setAmount(train->loading(resource));
+            resource.setAmount(train->unloading(Resource(PASSENGER, train->getAmountOfResource(PASSENGER))));
             cout << resource.getAmount() << " passengers ";
         }
+    }
+}
+
+void PassengerAndFreightStation::unloadingOfFreightVans(Train *train) {
+    for (auto &resource : resources) {
         if (resource.getType() == FREIGHT) {
             if (thereAreNotFreightVans(train)) {
                 return;
             }
-            resource.setAmount(train->loading(resource));
+            resource.setAmount(train->unloading(Resource(FREIGHT, train->getAmountOfResource(FREIGHT))));
             cout << "and " << resource.getAmount() << " goods ";
         }
     }
-    cout << "will stayed in the train." << endl;
-    train->setTravelTime(train->getAmountOfPassengerVans() + 2 * train->getAmountOfFreightVans());
 }

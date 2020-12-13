@@ -109,14 +109,19 @@ void Van::setTypeOfResources(int newType) {
 
 int PassengerVan::loading(int numberOfPersons) {
     numberOfPersons = Van::loading(numberOfPersons);
-    cout << numberOfPersons << " passengers are loading in the passenger van number " << number << "." << endl;
+    if (numberOfPersons != 0) {
+        cout << numberOfPersons << " passengers are loading in the passenger van number " << number << "." << endl;
+    }
     return numberOfPersons;
 }
 
 int PassengerVan::unloading(int numberOfPersons) {
     int remainder = Van::unloading(numberOfPersons);
-    cout << numberOfPersons - remainder << " passengers are unloading from the passenger van number " << number << "."
-         << endl;
+    if (numberOfPersons - remainder != 0) {
+        cout << numberOfPersons - remainder << " passengers are unloading from the passenger van number " << number
+             << "."
+             << endl;
+    }
     return remainder;
 }
 
@@ -135,14 +140,18 @@ PassengerVan::PassengerVan() {
 
 int FreightVan::loading(int numberOfGoods) {
     numberOfGoods = Van::loading(numberOfGoods);
-    cout << numberOfGoods << " goods are being loaded in the freight van number " << number << "." << endl;
+    if (numberOfGoods != 0) {
+        cout << numberOfGoods << " goods are being loaded in the freight van number " << number << "." << endl;
+    }
     return numberOfGoods;
 }
 
 int FreightVan::unloading(int numberOfGoods) {
     int remainder = Van::unloading(numberOfGoods);
-    cout << numberOfGoods - remainder << " goods are being unloaded from the freight van number " << number << "."
-         << endl;
+    if (numberOfGoods - remainder) {
+        cout << numberOfGoods - remainder << " goods are being unloaded from the freight van number " << number << "."
+             << endl;
+    }
     return remainder;
 }
 

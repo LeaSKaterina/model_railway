@@ -228,7 +228,7 @@ int Train::getStatus() {
 void Train::setStatus(int action) {
     if (action < 0 || action > 4) {
         throw TrainException(
-                "Incorrect input: invalid train status value. "); //-------------------------------------------------try catch (?)
+                "Incorrect input: invalid train status value. ");
     }
     status = action;
 }
@@ -287,7 +287,7 @@ int Train::getAmountOfFreightVans() {
 }
 
 bool Train::isFullyLoadedBy(int typeOfResource) {
-    for (auto van : listOfVans) {
+    for (auto &van : listOfVans) {
         if (van->getTypeOfVan() == typeOfResource && !van->isLoaded()) {
             return false;
         }
@@ -296,7 +296,7 @@ bool Train::isFullyLoadedBy(int typeOfResource) {
 }
 
 bool Train::isFullyUnloadedBy(int typeOfResource) {
-    for (auto van : listOfVans) {
+    for (auto &van : listOfVans) {
         if (van->getTypeOfVan() == typeOfResource && van->getCurrentLoad()) {
             return false;
         }
@@ -305,10 +305,32 @@ bool Train::isFullyUnloadedBy(int typeOfResource) {
 }
 
 void Train::printParameters() {
-    cout << getName() << ": ";
-    cout << "passengers : " << getAmountOfResource(PASSENGER) << ", ";
-    cout << "freight: " << getAmountOfResource(FREIGHT) << ". ";
-    cout << "Current station: " << getCurrentStation()->getName() << endl;
+    cout << "---\""<<getName() << "\":----\npassengers: " << getAmountOfResource(PASSENGER) << ", goods: "
+         << getAmountOfResource(FREIGHT) << ", status: " << getStatusAsAString() << ".\nCurrent (departure) station: ";
+    currentDepartureStation->printParameters();
+}
+
+string Train::getStatusAsAString() {
+    switch (status){
+        case ON_THE_WAY:{
+            return "on the way";
+        }
+        case REMOVED_FROM_THE_ROUTE:{
+            return "removed from the route || passed the route";
+        }
+        case STANDING:{
+            return "standing";
+        }
+        case IS_BEING_LOADED:{
+            return "is being loaded";
+        }
+        case IS_BEING_UNLOADED:{
+            return "is being unloaded";
+        }
+        default:{
+            throw TrainException("Incorrect input: invalid status of train");
+        }
+    }
 }
 
 

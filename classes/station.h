@@ -27,6 +27,7 @@ namespace rw {
         static int counter;
     protected:
         vector<Resource> resources{};
+
         short int type;
 
         static void checkTypeOfResource(int type);
@@ -56,8 +57,8 @@ namespace rw {
 
         void deleteTheResource(int typeOfDeletedResource);
 
-        //void reduceTheNumberOfResource(int typeOfResource, int numberOfResource);
-        //void restockTheNumberOfResource(int typeOfResource, int numberOfResource);
+        void restockTheNumberOfResource(int typeOfResource, int numberOfResource);
+
         virtual void temporaryStop(Train *train, int stopTime);
 
         virtual void transit(Train *train);
@@ -65,9 +66,15 @@ namespace rw {
         virtual void loading(Train *train);
 
         virtual void unloading(Train *train);
+
+        virtual void printParameters();
+
+        virtual string getTypeAsAString();
     };
 
     class PassengerStation : public Station {
+    private:
+        string getTypeAsAString() override;
     public:
         explicit PassengerStation(string name, int numberOfPassengers);
 
@@ -78,9 +85,13 @@ namespace rw {
         void temporaryStop(Train *train, int stopTime) override;
 
         void transit(Train *train) override;
+
+        void printParameters() override;
     };
 
     class FreightStation : public Station {
+    private:
+        string getTypeAsAString() override;
     public:
         explicit FreightStation(string name, int numberOfGoods);
 
@@ -91,9 +102,21 @@ namespace rw {
         void temporaryStop(Train *train, int stopTime) override;
 
         void transit(Train *train) override;
+
+        void printParameters() override;
     };
 
     class PassengerAndFreightStation : public Station {
+    private:
+        string getTypeAsAString() override;
+
+        void loadingOfPassengerVans(Train *train);
+
+        void loadingOfFreightVans(Train *train);
+
+        void unloadingOfPassengerVans(Train *train);
+
+        void unloadingOfFreightVans(Train *train);
     public:
         explicit PassengerAndFreightStation(string name, int numberOfPassengers, int numberOfGoods);
 
@@ -104,6 +127,8 @@ namespace rw {
         void temporaryStop(Train *train, int stopTime) override;
 
         void transit(Train *train) override;
+
+        void printParameters() override;
     };
 
 }

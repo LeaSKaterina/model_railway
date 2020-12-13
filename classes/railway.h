@@ -18,13 +18,25 @@ enum Action {
     UNLOADING
 };
 
+enum Option {
+    EXIT,
+    JUST_LOOK,
+    RESTOCK_THE_RESOURCE_OF_THE_STATION,
+    REMOVE_TRAIN_FROM_THE_ROUTE,
+    CHOOSE_THE_ACTION
+};
+
 enum Mode {
     AUTOMATIC,
     USER
 };
 
+class ModeException : public Exception{
+public:
+    explicit ModeException(string error) : Exception(move(error)) {};
+};
+
 namespace rw {
-    //режим работы - поле класса Railway, не читается из файла, а вводится вместе с названием файла входных данных
     class Railway {
     private:
         Map map;
@@ -39,9 +51,9 @@ namespace rw {
 
         void inputANewTrainFromFile(ifstream &F);
 
-        static int getRandomNumberOfResource();
+        void goToTheNextActionInAutomaticMode(Train &train);
 
-        void goToTheNextAction(Train &train);
+        void goToTheNextActionInUserMode(Train &train);
 
         void performAnActionAtTheStation(Train &train);
 
@@ -53,6 +65,32 @@ namespace rw {
 
         void trainsDepart();
 
+        static void printTheOptionsForUser();
+
+        static void printTheActions();
+
+        static int userDecidesWhatToDo();
+
+        static int userDecidesWhatToDoOnTheStation();
+
+        void gameOver();
+
+        void startAutomaticMode();
+
+        void startUserMode();
+
+        void liveAUnitOfTimeInAutomaticMode();
+
+        bool liveAUnitOfTimeInUserMode();
+
+        static void userRestockTheResourceOnTheStation(Station *station);
+
+        int doAnythingElseOnTheStation(Train &train);
+
+        static int getInt();
+
+        bool performTheUserOption(Train &train);
+
     public:
         explicit Railway(const char *path);
 
@@ -60,11 +98,9 @@ namespace rw {
 
         void inputModelFromFile(const char *path);
 
-        void start();
-
-        void liveAUnitOfTime();
-
         void printParametersOfTrains();
+
+        void run(int modeOfWork);
     };
 
 }
