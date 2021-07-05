@@ -12,14 +12,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5dfa12ea-abc3-44b6-a62f-ecca603283ad" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Model1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Model1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/railway.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/classes/railway.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/railway.h" beforeDir="false" afterPath="$PROJECT_DIR$/classes/railway.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/resource.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/classes/resource.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/station.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/classes/station.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/station.h" beforeDir="false" afterPath="$PROJECT_DIR$/classes/station.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/train.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/classes/train.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/train.h" beforeDir="false" afterPath="$PROJECT_DIR$/classes/train.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/van.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/classes/van.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/classes/railway.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/classes/railway.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/classes/station.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/classes/station.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/classes/van.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/classes/van.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/main.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/railway.dir/objects.a" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/railway.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/railway.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/railway.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/railway.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/railway.h" beforeDir="false" afterPath="$PROJECT_DIR$/railway.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/правила для input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/правила для input.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/переделать.txt" beforeDir="false" afterPath="$PROJECT_DIR$/переделать.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,10 +65,11 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../2 курс моё/ппвис/inheritance/main.cpp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunManager">
     <configuration name="railway" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="railway" TARGET_NAME="railway" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="railway" RUN_TARGET_NAME="railway">
@@ -96,7 +107,26 @@
       <workItem from="1605613975237" duration="217000" />
       <workItem from="1605619461405" duration="17460000" />
       <workItem from="1605693921953" duration="14013000" />
-      <workItem from="1605766014127" duration="17349000" />
+      <workItem from="1605766014127" duration="26874000" />
+      <workItem from="1605865662118" duration="188000" />
+      <workItem from="1605941814232" duration="1736000" />
+      <workItem from="1605957330653" duration="19817000" />
+      <workItem from="1606044708098" duration="19498000" />
+      <workItem from="1606078793402" duration="1391000" />
+      <workItem from="1606153116926" duration="13272000" />
+      <workItem from="1606384402121" duration="23000" />
+      <workItem from="1606387928539" duration="15000" />
+      <workItem from="1606470773054" duration="69000" />
+      <workItem from="1606566325269" duration="7748000" />
+      <workItem from="1606828979007" duration="16146000" />
+      <workItem from="1606913190046" duration="13031000" />
+      <workItem from="1607673008929" duration="9738000" />
+      <workItem from="1607684934400" duration="1678000" />
+      <workItem from="1607696130922" duration="1993000" />
+      <workItem from="1607755988306" duration="22859000" />
+      <workItem from="1607796764807" duration="620000" />
+      <workItem from="1607808327272" duration="4765000" />
+      <workItem from="1607852685602" duration="11706000" />
     </task>
     <servers />
   </component>
@@ -108,60 +138,49 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="170" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1605785434079" />
-    <state width="1493" height="339" key="GridCell.Tab.0.bottom" timestamp="1605792466323">
+    <state width="1493" height="666" key="GridCell.Tab.0.bottom" timestamp="1607863730743">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="339" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605792466323" />
-    <state width="1493" height="339" key="GridCell.Tab.0.center" timestamp="1605792466323">
+    <state width="1493" height="666" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1607863730743" />
+    <state width="1493" height="666" key="GridCell.Tab.0.center" timestamp="1607863730743">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="339" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1605792466323" />
-    <state width="1493" height="339" key="GridCell.Tab.0.left" timestamp="1605792466323">
+    <state width="1493" height="666" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1607863730743" />
+    <state width="1493" height="666" key="GridCell.Tab.0.left" timestamp="1607863730743">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="339" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1605792466323" />
-    <state width="1493" height="339" key="GridCell.Tab.0.right" timestamp="1605792466323">
+    <state width="1493" height="666" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1607863730743" />
+    <state width="1493" height="666" key="GridCell.Tab.0.right" timestamp="1607863730743">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="339" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1605792466323" />
-    <state width="1493" height="339" key="GridCell.Tab.1.bottom" timestamp="1605792467278">
+    <state width="1493" height="666" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1607863730743" />
+    <state width="1493" height="237" key="GridCell.Tab.1.bottom" timestamp="1607862984362">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="339" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1605792467278" />
-    <state width="1493" height="339" key="GridCell.Tab.1.center" timestamp="1605792467278">
+    <state width="1493" height="237" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1607862984362" />
+    <state width="1493" height="237" key="GridCell.Tab.1.center" timestamp="1607862984362">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="339" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1605792467278" />
-    <state width="1493" height="339" key="GridCell.Tab.1.left" timestamp="1605792467278">
+    <state width="1493" height="237" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1607862984362" />
+    <state width="1493" height="237" key="GridCell.Tab.1.left" timestamp="1607862984362">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="339" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1605792467278" />
-    <state width="1493" height="339" key="GridCell.Tab.1.right" timestamp="1605792467278">
+    <state width="1493" height="237" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1607862984362" />
+    <state width="1493" height="237" key="GridCell.Tab.1.right" timestamp="1607862984362">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="339" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1605792467278" />
+    <state width="1493" height="237" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1607862984362" />
     <state x="510" y="60" key="refactoring.ChangeSignatureDialog" timestamp="1605636344517">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="510" y="60" key="refactoring.ChangeSignatureDialog/0.0.1536.824@0.0.1536.824" timestamp="1605636344517" />
-    <state x="425" y="187" key="run.anything.popup" timestamp="1605782614367">
+    <state x="425" y="187" key="run.anything.popup" timestamp="1607809981905">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1605782614367" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1605724590919">
+    <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1607809981905" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1607812238127">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1605724590919" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/main.cpp</url>
-          <line>8</line>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1607812238127" />
   </component>
 </project>

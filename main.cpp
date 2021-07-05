@@ -1,10 +1,9 @@
-#include "railway.h"
+#include "classes/railway.h"
 
-#include <iostream>
 using namespace std;
 
 int main() {
-    rw::Railway railwayModel;
-    railwayModel.inputModelFromFile("Model1.txt");
+    rw::Railway railwayModel("Model2.txt");
+    railwayModel.run(USER);
     return 0;
 }

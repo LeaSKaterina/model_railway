@@ -69,34 +69,109 @@ CMakeFiles/railway.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/railway.dir/main.cpp.s"
 	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\railway\main.cpp -o CMakeFiles\railway.dir\main.cpp.s
 
-CMakeFiles/railway.dir/railway.cpp.obj: CMakeFiles/railway.dir/flags.make
-CMakeFiles/railway.dir/railway.cpp.obj: ../railway.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\railway\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/railway.dir/railway.cpp.obj"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\railway.dir\railway.cpp.obj -c D:\railway\railway.cpp
+CMakeFiles/railway.dir/classes/railway.cpp.obj: CMakeFiles/railway.dir/flags.make
+CMakeFiles/railway.dir/classes/railway.cpp.obj: ../classes/railway.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\railway\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/railway.dir/classes/railway.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\railway.dir\classes\railway.cpp.obj -c D:\railway\classes\railway.cpp
 
-CMakeFiles/railway.dir/railway.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/railway.dir/railway.cpp.i"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\railway\railway.cpp > CMakeFiles\railway.dir\railway.cpp.i
+CMakeFiles/railway.dir/classes/railway.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/railway.dir/classes/railway.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\railway\classes\railway.cpp > CMakeFiles\railway.dir\classes\railway.cpp.i
 
-CMakeFiles/railway.dir/railway.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/railway.dir/railway.cpp.s"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\railway\railway.cpp -o CMakeFiles\railway.dir\railway.cpp.s
+CMakeFiles/railway.dir/classes/railway.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/railway.dir/classes/railway.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\railway\classes\railway.cpp -o CMakeFiles\railway.dir\classes\railway.cpp.s
+
+CMakeFiles/railway.dir/classes/map.cpp.obj: CMakeFiles/railway.dir/flags.make
+CMakeFiles/railway.dir/classes/map.cpp.obj: ../classes/map.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\railway\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/railway.dir/classes/map.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\railway.dir\classes\map.cpp.obj -c D:\railway\classes\map.cpp
+
+CMakeFiles/railway.dir/classes/map.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/railway.dir/classes/map.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\railway\classes\map.cpp > CMakeFiles\railway.dir\classes\map.cpp.i
+
+CMakeFiles/railway.dir/classes/map.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/railway.dir/classes/map.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\railway\classes\map.cpp -o CMakeFiles\railway.dir\classes\map.cpp.s
+
+CMakeFiles/railway.dir/classes/station.cpp.obj: CMakeFiles/railway.dir/flags.make
+CMakeFiles/railway.dir/classes/station.cpp.obj: ../classes/station.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\railway\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/railway.dir/classes/station.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\railway.dir\classes\station.cpp.obj -c D:\railway\classes\station.cpp
+
+CMakeFiles/railway.dir/classes/station.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/railway.dir/classes/station.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\railway\classes\station.cpp > CMakeFiles\railway.dir\classes\station.cpp.i
+
+CMakeFiles/railway.dir/classes/station.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/railway.dir/classes/station.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\railway\classes\station.cpp -o CMakeFiles\railway.dir\classes\station.cpp.s
+
+CMakeFiles/railway.dir/classes/train.cpp.obj: CMakeFiles/railway.dir/flags.make
+CMakeFiles/railway.dir/classes/train.cpp.obj: ../classes/train.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\railway\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/railway.dir/classes/train.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\railway.dir\classes\train.cpp.obj -c D:\railway\classes\train.cpp
+
+CMakeFiles/railway.dir/classes/train.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/railway.dir/classes/train.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\railway\classes\train.cpp > CMakeFiles\railway.dir\classes\train.cpp.i
+
+CMakeFiles/railway.dir/classes/train.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/railway.dir/classes/train.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\railway\classes\train.cpp -o CMakeFiles\railway.dir\classes\train.cpp.s
+
+CMakeFiles/railway.dir/classes/van.cpp.obj: CMakeFiles/railway.dir/flags.make
+CMakeFiles/railway.dir/classes/van.cpp.obj: ../classes/van.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\railway\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/railway.dir/classes/van.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\railway.dir\classes\van.cpp.obj -c D:\railway\classes\van.cpp
+
+CMakeFiles/railway.dir/classes/van.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/railway.dir/classes/van.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\railway\classes\van.cpp > CMakeFiles\railway.dir\classes\van.cpp.i
+
+CMakeFiles/railway.dir/classes/van.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/railway.dir/classes/van.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\railway\classes\van.cpp -o CMakeFiles\railway.dir\classes\van.cpp.s
+
+CMakeFiles/railway.dir/classes/resource.cpp.obj: CMakeFiles/railway.dir/flags.make
+CMakeFiles/railway.dir/classes/resource.cpp.obj: ../classes/resource.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\railway\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/railway.dir/classes/resource.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\railway.dir\classes\resource.cpp.obj -c D:\railway\classes\resource.cpp
+
+CMakeFiles/railway.dir/classes/resource.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/railway.dir/classes/resource.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\railway\classes\resource.cpp > CMakeFiles\railway.dir\classes\resource.cpp.i
+
+CMakeFiles/railway.dir/classes/resource.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/railway.dir/classes/resource.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\railway\classes\resource.cpp -o CMakeFiles\railway.dir\classes\resource.cpp.s
 
 # Object files for target railway
 railway_OBJECTS = \
 "CMakeFiles/railway.dir/main.cpp.obj" \
-"CMakeFiles/railway.dir/railway.cpp.obj"
+"CMakeFiles/railway.dir/classes/railway.cpp.obj" \
+"CMakeFiles/railway.dir/classes/map.cpp.obj" \
+"CMakeFiles/railway.dir/classes/station.cpp.obj" \
+"CMakeFiles/railway.dir/classes/train.cpp.obj" \
+"CMakeFiles/railway.dir/classes/van.cpp.obj" \
+"CMakeFiles/railway.dir/classes/resource.cpp.obj"
 
 # External object files for target railway
 railway_EXTERNAL_OBJECTS =
 
 railway.exe: CMakeFiles/railway.dir/main.cpp.obj
-railway.exe: CMakeFiles/railway.dir/railway.cpp.obj
+railway.exe: CMakeFiles/railway.dir/classes/railway.cpp.obj
+railway.exe: CMakeFiles/railway.dir/classes/map.cpp.obj
+railway.exe: CMakeFiles/railway.dir/classes/station.cpp.obj
+railway.exe: CMakeFiles/railway.dir/classes/train.cpp.obj
+railway.exe: CMakeFiles/railway.dir/classes/van.cpp.obj
+railway.exe: CMakeFiles/railway.dir/classes/resource.cpp.obj
 railway.exe: CMakeFiles/railway.dir/build.make
 railway.exe: CMakeFiles/railway.dir/linklibs.rsp
 railway.exe: CMakeFiles/railway.dir/objects1.rsp
 railway.exe: CMakeFiles/railway.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\railway\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable railway.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\railway\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable railway.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\railway.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
